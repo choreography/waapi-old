@@ -1,0 +1,106 @@
+body {
+	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png);
+}
+
+
+header.glorious {
+	margin: 10px 40px;
+}
+
+
+
+
+
+section.index {
+	max-width: 960px;
+	padding: 20px 0;
+	background: hsl(0, 0%, 100%);
+	border: 1px solid hsl(215, 0%, 70%);
+	border-radius: 4px;
+	margin: 10px auto;
+	font-size: 0;
+/* 	white-space: nowrap; */
+}
+
+@media only screen and (max-width: 1000px) { section.index { margin: 10px 20px } }
+
+
+a.row {
+	display: inline-block;
+	padding: 2px;
+	color: hsl(215, 100%, 60%);
+	font: 20px/1.1 Lato, sans-serif;
+	cursor: pointer;
+}
+
+a.row span {
+	display: inline-block;
+	padding: 2px 8px;
+	margin: 0 4px
+}
+
+a.row:hover span {
+	background: hsl(215, 100%, 60%);
+	border-radius: 6px;
+	color: white;
+}
+
+a.row:active { opacity: .5 }
+
+
+
+
+
+
+
+
+section.api {
+	max-width: 960px;
+	padding: 20px 0;
+	background: hsl(0, 0%, 100%);
+	border: 1px solid hsl(215, 0%, 70%);
+	border-radius: 4px;
+	margin: 30px auto;
+}
+
+@media only screen and (max-width: 1000px) { section.api { margin: 30px 20px } }
+
+
+code {
+	display: inline-block;
+	padding: 8px 10px;
+	border-radius: 4px;
+	margin: 0 20px 10px;
+	box-shadow: 0 4px 10px 2px hsl(0, 0%, 95%), 0 4px 0 2px hsl(0, 0%, 80%);
+	font: 20px/1 Lato, sans-serif;
+}
+
+code .syntax { margin: 0 .1em }
+h2, h3 { display: inline; margin: 0; font: inherit; }
+
+.keyword { color: hsl(0, 66%, 47%) }
+.syntax { color: hsl(0, 0%, 80%) }
+.function { color: hsl(262, 52%, 47%) }
+.variable { color: hsl(123, 46%, 40%) }
+.type { color: hsl(15, 25%, 34%) }
+.argument { color: hsl(123, 46%, 40%) }
+
+ol.arguments { margin: 40px 0 }
+ol.arguments .syntax { margin-left: 8px }
+ol.arguments .syntax,
+ol.arguments .type { font-size: 14px }
+
+ol.arguments li { margin-bottom: 30px }
+p.description { margin: 8px 40px 0 }
+
+
+
+
+
+
+
+
+
+
+
+

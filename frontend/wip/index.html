@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1, width=device-width">
+	<title>Web Animations API | Documentation</title>
+	
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="/shared/fonts/lato.css">
+	<link rel="stylesheet" href="/shared/css/unstyle.css">
+	<link rel="stylesheet" href="/shared/css/foundational.css">
+	<link rel="stylesheet" href="../style.css">
+	
+	<!-- Scripts -->
+	<script src="/shared/js/web-animations-next.js"></script>
+	<script src="/shared/js/choreography.js"></script>
+	<script src="../app.js"></script>
+
+
+<body>
+	<!-- Markup -->
+	<article class="view dashboard">
+		<header class="glorious">
+			<h1>Web Animations API</h1>
+		</header>
+		<section class="index">
+			<a class="row" href="?API=Animation"><span>Animation</span></a>
+			<br>
+			<a class="row" href="?API=KeyframeEffect"><span>KeyframeEffect</span></a>
+			<a class="row" href="?API=GroupEffect"><span>GroupEffect</span></a>
+			<a class="row" href="?API=SequenceEffect"><span>SequenceEffect</span></a>
+			<br>
+			<a class="row" href="?API=DocumentTimeline"><span>document.timeline</span></a>
+			<br>
+			<a class="row" href="?API=Element.animate"><span>element.animate</span></a>
+			<a class="row" href="?API=Element.getAnimations"><span>element.getAnimations</span></a>
+		</section>
+		
+		<section class="api">
+			<code>
+				<span class="keyword">new</span> <h2 class="function">KeyframeEffect</h2><span class="syntax">(</span><span class="variable">target</span><span class="syntax">,</span> <span class="variable">frames</span><span class="syntax">,</span> <span class="variable">options</span><span class="syntax">);</span>
+			</code>
+			<p class="description">
+				KeyframeEffects update CSS properties of a target element over time.<br>
+				<br>
+				They sit within an Animation and work with the global clock known as the DocumentTimeline
+			</p>
+			<ol class="arguments">
+				<li>
+					<h3 class="argument">target</h3>
+					<span class="syntax">= </span><span class="type">Element</span>
+					<p class="description">
+						The target element being animated. Can be null for animations that don't target a specific element, for example an animation that makes sound using the audio API.
+					</p>
+				
+				<li>
+					<h3 class="argument">frames</h3>
+					<span class="syntax">= </span><span class="type">Array&lt;Keyframes&gt;</span>
+					<p class="description">
+						An array of keyframes to use.
+					</p>
+				
+				<li>
+					<h3 class="argument">options</h3>
+					<span class="syntax">= </span><span class="type">Number|Object&lt;KeyframeEffectOptions&gt;</span>
+					<p class="description">
+						Either a number specifying duration in milliseconds OR an object with properties specifying timing and behaviour of the effect.
+					</p>
+				
+			</ol>
+
+		</section>
+	</article>
+	
+	<article class="view no-layout">
+		
+	</article>

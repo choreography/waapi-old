@@ -1,0 +1,204 @@
+{
+	"spec": "https://w3c.github.io/web-animations/",
+	
+	"effects": ["KeyframeEffect", "GroupEffect", "SequenceEffect"],
+	
+	"extensions": {
+		"Document": {
+			"timeline": {
+				"description": "Represents the default document timeline"
+			}
+		},
+		"Element": {
+			"animate": {
+				"type": "method",
+				"signature": {
+					"frames": {
+						"type": "Array<Keyframes>",
+						"description": "An array of keyframes to use."
+					},
+					"options": {
+						"type": "Number|Object<KeyframeEffectOptions>",
+						"description": "Either a number specifying duration in milliseconds OR an object with properties specifying timing and behaviour of the effect."
+					}
+				},
+				"description": "Easy shortcut for animating an element, e.g. `elem.animate({ color: 'green' }, 600);`"
+			},
+			"getAnimations": {
+				"type": "method",
+				"signature": "Element.getAnimations()",
+				"description": "Returns an array of Animation objects whose effect(s) target element is this object"
+			}
+		}
+	},
+	
+	"api": [
+		{
+			"name": "Animation",
+			"type": "interface",
+			"constructor": {
+				"effect": {
+					"type": "AnimationEffect",
+					"nullable": true
+				},
+				"timeline": {
+					"type": "AnimationTimeline",
+
+				}
+			},
+			"attributes": {
+				"id": {
+					"type": "String",
+					"description": "Used to identify the animation"
+				},
+				"effect": {
+					"type": "AnimationEffect",
+					"nullable": true,
+					"description": "Effect associated with animation"
+				},
+				"timeline": {
+					"type": "AnimationTimeline",
+					"nullable": true,
+					"description": "Timeline associated with animation"
+				},
+				"startTime": {
+					"type": "Number",
+					"nullable": true,
+					"description": "Returns start time of animation"
+				},
+				"currentTime": {
+					"type": "Number",
+					"nullable": true,
+					"description": "Current time of animation, unless has a pending pause whereby it returns null."
+				},
+				"playbackRate": {
+					"type": "Number",
+					"description": "Playback rate of animation"
+				},
+				"playState": {
+					"type": "AnimationPlayState",
+					"readonly": true
+				},
+				"ready": {
+					"type": "Promise<Animation>",
+					"readonly": true
+				},
+				"finished": {
+					"type": "Promise<Animation>",
+					"readonly": true
+				},
+				"onfinish": {
+					"type": "EventHandler"
+				},
+				"oncancel": {
+					"type": "EventHandler"
+				}
+			},
+			"methods": {
+				"cancel": {
+					"description": "Clears all effects caused by animation and aborts playback"
+				},
+				"finish": {
+					"description": "Seeks to the end of the animation via the current direction"
+				},
+				"play": {
+					"description": "Unpauses and also rewinds to start if it had finished"
+				},
+				"pause": {
+					"description": "Suspends playback of animation"
+				},
+				"reverse": {
+					"description": "Inverts playback rate of animation. Similar to `.play()` will unpause and seek to start in the reversed direction"
+				},
+			}
+		},
+		{
+			"name": "KeyframeEffect",
+			"description": "KeyframeEffects update CSS properties of a target element over time.<br><br>Keyframe effects are an effect in Animations and update CSS properties of a target element across the DocumentTimeline",
+			"type": "interface",
+			"constructor": {
+				"target": {
+					"type": "Element",
+					"nullable": true,
+					"description": "The target element being animated. Can be null for animations that don't target a specific element, for example an animation that makes sound using the audio API."
+				},
+				"frames": {
+					"type": "Array<Keyframes>",
+					"description": "An array of keyframes to use."
+				},
+				"options": {
+					"type": "Number|Object<KeyframeEffectOptions>",
+					"description": "Either a number specifying duration in milliseconds OR an object with properties specifying timing and behaviour of the effect."
+				}
+			}
+		},
+		{
+			"name": "KeyframeEffectOptions",
+			"type": "dictionary",
+			"attributes": {
+				"delay": {
+					"type": "Number",
+					"default": 0,
+					"description": "Number of milliseconds before the animation starts"
+				},
+				"endDelay": {
+					"type": "Number",
+					"default": 0,
+					"description": "Number of milliseconds from the end of the animations active interval"
+				},
+				"fill": {
+					"type": "String<FillMode>",
+					"default": "auto",
+					"description": "The behaviour of the effect of the animation outside of its' active duration."
+				},
+				"iterationStart": {
+					"type": "Number",
+					"default": 0,
+					"description": "How far into the iteration to start at, can be fractional. For example 0.5 would indicate to start half way into the first iteration."
+				},
+				"iterations": {
+					"type": "Number",
+					"default": 1,
+					"description": "How many times the animation effect should repeat itself. Positive infinity to set it to repeat forever."
+				},
+				"duration": {
+					"type": "Number|String",
+					"default": "auto",
+					"description": "How long the animation takes in milliseconds. \"auto\" to allow it to expand to include duration of child effects."
+				},
+				"direction": {
+					"type": "String<PlaybackDirection>",
+					"direction": "normal",
+					"description": "Which direction the animation should playback at: forwards, backwards, or alternate on each iteration."
+				},
+				"easing": {
+					"type": "String",
+					"default": "linear",
+					"description": "Scale the time to produce easing effects."
+				},
+				"iterationComposite": {
+					"type": "String",
+					"default": "replace",
+					"description": "Defines how animation values should build from iteration to iteration"
+				},
+				"composite": {
+					"type": "String",
+					"default": "replace",
+					"description": "How this animation should composite with the effect stack (sets the default for all keyframes that don't speciy their own individual keyframe-specific composite operations)"
+				},
+				"spacing": {
+					"type": "String",
+					"default": "distribute",
+					"values": {
+						"distribute": {
+							"description": "Distribute keyframes so that they are spaced evenly"
+						},
+						"paced": {
+							"description": "Set the pacing of the keyframes by a property. For example `paced(transform)` would space keyframes so that changes to the transform property occurs at a constant rate"
+						}
+					}
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,32 @@
+{
+	"name": "waapi-docs",
+	"version": "1.0.0",
+	"license": "MIT",
+	"description": "Documentation of the Web Animations API",
+	"homepage": "https://github.com/choreography/waapi",
+	"keywords": ["waapi", "web", "animations", "api"],
+	"author": {
+		"name": "Martin Pitt",
+		"email": "martin.r.pitt@gmail.com",
+		"url": "http://martinpitt.co.uk/"
+	},
+	
+	"scripts": {
+		"start": "node --harmony .koa.js",
+		"serve": "if hash iojs 2>/dev/null; then iojs .koa.js; else node --harmony .koa.js; fi;"
+	},
+
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/choreography/waapi.git"
+	},
+	
+	"bugs": {
+		"url": "https://github.com/choreography/waapi/issues"
+	},
+
+	"dependencies": {
+		"koa": "^0.21.0",
+		"koa-static": "^1.4.9"
+	}
+}
