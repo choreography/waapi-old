@@ -1,29 +1,146 @@
+h1, h2, h3, h4 { margin: 0 }
+
+
 body {
 	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png);
 }
 
 
-header.glorious {
-	margin: 10px 40px;
+
+
+/*
+	Search Header
+*/
+
+header.search {
+	background: hsl(0, 0%, 98%);
+	border-bottom: 1px solid hsl(0, 0%, 70%);
+	margin-bottom: 10px;
+}
+
+header.search h1 {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+form.search {
+	display: inline-block;
+	border-radius: 4px;
+	background: white;
+	margin: 2px;
+	vertical-align: middle;
+	font-size: 0;
+}
+
+input.search {
+	display: inline-block;
+	width: 200px;
+	padding: 0 41px;
+	border: none;
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 2px hsla(30, 0%, 50%, 0.3);
+	margin: 0 -36px;
+	outline: none;
+	background: none;
+	font: 18px/36px Lato, sans-serif;
+}
+
+input.search:focus {
+	box-shadow: inset 0 0 0 2px hsla(30, 100%, 50%, 0.8);
+}
+
+span.icon-search {
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	background: url(assets/icon-search.svg) center no-repeat;
+	background-size: auto 20px;
+	vertical-align: middle;
+}
+
+button.clear {
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	background: url(assets/icon-close.svg) center no-repeat;
+	background-size: auto 20px;
+	vertical-align: middle;
+}
+
+
+
+/*
+	Code Blocks & Highlighting
+*/
+
+code {
+	display: inline-block;
+	padding: 8px 10px;
+	border-radius: 4px;
+	margin: 0 10px 10px;
+	box-shadow: 0 4px 10px 2px hsl(0, 0%, 95%), 0 4px 0 2px hsl(0, 0%, 80%);
+	font: 16px/1 Inconsolata;
+	vertical-align: top;
+}
+
+code h2 { display: inline }
+
+.keyword { color: hsl(0, 66%, 47%) }
+.syntax, .operator { color: hsl(0, 0%, 0%);}
+.entity { color: hsl(262, 52%, 47%) }
+.string { color: hsl(0, 60%, 40%) }
+.numeric { color: hsl(220, 100%, 40%) }
+
+
+.variable { color: hsl(123, 46%, 40%) }
+.type { color: hsl(15, 25%, 34%) }
+.parameter { color: hsl(123, 46%, 40%) }
+
+.tab {
+	display: inline-block;
+	width: 1.75em;
+	height: 4px;
+	border-radius: 6px;
+	margin: 0 .25em;
+	background: hsla(0, 0%, 50%, 0.1);
+	vertical-align: middle;
+	white-space: pre;
 }
 
 
 
 
 
-section.index {
+/*
+	Paper Sections
+*/
+
+
+section.paper {
 	max-width: 960px;
-	padding: 20px 0;
 	background: hsl(0, 0%, 100%);
-	border: 1px solid hsl(215, 0%, 70%);
+	border: 1px solid hsl(0, 0%, 70%);
 	border-radius: 4px;
-	margin: 10px auto;
-	font-size: 0;
+	margin: 30px auto;
+}
+@media only screen and (max-width: 964px) { section.paper { margin: 10px 4px } }
+
+
+
+
+
+/*
+	Index Section
+*/
+
+section.index {
+/* 	font-size: 0; */
 /* 	white-space: nowrap; */
 }
 
-@media only screen and (max-width: 1000px) { section.index { margin: 10px 20px } }
-
+section.index h2 {
+	margin: 14px 10px 8px;
+}
 
 a.row {
 	display: inline-block;
@@ -50,48 +167,63 @@ a.row:active { opacity: .5 }
 
 
 
+/*
+	Quickstart Section
+*/
+
+section.quickstart {
+	padding: 10px 0;
+}
+
+section.quickstart code {
+	display: block;
+}
 
 
 
+
+/*
+	API Section
+*/
 
 section.api {
-	max-width: 960px;
 	padding: 20px 0;
-	background: hsl(0, 0%, 100%);
-	border: 1px solid hsl(215, 0%, 70%);
-	border-radius: 4px;
-	margin: 30px auto;
 }
 
-@media only screen and (max-width: 1000px) { section.api { margin: 30px 20px } }
+section.api > p.description { margin: 8px 20px 0 }
 
+@font-face { font-family: Inconsolata; src: url('/assets/Inconsolata-Regular.ttf'); }
+@font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/Inconsolata-Bold.ttf'); }
 
-code {
-	display: inline-block;
-	padding: 8px 10px;
-	border-radius: 4px;
-	margin: 0 20px 10px;
-	box-shadow: 0 4px 10px 2px hsl(0, 0%, 95%), 0 4px 0 2px hsl(0, 0%, 80%);
-	font: 20px/1 Lato, sans-serif;
-}
-
+code {  white-space: pre;}
+code.topdog { font-size: 24px }
 code .syntax { margin: 0 .1em }
-h2, h3 { display: inline; margin: 0; font: inherit; }
+section.api h2, h3 { display: inline; margin: 0; font: inherit; }
 
-.keyword { color: hsl(0, 66%, 47%) }
-.syntax { color: hsl(0, 0%, 80%) }
-.function { color: hsl(262, 52%, 47%) }
-.variable { color: hsl(123, 46%, 40%) }
-.type { color: hsl(15, 25%, 34%) }
-.argument { color: hsl(123, 46%, 40%) }
 
-ol.arguments { margin: 40px 0 }
-ol.arguments .syntax { margin-left: 8px }
-ol.arguments .syntax,
-ol.arguments .type { font-size: 14px }
+ol.parameters { margin: 40px 0 0 -40px }
+ol.parameters .syntax { margin-left: 8px }
+ol.parameters .syntax,
+ol.parameters .type { font-size: 14px }
 
-ol.arguments li { margin-bottom: 30px }
-p.description { margin: 8px 40px 0 }
+h3.parameter {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 140px;
+	text-align: right;
+}
+
+ol.parameters p.description {
+
+}
+
+ol.parameters li {
+	position: relative;
+	padding: 0 20px 0 150px;
+	margin-bottom: 30px;
+}
+
 
 
 

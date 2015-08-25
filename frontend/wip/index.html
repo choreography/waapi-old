@@ -14,16 +14,23 @@
 	<!-- Scripts -->
 	<script src="/shared/js/web-animations-next.js"></script>
 	<script src="/shared/js/choreography.js"></script>
+	<script src="../lib/rainbow-custom.min.js"></script>
 	<script src="../app.js"></script>
 
 
 <body>
 	<!-- Markup -->
 	<article class="view dashboard">
-		<header class="glorious">
+		<header class="search">
+			<form class="search">
+				<span class="icon-search"></span>
+				<input class="search" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Search…">
+				<button class="clear"></button>
+			</form>
 			<h1>Web Animations API</h1>
 		</header>
-		<section class="index">
+<!-- 		<section class="paper index">
+			<h2>Overview</h2>
 			<a class="row" href="?API=Animation"><span>Animation</span></a>
 			<br>
 			<a class="row" href="?API=KeyframeEffect"><span>KeyframeEffect</span></a>
@@ -34,41 +41,67 @@
 			<br>
 			<a class="row" href="?API=Element.animate"><span>element.animate</span></a>
 			<a class="row" href="?API=Element.getAnimations"><span>element.getAnimations</span></a>
-		</section>
+		</section> -->
 		
-		<section class="api">
-			<code>
-				<span class="keyword">new</span> <h2 class="function">KeyframeEffect</h2><span class="syntax">(</span><span class="variable">target</span><span class="syntax">,</span> <span class="variable">frames</span><span class="syntax">,</span> <span class="variable">options</span><span class="syntax">);</span>
+		<section class="paper quickstart">
+			<code class="topdog"><span class="keyword">new</span> <h2 class="function">KeyframeEffect</h2><span class="syntax">(</span><span class="variable">target</span><span class="syntax">,</span> <span class="variable">frames</span><span class="syntax">,</span> <span class="variable">options</span><span class="syntax">);</span></code>
+			<code class="usage" data-language="javascript">var target = document.querySelector('.my-target');
+new KeyframeEffect(target, [
+	{ opacity: 1 },
+	{ options: 0 }
+], {
+	delay: 100,
+	duration: 300,
+	fill: 'both'
+});
 			</code>
-			<p class="description">
-				KeyframeEffects update CSS properties of a target element over time.<br>
-				<br>
-				They sit within an Animation and work with the global clock known as the DocumentTimeline
-			</p>
-			<ol class="arguments">
-				<li>
-					<h3 class="argument">target</h3>
-					<span class="syntax">= </span><span class="type">Element</span>
-					<p class="description">
-						The target element being animated. Can be null for animations that don't target a specific element, for example an animation that makes sound using the audio API.
-					</p>
-				
-				<li>
-					<h3 class="argument">frames</h3>
-					<span class="syntax">= </span><span class="type">Array&lt;Keyframes&gt;</span>
-					<p class="description">
-						An array of keyframes to use.
-					</p>
-				
-				<li>
-					<h3 class="argument">options</h3>
-					<span class="syntax">= </span><span class="type">Number|Object&lt;KeyframeEffectOptions&gt;</span>
-					<p class="description">
-						Either a number specifying duration in milliseconds OR an object with properties specifying timing and behaviour of the effect.
-					</p>
-				
-			</ol>
+		</section>
 
+		<section class="paper api">
+			<p class="description">
+				KeyframeEffect updates CSS properties of a target element over time.<br>
+				<br>
+				They sit within an Animation and work with the global clock known as the DocumentTimeline.
+			</p>
+
+			<ol class="parameters">
+				<li>
+					<h3 class="parameter">target</h3>
+<!-- 					<span class="syntax">= </span><span class="type">Element</span> -->
+					<p class="description">
+						is the Element being animated. Can be null.
+					</p>
+				
+				<li>
+					<h3 class="parameter">frames</h3>
+<!-- 					<span class="syntax">= </span><span class="type">Array of Keyframes</span> -->
+					<p class="description">
+						is an array of Keyframes to use.
+					</p>
+				
+				<li>
+					<h3 class="parameter">options</h3>
+<!-- 					<span class="syntax">= </span><span class="type">Number | KeyframeEffectOptions</span> -->
+					<p class="description">
+						is either a Number specifying duration in milliseconds OR an Object with properties specifying timing and behaviour of the effect.<br>
+						For a list & description of the properties see KeyframeEffectOptions.
+					</p>
+			</ol>
+		</section>
+		<section class="paper examples">
+			<details>
+				<summary>
+					Example #1
+				</summary>
+				<code>
+					<span class="keyword">var</span> <span class="variable">fadeOutEffect</span> <span class="syntax">=</span> <span class="keyword">new</span> <span class="function">KeyframeEffect</span><span class="syntax">(</span><span>document.querySelector</span><span class="syntax">(</span><span class="string">'div.test'</span><span class="syntax">)</span><span class="syntax">,</span> <span class="array">[<br><span class="tab">&#09;</span>{ opacity: 1 },<br><span class="tab">&#09;</span>{ opacity: 0 }<br>]</span><span class="syntax">,</span> <span class="number">500</span><span class="syntax">);</span>
+				</code>
+			</details>
+		</section>
+		<section class="paper notes">
+			<p>
+				The <span class="parameter">target</span> can be null for animations that don't target a specific element, for example an animation that makes sound using the audio API.
+			</p>
 		</section>
 	</article>
 	
