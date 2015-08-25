@@ -80,6 +80,7 @@ code {
 	margin: 0 10px 10px;
 	box-shadow: 0 4px 10px 2px hsl(0, 0%, 95%), 0 4px 0 2px hsl(0, 0%, 80%);
 	font: 16px/1 Inconsolata;
+	tab-size: 4;
 	vertical-align: top;
 }
 
@@ -97,17 +98,19 @@ code h2 { display: inline }
 .parameter { color: hsl(123, 46%, 40%) }
 
 .tab {
+	position: relative;
 	display: inline-block;
-	width: 1.75em;
-	height: 4px;
-	border-radius: 6px;
-	margin: 0 .25em;
-	background: hsla(0, 0%, 50%, 0.1);
-	vertical-align: middle;
-	white-space: pre;
 }
 
-
+.tab:before {
+	content: '';
+	position: absolute;
+	bottom: 50%;
+	left: 5%;
+	right: 5%;
+	display: block;
+	border-bottom: 1px solid hsl(0, 0%, 95%);
+}
 
 
 

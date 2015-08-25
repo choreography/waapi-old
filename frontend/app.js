@@ -69,3 +69,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 });
 
 
+
+Rainbow.onHighlight(function(block, language) {
+	block.innerHTML = block.innerHTML.trim().replace(/\t/g, '<span class="tab">&#09;</span>');
+});
