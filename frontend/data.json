@@ -6,35 +6,36 @@
 	"extensions": {
 		"Document": {
 			"timeline": {
-				"description": "Represents the default document timeline"
+				"description": "A timeline is like a clock - it provides a source of time for the purpose of synchronization. It is fixed with an offset from the global clock.<br><br>In the future we might see other timelines introduced, such as a timeline which is related to the progress of a UI gesture."
 			}
 		},
 		"Element": {
 			"animate": {
 				"type": "method",
+				"description": "Easy shortcut for animating an element, e.g. `elem.animate({ color: 'green' }, 600);`",
 				"signature": {
 					"frames": {
 						"type": "Array<Keyframes>",
 						"description": "An array of keyframes to use."
 					},
 					"options": {
-						"type": "Number|Object<KeyframeEffectOptions>",
-						"description": "Either a number specifying duration in milliseconds OR an object with properties specifying timing and behaviour of the effect."
+						"type": "<high-light group=\"animate.num\">Number</high-light> or <high-light group=\"animate.opts\">KeyframeEffectOptions</high-light>",
+						"description": "Either <high-light group=\"animate.num\">a number specifying duration in milliseconds</high-light> OR <high-light group=\"animate.opts\">an object with properties specifying timing and behaviour of the effect</high-light>."
 					}
-				},
-				"description": "Easy shortcut for animating an element, e.g. `elem.animate({ color: 'green' }, 600);`"
+				}
 			},
 			"getAnimations": {
 				"type": "method",
-				"signature": "Element.getAnimations()",
-				"description": "Returns an array of Animation objects whose effect(s) target element is this object"
+				"description": "Returns an array of Animation objects whose effect(s) target element is this object",
+				"signature": "Element.getAnimations()"
 			}
 		}
 	},
 	
-	"api": [
+	"interfaces": [
 		{
 			"name": "Animation",
+			"description": "Animation is like the video player of web animations, it gives you the ability to play, pause, seek, reverse or modify the playback rate. Usually attached to a clock which is the `document.timeline`.",
 			"type": "interface",
 			"constructor": {
 				"effect": {
@@ -43,7 +44,7 @@
 				},
 				"timeline": {
 					"type": "AnimationTimeline",
-
+					"nullable": true
 				}
 			},
 			"attributes": {
@@ -109,12 +110,12 @@
 				},
 				"reverse": {
 					"description": "Inverts playback rate of animation. Similar to `.play()` will unpause and seek to start in the reversed direction"
-				},
+				}
 			}
 		},
 		{
 			"name": "KeyframeEffect",
-			"description": "KeyframeEffects update CSS properties of a target element over time.<br><br>Keyframe effects are an effect in Animations and update CSS properties of a target element across the DocumentTimeline",
+			"description": "KeyframeEffect updates CSS properties of a target element over time.<br><br>They sit within an Animation and work with the global clock known as the DocumentTimeline.",
 			"type": "interface",
 			"constructor": {
 				"target": {
@@ -123,12 +124,12 @@
 					"description": "The target element being animated. Can be null for animations that don't target a specific element, for example an animation that makes sound using the audio API."
 				},
 				"frames": {
-					"type": "Array<Keyframes>",
+					"type": "[Keyframes, …]",
 					"description": "An array of keyframes to use."
 				},
 				"options": {
-					"type": "Number|Object<KeyframeEffectOptions>",
-					"description": "Either a number specifying duration in milliseconds OR an object with properties specifying timing and behaviour of the effect."
+					"type": "<high-light group=\"opt.number\">Number</high-light> or <high-light group=\"opt.keyeffopt\">KeyframeEffectOptions</high-light>",
+					"description": "Either <high-light group=\"opt.number\">a number specifying duration in milliseconds</high-light> OR <high-light group=\"opt.keyeffopt\">an object with properties specifying timing and behaviour of the effect</high-light>.<br><br>For a list &amp; description of the properties see KeyframeEffectOptions."
 				}
 			}
 		},
@@ -136,10 +137,15 @@
 			"name": "KeyframeEffectOptions",
 			"type": "dictionary",
 			"attributes": {
+				"duration": {
+					"type": "Number|String",
+					"default": "auto",
+					"description": "How long the animation takes in milliseconds. The duration is for a single iteration. \"auto\" to allow it to expand to include duration of child effects."
+				},
 				"delay": {
 					"type": "Number",
 					"default": 0,
-					"description": "Number of milliseconds before the animation starts"
+					"description": "Number of milliseconds before the effect starts"
 				},
 				"endDelay": {
 					"type": "Number",
@@ -159,12 +165,7 @@
 				"iterations": {
 					"type": "Number",
 					"default": 1,
-					"description": "How many times the animation effect should repeat itself. Positive infinity to set it to repeat forever."
-				},
-				"duration": {
-					"type": "Number|String",
-					"default": "auto",
-					"description": "How long the animation takes in milliseconds. \"auto\" to allow it to expand to include duration of child effects."
+					"description": "How many times the animation effect should repeat itself. Fractional iterations are allowed. Positive infinity (Number.POSITIVE_INFINITY) to set it to repeat forever."
 				},
 				"direction": {
 					"type": "String<PlaybackDirection>",
@@ -174,7 +175,7 @@
 				"easing": {
 					"type": "String",
 					"default": "linear",
-					"description": "Scale the time to produce easing effects."
+					"description": "Control over how time impacts the animation."
 				},
 				"iterationComposite": {
 					"type": "String",

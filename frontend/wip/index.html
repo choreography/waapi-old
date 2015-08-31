@@ -43,9 +43,54 @@
 			<a class="row" href="?API=Element.getAnimations"><span>element.getAnimations</span></a>
 		</section> -->
 		
-		<section class="paper quickstart">
-			<code class="topdog"><span class="keyword">new</span> <h2 class="function">KeyframeEffect</h2><span class="syntax">(</span><span class="variable">target</span><span class="syntax">,</span> <span class="variable">frames</span><span class="syntax">,</span> <span class="variable">options</span><span class="syntax">);</span></code>
-			<code class="usage" data-language="javascript">var target = document.querySelector('.my-target');
+		<div class="mirror">
+			<div class="prose">
+				<h2 class="herald">KeyframeEffect</h2>
+				<p class="description">
+					KeyframeEffect updates CSS properties of a target element over time.<br>
+					<br>
+					They sit within an Animation and work with the global clock known as the DocumentTimeline.
+				</p>
+				
+				<ol class="arguments">
+					<li>
+						<h3 class="argument">
+							<span class="nom">target</span><sub class="type">Element</sub>
+						</h3>
+						<p class="description">
+							is the Element being animated.<br>
+							Can be null.
+						</p>
+					
+					<li>
+						<h3 class="argument">
+							<span class="nom">frames</span><sub class="type">[Keyframes, …]</sub>
+						</h3>
+						<p class="description">
+							is an array of Keyframes to use.
+						</p>
+					
+					<li>
+						<h3 class="argument">
+							<span class="nom">options</span><sub class="type"><high-light group="options.number">Number</high-light> or <high-light group="options.keyopt">KeyframeEffectOptions</high-light></sub>
+						</h3>
+						<p class="description">
+							is either <high-light group="options.number">a Number specifying duration in milliseconds</high-light> OR <high-light group="options.keyopt">an Object with properties specifying timing and behaviour of the effect</high-light>.<br>
+							<br>
+							For a list & description of the properties see KeyframeEffectOptions.
+						</p>
+				</ol>
+				
+				
+				<p class="description">
+					The <span class="argument">target</span> can be null for animations that don't target a specific element, for example an animation that makes sound using the audio API.
+				</p>
+			</div>
+			<button class="divider"></button>
+			<div class="code">
+				<code class="block topdog"><span class="keyword">new</span> <h2 class="function">KeyframeEffect</h2><span class="syntax">(</span><span class="argument">target</span><span class="syntax">,</span> <span class="argument">frames</span><span class="syntax">,</span> <span class="argument">options</span><span class="syntax">);</span></code>
+				<code class="block usage" data-language="javascript">
+var target = document.querySelector('.my-target');
 new KeyframeEffect(target, [
 	{ opacity: 1 },
 	{ options: 0 }
@@ -54,53 +99,14 @@ new KeyframeEffect(target, [
 	duration: 300,
 	fill: 'both'
 });
-			</code>
-		</section>
-
-		<section class="paper api">
-			<p class="description">
-				KeyframeEffect updates CSS properties of a target element over time.<br>
-				<br>
-				They sit within an Animation and work with the global clock known as the DocumentTimeline.
-			</p>
-
-			<ol class="parameters">
-				<li>
-					<h3 class="parameter">target</h3>
-<!-- 					<span class="syntax">= </span><span class="type">Element</span> -->
-					<p class="description">
-						is the Element being animated. Can be null.
-					</p>
+				</code>
 				
-				<li>
-					<h3 class="parameter">frames</h3>
-<!-- 					<span class="syntax">= </span><span class="type">Array of Keyframes</span> -->
-					<p class="description">
-						is an array of Keyframes to use.
-					</p>
-				
-				<li>
-					<h3 class="parameter">options</h3>
-<!-- 					<span class="syntax">= </span><span class="type">Number | KeyframeEffectOptions</span> -->
-					<p class="description">
-						is either a Number specifying duration in milliseconds OR an Object with properties specifying timing and behaviour of the effect.<br>
-						For a list & description of the properties see KeyframeEffectOptions.
-					</p>
-			</ol>
-		</section>
-		<section class="paper examples">
-			<details>
-				<summary>
-					Example #1
-				</summary>
-				<code><span class="keyword">var</span> <span class="variable">fadeOutEffect</span> <span class="syntax">=</span> <span class="keyword">new</span> <span class="function">KeyframeEffect</span><span class="syntax">(</span><span>document.querySelector</span><span class="syntax">(</span><span class="string">'div.test'</span><span class="syntax">)</span><span class="syntax">,</span> <span class="array">[<br><span class="tab">&#09;</span>{ opacity: 1 },<br><span class="tab">&#09;</span>{ opacity: 0 }<br>]</span><span class="syntax">,</span> <span class="number">500</span><span class="syntax">);</span></code>
-			</details>
-		</section>
-		<section class="paper notes">
-			<p>
-				The <span class="parameter">target</span> can be null for animations that don't target a specific element, for example an animation that makes sound using the audio API.
-			</p>
-		</section>
+				<details class="code">
+					<summary>Example</summary>
+					<code class="block"><span class="keyword">var</span> <span class="variable">fadeOutEffect</span> <span class="syntax">=</span> <span class="keyword">new</span> <span class="function">KeyframeEffect</span><span class="syntax">(</span><span>document.querySelector</span><span class="syntax">(</span><span class="string">'div.test'</span><span class="syntax">)</span><span class="syntax">,</span> <span class="array">[<br><span class="tab">&#09;</span>{ opacity: 1 },<br><span class="tab">&#09;</span>{ opacity: 0 }<br>]</span><span class="syntax">,</span> <span class="number">500</span><span class="syntax">);</span></code>
+				</details>
+			</div>
+		</div>
 	</article>
 	
 	<article class="view no-layout">

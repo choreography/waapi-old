@@ -1,8 +1,24 @@
 h1, h2, h3, h4 { margin: 0 }
+::selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
+::-moz-selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
 
+high-light { display: inline; }
+high-light.on {
+/* 	outline: 2px solid hsla(30, 100%, 50%, 0.2); */
+	padding: 1px 2px;
+	border-radius: 4px;
+	margin: -1px -2px;
+	background: hsla(30, 100%, 50%, 0.2);
+	color: black;
+}
+high-light:hover {
+	background: initial;
+	color: initial;
+}
 
 body {
 	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png);
+	font-size: 0;
 }
 
 
@@ -15,12 +31,13 @@ body {
 header.search {
 	background: hsl(0, 0%, 98%);
 	border-bottom: 1px solid hsl(0, 0%, 70%);
-	margin-bottom: 10px;
 }
 
 header.search h1 {
 	display: inline-block;
 	vertical-align: middle;
+	margin-left: 5px;
+	font-size: 22px;
 }
 
 form.search {
@@ -69,33 +86,35 @@ button.clear {
 
 
 
+
+
+
 /*
 	Code Blocks & Highlighting
 */
 
-code {
-	display: inline-block;
-	padding: 8px 10px;
-	border-radius: 4px;
-	margin: 0 10px 10px;
-	box-shadow: 0 4px 10px 2px hsl(0, 0%, 95%), 0 4px 0 2px hsl(0, 0%, 80%);
-	font: 16px/1 Inconsolata;
+code.block {
+	display: block;
+	overflow: scroll;
+	padding: 10px 20px;
+	margin: 20px 0px;
+	background: hsl(215, 10%, 15%);
+	font: 16px/1.2 Inconsolata;
+	-moz-tab-size: 4;
 	tab-size: 4;
 	vertical-align: top;
 }
 
-code h2 { display: inline }
+code.block h2 { display: inline }
 
-.keyword { color: hsl(0, 66%, 47%) }
-.syntax, .operator { color: hsl(0, 0%, 0%);}
-.entity { color: hsl(262, 52%, 47%) }
-.string { color: hsl(0, 60%, 40%) }
-.numeric { color: hsl(220, 100%, 40%) }
+.keyword { color: hsl(0, 70%, 50%) }
+.syntax, .operator { color: hsl(0, 0%, 80%);}
+.entity { color: hsl(260, 30%, 60%) }
+.string { color: hsl(0, 40%, 60%) }
+.numeric { color: hsl(215, 50%, 60%) }
 
-
-.variable { color: hsl(123, 46%, 40%) }
 .type { color: hsl(15, 25%, 34%) }
-.parameter { color: hsl(123, 46%, 40%) }
+.argument { color: hsl(120, 20%, 50%) }
 
 .tab {
 	position: relative;
@@ -105,28 +124,115 @@ code h2 { display: inline }
 .tab:before {
 	content: '';
 	position: absolute;
-	bottom: 50%;
-	left: 5%;
-	right: 5%;
+	top: 50%;
+	left: .1em;
+	right: .2em;
 	display: block;
-	border-bottom: 1px solid hsl(0, 0%, 95%);
+	height: 0;
+	border-radius: 4px;
+	border-bottom: 2px solid hsla(0, 0%, 100%, 0.05);
 }
 
 
 
 /*
-	Paper Sections
+	Expandable Code
 */
 
-
-section.paper {
-	max-width: 960px;
-	background: hsl(0, 0%, 100%);
-	border: 1px solid hsl(0, 0%, 70%);
-	border-radius: 4px;
-	margin: 30px auto;
+details.code {
+	padding: 0 0 6px;
 }
-@media only screen and (max-width: 964px) { section.paper { margin: 10px 4px } }
+details.code summary {
+	padding: 6px 0 0;
+	border-bottom: 2px solid transparent;
+	margin: 0 20px;
+	outline: 0;
+	cursor: s-resize;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+details.code summary:focus {
+	border-bottom: 2px solid hsla(30, 100%, 50%, 0.8);
+}
+
+details.code[open] summary {
+	cursor: n-resize;
+}
+
+
+
+/*
+	Code/Prose columns
+*/
+
+div.mirror {
+	position: relative;
+}
+
+/* @media only screen and (max-width: 800px) { div.mirror { margin: 0 } }
+@media only screen and (min-width: 1100px) { div.mirror { margin: 0 40px } } */
+
+
+div.prose,
+div.code {
+	display: inline-block;
+	width: 50%;
+	vertical-align: top;
+	font-size: 20px;
+}
+
+div.prose { background: hsl(0, 0%, 100%); color: hsl(215, 10%, 33%); }
+div.code { background: hsl(215, 10%, 20%); color: hsl(215, 10%, 83%); }
+
+button.divider {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	bottom: 0;
+	width: 8px;
+	margin-left: -4px;
+	cursor: col-resize;
+	background: none;
+}
+
+button.divider:hover,
+button.divider:active {
+	background: hsl(0, 0%, 50%);
+}
+
+
+
+
+
+/*
+	Prose
+*/
+
+div.prose {
+	padding: 20px 0;
+}
+
+h2.herald {
+	margin: 0 20px;
+	font-size: 24px;
+}
+
+p.description {
+	margin: 10px 20px 30px;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -170,17 +276,10 @@ a.row:active { opacity: .5 }
 
 
 
-/*
-	Quickstart Section
-*/
 
-section.quickstart {
-	padding: 10px 0;
-}
 
-section.quickstart code {
-	display: block;
-}
+
+
 
 
 
@@ -193,39 +292,37 @@ section.api {
 	padding: 20px 0;
 }
 
-section.api > p.description { margin: 8px 20px 0 }
+section.api > p.description { margin: 8px 10px 0 }
 
 @font-face { font-family: Inconsolata; src: url('/assets/Inconsolata-Regular.ttf'); }
 @font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/Inconsolata-Bold.ttf'); }
 
-code {  white-space: pre;}
-code.topdog { font-size: 24px }
+code { white-space: pre}
 code .syntax { margin: 0 .1em }
 section.api h2, h3 { display: inline; margin: 0; font: inherit; }
 
 
-ol.parameters { margin: 40px 0 0 -40px }
-ol.parameters .syntax { margin-left: 8px }
-ol.parameters .syntax,
-ol.parameters .type { font-size: 14px }
 
-h3.parameter {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 140px;
-	text-align: right;
+
+
+ol.arguments {
+	padding: 0;
 }
 
-ol.parameters p.description {
-
-}
-
-ol.parameters li {
+ol.arguments li {
 	position: relative;
-	padding: 0 20px 0 150px;
+	padding: 0 20px;
 	margin-bottom: 30px;
 }
+
+ol.arguments li:before {
+	content: '•';
+	font-size: 16px;
+}
+
+ol.arguments .syntax  { font-size: 15px}
+ol.arguments .type { margin-left: .4em }
+
 
 
 

@@ -73,3 +73,100 @@ document.addEventListener('DOMContentLoaded', function(event) {
 Rainbow.onHighlight(function(block, language) {
 	block.innerHTML = block.innerHTML.trim().replace(/\t/g, '<span class="tab">&#09;</span>');
 });
+
+
+
+
+
+var MirrorResizer = {
+	init: function() {
+		this.mirror = document.querySelector('div.mirror');
+		this.divider = document.querySelector('div.mirror > button.divider');
+		this.prose = document.querySelector('div.mirror > div.prose');
+		this.code = document.querySelector('div.mirror > div.code');
+		
+		this.divider.addEventListener('mousedown', this);
+	},
+	
+	handleEvent: function(event) { this[event.type](event); },
+	mousedown: function(event) {
+		event.preventDefault();
+		this.mirrorBox = this.mirror.getBoundingClientRect();
+		document.addEventListener('mousemove', this);
+		document.addEventListener('mouseup', this);
+	},
+	mousemove: function(event) {
+		var percent = (event.screenX - this.mirrorBox.left) / this.mirrorBox.width;
+		percent *= 100.0;
+		percent = percent.toFixed(2);
+		this.divider.style.left = percent + '%';
+		this.prose.style.width = percent + '%';
+		this.code.style.width = (100 - percent) + '%';
+	},
+	mouseup: function(event) {
+		event.preventDefault();
+		document.removeEventListener('mousemove', this);
+		document.removeEventListener('mouseup', this);
+	}
+};
+
+document.addEventListener('DOMContentLoaded', function(event) {
+	MirrorResizer.init();
+});
+
+
+
+
+
+
+
+var HighLighter = {
+	init: function() {
+		document.addEventListener('mouseover', this);
+	},
+	
+	handleEvent: function(event) { this[event.type](event); },
+	mouseover: function(event) {
+		if(!event.target.matches('high-light')) return;
+		var group = event.target.getAttribute('group');
+		if(!group) return;
+		
+		var elements = document.querySelectorAll('high-light[group="' + group + '"]');
+		var iter = elements.length;
+		while(iter-->0) elements[iter].classList.add('on');
+		
+		event.target.addEventListener('mouseleave', this);
+	},
+
+	mouseleave: function(event) {
+		var group = event.target.getAttribute('group');
+		if(!group) return;
+		var elements = document.querySelectorAll('high-light[group="' + group + '"]');
+		var iter = elements.length;
+		while(iter-->0) elements[iter].classList.remove('on');
+		
+		event.target.removeEventListener('mouseleave', this);
+	}
+}
+
+document.addEventListener('DOMContentLoaded', function(event) {
+	HighLighter.init();
+});
+
+
+
+
+
+
+
+fetch('/data.json')
+.then(function(response) {
+	return response.json();
+})
+.then(function(json) {
+	window.WAAPI = json;
+	
+	
+});
+
+
