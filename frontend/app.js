@@ -1,3 +1,33 @@
+/*
+	
+	
+	TODO:
+	
+	Copy idea of the well-structured worksheets app
+	• <base href="/">
+	• Server redirect non-file requests to /index.html
+	• Client-side Routing
+	• …?
+	
+	Need to fix syntax highlighting to cooperate with <high-light> module
+	
+		• Manually go through text nodes
+		• Parse text nodes with rainbow.js
+		- `Rainbow.color(text, 'javascript', function(code) { textnode replace with code });`
+	OR
+		• Replace with <high-light> with tokens OR different way of marking code
+	
+	
+	
+	
+	
+	
+	
+	
+*/
+
+
+
 
 Choreo.Settings.noLayout = 'class'; // class-based hiding of views
 
@@ -78,7 +108,7 @@ Rainbow.onHighlight(function(block, language) {
 
 
 
-var MirrorResizer = {
+/*var MirrorResizer = {
 	init: function() {
 		this.mirror = document.querySelector('div.mirror');
 		this.divider = document.querySelector('div.mirror > button.divider');
@@ -112,7 +142,7 @@ var MirrorResizer = {
 
 document.addEventListener('DOMContentLoaded', function(event) {
 	MirrorResizer.init();
-});
+});*/
 
 
 
@@ -166,7 +196,7 @@ fetch('/data.json')
 .then(function(json) {
 	window.WAAPI = json;
 	
-	
+
 });
 
 

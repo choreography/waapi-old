@@ -2,22 +2,18 @@ h1, h2, h3, h4 { margin: 0 }
 ::selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
 ::-moz-selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
 
-high-light { display: inline; }
+high-light { display: inline }
 high-light.on {
-/* 	outline: 2px solid hsla(30, 100%, 50%, 0.2); */
 	padding: 1px 2px;
 	border-radius: 4px;
 	margin: -1px -2px;
 	background: hsla(30, 100%, 50%, 0.2);
-	color: black;
-}
-high-light:hover {
-	background: initial;
-	color: initial;
 }
 
+div.prose high-light.on { color: black }
+div.code high-light.on { color: white }
+
 body {
-	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png);
 	font-size: 0;
 }
 
@@ -170,6 +166,7 @@ details.code[open] summary {
 
 div.mirror {
 	position: relative;
+	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png);
 }
 
 /* @media only screen and (max-width: 800px) { div.mirror { margin: 0 } }
@@ -207,6 +204,27 @@ button.divider:active {
 
 @media only screen and (max-width: 1000px) {
 	div.mirror {
+		overflow: scroll;
+		white-space: nowrap;
+	}
+	
+	div.prose,
+	div.code {
+		width: 500px !important;
+		white-space: normal;
+	}
+	
+	h2.herald, h3.signal {
+		width: 1000px;
+	}
+
+	button.divider {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	div.mirror {
 		width: 100%;
 		overflow: scroll;
 		white-space: nowrap;
@@ -232,95 +250,27 @@ button.divider:active {
 */
 
 div.prose {
-	padding: 20px 0;
+	padding: 0;
 }
 
 h2.herald {
-	margin: 0 20px;
+	padding: 40px 20px 10px;
+	background: hsl(215, 50%, 60%);
+	color: white;
 	font-size: 24px;
+}
+
+h3.signal {
+	display: block;
+	padding: 30px 20px 10px;
+	background: hsl(215, 50%, 60%);
+	color: white;
+	font-size: 22px;
 }
 
 p.description {
 	margin: 10px 20px 30px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-	Index Section
-*/
-
-section.index {
-/* 	font-size: 0; */
-/* 	white-space: nowrap; */
-}
-
-section.index h2 {
-	margin: 14px 10px 8px;
-}
-
-a.row {
-	display: inline-block;
-	padding: 2px;
-	color: hsl(215, 100%, 60%);
-	font: 20px/1.1 Lato, sans-serif;
-	cursor: pointer;
-}
-
-a.row span {
-	display: inline-block;
-	padding: 2px 8px;
-	margin: 0 4px
-}
-
-a.row:hover span {
-	background: hsl(215, 100%, 60%);
-	border-radius: 6px;
-	color: white;
-}
-
-a.row:active { opacity: .5 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-	API Section
-*/
-
-section.api {
-	padding: 20px 0;
-}
-
-section.api > p.description { margin: 8px 10px 0 }
-
-@font-face { font-family: Inconsolata; src: url('/assets/Inconsolata-Regular.ttf'); }
-@font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/Inconsolata-Bold.ttf'); }
-
-code { white-space: pre}
-code .syntax { margin: 0 .1em }
-section.api h2, h3 { display: inline; margin: 0; font: inherit; }
-
 
 
 
@@ -331,17 +281,58 @@ ol.arguments {
 
 ol.arguments li {
 	position: relative;
-	padding: 0 20px;
-	margin-bottom: 30px;
+	padding: 0px 20px 0px 35px;
 }
 
-ol.arguments li:before {
+ol.arguments li + li {
+	margin-top: 20px;
+}
+
+ol.arguments li h4 {
+	display: inline;
+}
+
+ol.arguments li h4:before {
+	position: absolute;
+	top: 0;
+	left: 20px;
 	content: '•';
-	font-size: 16px;
 }
 
-ol.arguments .syntax  { font-size: 15px}
-ol.arguments .type { margin-left: .4em }
+
+
+ol.arguments .syntax {
+	font-size: 15px
+}
+
+ol.arguments .type {
+	margin-left: .8em;
+	font-size: 13px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+	Code
+*/
+
+@font-face { font-family: Inconsolata; src: url('/assets/Inconsolata-Regular.ttf'); }
+@font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/Inconsolata-Bold.ttf'); }
+
+code { white-space: pre}
+code .syntax { margin: 0 .1em }
+
+
 
 
 
