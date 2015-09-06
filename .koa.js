@@ -34,14 +34,14 @@ var serve = require('koa-static');
 
 
 /// Redirect non-file-ish queries to index
-/*server.use(function* (next) {
+server.use(function* (next) {
 	if(this.request.path.length && /^(\/[\-_a-z0-9]+)+\/?$/i.test(this.request.path))
 	{
 		this.request.path = '/';
 	}
 	
 	yield next;
-});*/
+});
 
 
 

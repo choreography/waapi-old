@@ -3,15 +3,31 @@ h1, h2, h3, h4 { margin: 0 }
 ::-moz-selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
 
 high-light { display: inline }
-high-light.on {
+/*high-light.on {
 	padding: 1px 2px;
 	border-radius: 4px;
 	margin: -1px -2px;
 	background: hsla(30, 100%, 50%, 0.2);
+}*/
+
+div.prose high-light.on {
+	padding: 1px 2px;
+	border-radius: 4px;
+	margin: -1px -2px;
+	color: black;
+	background: hsla(30, 100%, 50%, 0.2);
 }
 
-div.prose high-light.on { color: black }
-div.code high-light.on { color: white }
+div.code high-light.on {
+	padding: 1px 0;
+	margin: -1px -0;
+	background: hsla(30, 100%, 50%, 0.2);
+/* 	outline: 1px auto hsla(30, 100%, 50%, 0.2);
+	outline-offset: 4px;
+	z-index: 2;
+	position: relative; */
+}
+
 
 body {
 	font-size: 0;
@@ -90,21 +106,41 @@ button.clear {
 */
 
 code.block {
+	position: relative;
 	display: block;
-	overflow: scroll;
 	padding: 10px 20px;
-	margin: 20px 0px;
+	margin: 5px 0px;
 	background: hsl(215, 10%, 15%);
+	color: hsl(215, 10%, 95%);
 	font: 16px/1.2 Inconsolata;
 	-moz-tab-size: 4;
 	tab-size: 4;
 	vertical-align: top;
 }
 
+/* code.block + code.block {
+	margin-top: 25px;
+}
+code.block + code.block:before {
+	position: absolute;
+	top: -20px;
+	left: 5px;
+	right: 5px;
+	content: '';
+	display: block;
+	height: 15px;
+	padding-left: 20px;
+	border-radius: 20px;
+	background: hsl(215, 10%, 18%);
+	color: hsl(215, 10%, 50%);
+	font: 16px/10px Inconsolata;
+} */
+
 code.block h2 { display: inline }
 
+.comment { color: hsl(120, 10%, 40%) }
 .keyword { color: hsl(0, 70%, 50%) }
-.syntax, .operator { color: hsl(0, 0%, 80%);}
+.syntax, .operator { color: hsl(0, 0%, 70%) }
 .entity { color: hsl(260, 30%, 60%) }
 .string { color: hsl(0, 40%, 60%) }
 .numeric { color: hsl(215, 50%, 60%) }
@@ -114,20 +150,40 @@ code.block h2 { display: inline }
 
 .tab {
 	position: relative;
-	display: inline-block;
+	display: inline;
 }
 
 .tab:before {
 	content: '';
 	position: absolute;
 	top: 50%;
-	left: .1em;
-	right: .2em;
+	left: 1px;
+	right: 1px;
 	display: block;
 	height: 0;
 	border-radius: 4px;
 	border-bottom: 2px solid hsla(0, 0%, 100%, 0.05);
 }
+
+.space {
+	position: relative;
+	font-size: 0;
+}
+
+.space:before {
+	content: '·';
+	color: hsla(0, 0%, 100%, 0.08);
+	font-size: 16px;
+}
+
+.newline:before {
+/* 	margin-left: .1em;
+	content: '\21B5';
+	color: hsla(0, 100%, 80%, 0.09); */
+}
+
+
+
 
 
 
@@ -165,6 +221,9 @@ details.code[open] summary {
 */
 
 div.mirror {
+/* 	display: -webkit-flex; */
+/* 	display: flex; */
+	
 	position: relative;
 	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png);
 }
@@ -175,7 +234,11 @@ div.mirror {
 
 div.prose,
 div.code {
+/* 	-webkit-flex: 1 50%; */
+/* 	flex: 1 50%; */
+	
 	display: inline-block;
+	overflow: hidden;
 	width: 50%;
 	vertical-align: top;
 	font-size: 20px;
@@ -202,9 +265,21 @@ button.divider:active {
 }
 
 
-@media only screen and (max-width: 1000px) {
-	div.mirror {
+
+@media only screen and (max-width: 800px) {
+	div.prose,
+	div.code {
+		display: block;
+		width: 100%;
+	}
+}
+
+/*@media only screen and (max-width: 1000px) {
+	article.interface {
 		overflow: scroll;
+	}
+	
+	div.mirror {
 		white-space: nowrap;
 	}
 	
@@ -226,7 +301,6 @@ button.divider:active {
 @media only screen and (max-width: 500px) {
 	div.mirror {
 		width: 100%;
-		overflow: scroll;
 		white-space: nowrap;
 	}
 
@@ -239,7 +313,7 @@ button.divider:active {
 	button.divider {
 		display: none;
 	}
-}
+}*/
 
 
 
@@ -262,7 +336,8 @@ h2.herald {
 
 h3.signal {
 	display: block;
-	padding: 30px 20px 10px;
+	padding: 20px 20px 10px;
+	margin-top: 40px;
 	background: hsl(215, 50%, 60%);
 	color: white;
 	font-size: 22px;
@@ -330,7 +405,6 @@ ol.arguments .type {
 @font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/Inconsolata-Bold.ttf'); }
 
 code { white-space: pre}
-code .syntax { margin: 0 .1em }
 
 
 
