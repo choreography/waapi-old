@@ -2,13 +2,29 @@ h1, h2, h3, h4 { margin: 0 }
 ::selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
 ::-moz-selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
 
-high-light { display: inline }
+high-light { display: inline;}
 /*high-light.on {
 	padding: 1px 2px;
 	border-radius: 4px;
 	margin: -1px -2px;
 	background: hsla(30, 100%, 50%, 0.2);
 }*/
+
+div.prose high-light:after {
+	content: '';
+	display: inline-block;
+	box-sizing: border-box;
+	width: .3em;
+	height: .3em;
+	border-radius: 100%;
+	margin-left: 2px;
+	background: hsl(30, 100%, 50%);
+	vertical-align: .5em;
+}
+
+div.prose high-light.on:after {
+	visibility: hidden;
+}
 
 div.prose high-light.on {
 	padding: 1px 2px;
@@ -108,6 +124,7 @@ button.clear {
 code.block {
 	position: relative;
 	display: block;
+	overflow-x: scroll;
 	padding: 10px 20px;
 	margin: 5px 0px;
 	background: hsl(215, 10%, 15%);
@@ -274,46 +291,7 @@ button.divider:active {
 	}
 }
 
-/*@media only screen and (max-width: 1000px) {
-	article.interface {
-		overflow: scroll;
-	}
-	
-	div.mirror {
-		white-space: nowrap;
-	}
-	
-	div.prose,
-	div.code {
-		width: 500px !important;
-		white-space: normal;
-	}
-	
-	h2.herald, h3.signal {
-		width: 1000px;
-	}
 
-	button.divider {
-		display: none;
-	}
-}
-
-@media only screen and (max-width: 500px) {
-	div.mirror {
-		width: 100%;
-		white-space: nowrap;
-	}
-
-	div.prose,
-	div.code {
-		width: 100% !important;
-		white-space: normal;
-	}
-
-	button.divider {
-		display: none;
-	}
-}*/
 
 
 
@@ -337,7 +315,6 @@ h2.herald {
 h3.signal {
 	display: block;
 	padding: 20px 20px 10px;
-	margin-top: 40px;
 	background: hsl(215, 50%, 60%);
 	color: white;
 	font-size: 22px;
