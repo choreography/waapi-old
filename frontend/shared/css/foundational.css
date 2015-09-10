@@ -4,7 +4,7 @@
 
 article.view {
 	position: absolute;
-	top: 41px;
+	top: auto;
 	left: 0;
 	right: 0;
 	width: 100%;
