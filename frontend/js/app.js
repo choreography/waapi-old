@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	while(iter-->0)
 	{
 		var block = blocks[iter];
-		
+		/*
 		// Need to preserve the original HTML-ified sourcecode,
 		// which may contain highlighting (<high-light>) and typographic syntax (<b>/<i>)
 		// We split the contentText and innerHTML while allowing the whole to be indexed
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
 					else return node[1];
 				}).join('');
 			},
-
+			
 			get raw () {
 				return this.nodes.map(function(node) {
 					if(typeof node === 'string') return node;
@@ -163,44 +163,115 @@ document.addEventListener('DOMContentLoaded', function() {
 		else pseudo.nodes[pseudo.nodes.length-1][1] = pseudo.nodes[pseudo.nodes.length-1][1].trimRight();
 		
 		
-
 		var source = pseudo.text;
 // 		var source = block.textContent.trim();
+		*/
+
+		
+		var pseudo = {
+			nodes: [],
+			
+			walk: function (node) {
+				var index = 0;
+				if(node.nodeType === document.TEXT_NODE)
+				{
+					var length = node.nodeValue.length;
+					var start = pseudo.length;
+					var end = start + length;
+					pseudo.length += length;
+					pseudo.nodes.push({ start: start, end: end, dom: node, diff: [] });
+				}
+				else if(node.nodeType === document.ELEMENT_NODE) Array.prototype.forEach.call(node.childNodes, pseudo.walk);
+			},
+			
+			replace: function(target, by) {
+				if(!by.length) return target.parentNode.removeChild(target);
+				var parent = target.parentNode;
+				var newer = by.shift();
+				parent.replaceChild(newer, target);
+				var current = newer;
+				var iter = by.length;
+				while(iter-->0)
+				{
+					newer = by.shift();
+					parent.insertBefore(newer, current.nextSibling);
+					current = newer;
+				}
+			},
+			
+			length: 0,
+			get text () { return pseudo.nodes.map(function(node) { return node.dom.nodeValue }).join('') },
+			
+			
+			tokenize: function(start, end, token) {
+				var nodes = this.nodes.filter(function(node) { return start < node.end && end > node.start });
+				
+				nodes.forEach(function(node, index) {
+					var piece = node.dom.nodeValue.slice(Math.max(start, node.start) - node.start, Math.min(end, node.end) - node.start);
+					var nodus;
+					if(typeof token === 'string')
+					{
+						nodus = document.createElement('span');
+						nodus.className = token;
+						nodus.textContent = piece;
+						node.diff.push(nodus);
+					}
+					
+					else if(typeof token === 'function')
+					{
+						token(piece, node);
+					}
+					
+					else
+					{
+						nodus = document.createTextNode(piece);
+						node.diff.push(nodus);
+					}
+				});
+			},
+			
+			render: function() {
+				for(var iter = 0, total = this.nodes.length; iter < total; ++iter)
+				{
+					var node = this.nodes[iter];
+					this.replace(node.dom, node.diff);
+				}
+			}
+		};
+
+		if(block.firstChild.nodeType === document.TEXT_NODE) block.firstChild.nodeValue = block.firstChild.nodeValue.trimLeft();
+		if(block.lastChild.nodeType === document.TEXT_NODE) block.lastChild.nodeValue = block.lastChild.nodeValue.trimRight();
+		
+		pseudo.walk(block);
+		
+		var source = pseudo.text;
+		
+		
+		
 		var ctx = source.match(/(.*)\n/);
 		if(!ctx) ctx = source; else ctx = ctx[1];
-		console.groupCollapsed('Parsing new block (' + ctx + ')');
-		console.group('Source');
-		console.log(source);
-		console.groupEnd();
 		
-		
-		var code = [];
+
 		var last = 0;
 		var ast = acorn.parse(source, {
+			ecmaVersion: 6,
 			onToken: function(token) {
-				if(last) onWhitespace(last, token.start);
+				if(last !== token.start) onWhitespace(last, token.start);
 				last = token.end;
 				
 				if(token.type.label === 'eof') return;
 				
-				var str = pseudo.slice(token.start, token.end);
 				if(token.type === acorn.tokTypes.num)
-					code.push(['<span class="numeric">', str, '</span>'].join(''));
+					pseudo.tokenize(token.start, token.end, 'numeric');
 				
 				else if(token.type === acorn.tokTypes.string)
-					code.push(['<span class="string">', str, '</span>'].join(''));
+					pseudo.tokenize(token.start, token.end, 'string');
 				
 				else if(token.type === acorn.tokTypes.template)
-					code.push(['<span class="template">', str, '</span>'].join(''));
+					pseudo.tokenize(token.start, token.end, 'template');
 				
 				else if(token.type === acorn.tokTypes.name)
-					code.push([
-						'<span class="name">',
-// 							'<high-light group="', token.value, '">',
-								str,
-// 							'</high-light>',
-						'</span>'
-					].join(''));
+					pseudo.tokenize(token.start, token.end, 'name');
 				
 				else if(token.type === acorn.tokTypes._break ||
 						token.type === acorn.tokTypes._case ||
@@ -239,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						token.type === acorn.tokTypes._while ||
 						token.type === acorn.tokTypes._with ||
 						token.type === acorn.tokTypes._yield)
-					code.push('<span class="keyword">', str,'</span>');
+					pseudo.tokenize(token.start, token.end, 'keyword');
 				
 				else if(token.type === acorn.tokTypes.arrow ||
 						token.type === acorn.tokTypes.assign ||
@@ -262,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						token.type === acorn.tokTypes.semi ||
 						token.type === acorn.tokTypes.slash ||
 						token.type === acorn.tokTypes.star)
-					code.push('<span class="syntax">', str,'</span>');
+					pseudo.tokenize(token.start, token.end, 'syntax');
 				
 				else if(token.type === acorn.tokTypes.eq ||
 						token.type === acorn.tokTypes.equality ||
@@ -275,38 +346,62 @@ document.addEventListener('DOMContentLoaded', function() {
 						token.type === acorn.tokTypes.bitwiseAND ||
 						token.type === acorn.tokTypes.bitwiseOR ||
 						token.type === acorn.tokTypes.bitwiseXOR)
-					code.push('<span class="operator">', str, '</span>');
+					pseudo.tokenize(token.start, token.end, 'operator');
 				
 				else
 				{
-					console.log(token);
-					code.push(str); // code.push(token.value || token.type.label);
+					pseudo.tokenize(token.start, token.end);
 				}
 			},
 			
 			onComment: function(isBlock, text, start, end) {
-				if(last) onWhitespace(last, start);
+				if(last !== start) onWhitespace(last, start);
 				last = end;
 				
-				var str = pseudo.slice(start, end);
-				code.push(['<span class="comment">', str, '</span>'].join(''));
-				
+				pseudo.tokenize(start, end, 'comment');
 			}
 		});
 		
 		function onWhitespace(start, end) {
-			var text = pseudo.slice(start, end, function (str) {
-				return str
-				.replace(/ /g, '<span class="space">$&</span>')
-// 				.replace(/[\n\r]+/g, '<span class="newline">$&</span>')
-				.replace(/\t/g, '<span class="tab">&#09;</span>');
+			// pseudo.tokenize(start, end, function(piece) {
+			// 	return piece.replace()
+			// });
+			
+			pseudo.tokenize(start, end, function(piece, node) {
+				console.log('"' + piece + '"');
+				var threads = piece.split(/(\t)/);
+				for(var iter = 0, total = threads.length; iter < total; ++iter)
+				{
+					var thread = threads[iter];
+					
+					if(iter&1)
+					{
+						var tab = document.createElement('span');
+						tab.className = 'tab';
+						tab.textContent = '\t';
+						node.diff.push(tab);
+					}
+					
+					else node.diff.push(document.createTextNode(thread));
+				}
+				
+				//var text = document.createTextNode(piece);
+				//node.diff.push(text);
 			});
-			code.push(text);
+			
+			
+// 			var text = pseudo.slice(start, end, function (str) {
+// 				return str
+// // 				.replace(/ /g, '<span class="space">$&</span>')
+// // 				.replace(/[\n\r]+/g, '<span class="newline">$&</span>')
+// 				.replace(/\t/g, '<span class="tab">&#09;</span>');
+// 			});
+// 			code.push(text);
 		}
 		
-		block.innerHTML = code.join('');
-		console.groupEnd();
-		
+		// if(source === 'new KeyframeEffect(target, frames, options);') debugger;
+
+		pseudo.render();
 	}
 });
 

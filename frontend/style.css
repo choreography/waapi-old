@@ -2,29 +2,16 @@ h1, h2, h3, h4 { margin: 0 }
 ::selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
 ::-moz-selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
 
-high-light { display: inline;}
-/*high-light.on {
-	padding: 1px 2px;
-	border-radius: 4px;
-	margin: -1px -2px;
-	background: hsla(30, 100%, 50%, 0.2);
-}*/
+
+high-light { display: inline }
 
 div.prose high-light:after {
-	content: '';
-	display: inline-block;
-	box-sizing: border-box;
-	width: .3em;
-	height: .3em;
-	border-radius: 100%;
-	margin-left: 2px;
-	background: hsl(30, 100%, 50%);
-	vertical-align: .5em;
+	content: '*';
+	color: hsl(30, 100%, 50%);
 }
 
-div.prose high-light.on:after {
-	visibility: hidden;
-}
+div.prose high-light.on:after { visibility: hidden }
+
 
 div.prose high-light.on {
 	padding: 1px 2px;
@@ -38,11 +25,8 @@ div.code high-light.on {
 	padding: 1px 0;
 	margin: -1px -0;
 	background: hsla(30, 100%, 50%, 0.2);
-/* 	outline: 1px auto hsla(30, 100%, 50%, 0.2);
-	outline-offset: 4px;
-	z-index: 2;
-	position: relative; */
 }
+
 
 
 body {

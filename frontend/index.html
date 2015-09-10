@@ -20,7 +20,6 @@
 	<script src="/lib/view.js"></script>
 	<script src="/lib/highlighter.js"></script>
 	<script src="/lib/acorn.js"></script>
-	<script src="/lib/walk.js"></script>
 	<script src="/js/choreo.js"></script>
 	<script src="/js/app.js"></script>
 
@@ -52,6 +51,11 @@
 			</div>
 			<div class="code">
 				<code class="block topdog">new <h2>KeyframeEffect</h2>(target, frames, options);</code>
+				<code class="block spec">
+var target = Element || null;
+var frames = [Keyframes, Keyframes, Keyframes];
+var options = Number || KeyframeEffectOptions;
+				</code>
 			</div>
 		</div>
 
@@ -61,25 +65,19 @@
 				<ol class="arguments">
 					<li>
 						<high-light group="target"><h4 class="argument">target</h4>
-						is the Element being animated.</high-light><br>
-						Can be null.
-						
-<!-- 							<small class="type">Element</small> -->
-					
+						is the Element being animated.</high-light><br><br>
+						Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.
 					<li>
 						<high-light group="frames"><h4 class="argument">frames</h4>
 						is an array of Keyframes to use.</high-light>
-<!-- 							<small class="type">[Keyframes, …]</small> -->
 					<li>
 						<h4 class="argument">options</h4>
-						is either <high-light group="options.number">a Number specifying duration in milliseconds</high-light> OR <high-light group="options.obj">an Object with properties specifying timing and behaviour of the effect</high-light>.<br>
+						is either a Number specifying duration in milliseconds OR <high-light group="options.obj">an Object with properties specifying timing and behaviour of the effect</high-light>.<br>
 						<br>
 						For a list & description of the properties see KeyframeEffectOptions.
 						
-<!-- 							<small class="type"><high-light group="options.number">Number</high-light> or <high-light group="options.keyopt">KeyframeEffectOptions</high-light></small> -->
 				</ol>
 				<p class="description">
-					The <span class="argument">target</span> can be null for animations that don't target a specific element, for example an animation that makes sound using the audio API.
 				</p>
 			</div>
 			<div class="code">
@@ -105,7 +103,7 @@
 	fill: 'both'	// keep CSS active beyond animation (until `.cancel()` is called)
 };</high-light>
 
-var <high-light group="node">effect</high-light> = new <b>KeyframeEffect</b>(<high-light group="target">target</high-light>, <high-light group="frames">frames</high-light>, <high-light group="options.obj">options</high-light>);
+var <high-light group="node">effect</high-light> = new KeyframeEffect(<high-light group="target">target</high-light>, <high-light group="frames">frames</high-light>, <high-light group="options.obj">options</high-light>);
 				</code>
 				<code class="block highlight usage">
 /// You can use the effect by putting it directly into an animation
