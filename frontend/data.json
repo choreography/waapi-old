@@ -115,22 +115,72 @@
 		},
 		{
 			"name": "KeyframeEffect",
-			"description": "KeyframeEffect updates CSS properties of a target element over time.<br><br>They sit within an Animation and work with the global clock known as the DocumentTimeline.",
-			"type": "interface",
-			"constructor": {
-				"target": {
-					"type": "Element",
-					"nullable": true,
-					"description": "<high-light group=\"target\"><h4 class=\"argument\">target</h4> is the Element being animated.</high-light><br><br>Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API."
+			"introduction": {
+				"title": "NAME",
+				"prose": "KeyframeEffect updates CSS properties of a target element over time.<br><br>They sit within an Animation and work with the global clock known as the DocumentTimeline.",
+				"code": [
+					"new KeyframeEffect(target, frames, options);",
+					"var target = Element || null;\nvar frames = [Keyframes, Keyframes, Keyframes];\nvar options = Number || KeyframeEffectOptions;"
+				]
+			},
+			"arguments": {
+				"title": "Arguments",
+				"prose": {
+					"ordered-list": "arguments",
+					"children": [
+						"<high-light group=\"target\"><h4 class=\"argument\">target</h4> is the Element being animated.</high-light><br><br>Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.",
+						"<high-light group=\"frames\"><h4 class=\"argument\">frames</h4> is an array of Keyframes to use.</high-light>",
+						"<h4 class=\"argument\">options</h4> is either a Number specifying duration in milliseconds OR <high-light group=\"options.obj\">an Object with properties specifying timing and behaviour of the effect</high-light>.<br><br>For a list & description of the properties see KeyframeEffectOptions."
+					]
 				},
-				"frames": {
-					"type": "[Keyframes, Keyframes, Keyframes]",
-					"description": "<high-light group=\"frames\"><h4 class=\"argument\">frames</h4> is an array of Keyframes to use.</high-light>"
-				},
-				"options": {
-					"type": "Number || KeyframeEffectOptions",
-					"description": "<h4 class=\"argument\">options</h4> is either a Number specifying duration in milliseconds OR <high-light group=\"options.obj\">an Object with properties specifying timing and behaviour of the effect</high-light>.<br><br>For a list & description of the properties see KeyframeEffectOptions."
-				}
+				"code": [
+"/// Constructing a KeyframeEffect\
+\
+// Grab a DOM element to animate\
+<high-light group=\"target\">var target = document.querySelector('.my-target');</high-light>\
+\
+// Keyframes for fade out, start from `opacity: 1` and end at `opacity: 0`\
+<high-light group=\"frames\">var frames = [\
+	{\
+		opacity: 1\
+	},\
+	{\
+		opacity: 0\
+	}\
+];</high-light>\
+\
+<high-light group=\"options.obj\">var options = {\
+	duration: 300,	// Play effect for 300ms,\
+	delay: 100,		// delay it for 100ms,\
+	fill: 'both'	// keep CSS active beyond animation (until `.cancel()` is called)\
+};</high-light>\
+\
+var <high-light group=\"node\">effect</high-light> = new KeyframeEffect(<high-light group=\"target\">target</high-light>, <high-light group=\"frames\">frames</high-light>, <high-light group=\"options.obj\">options</high-light>);",
+
+"/// You can use the effect by putting it directly into an animation\
+var animation = document.timeline.play(<high-light group=\"node\">effect</high-light>);",
+
+"/// Or alternatively you can composite it with other effects\
+var group = new GroupEffect([\
+	<high-light group=\"node\">effect</high-light>,\
+	otherEffect\
+]);\
+\
+var animation = document.timeline.play(group);"
+				]
+			}
+			"examples": {
+				"title": "Examples",
+				"code": [
+					{
+						"summary": "Opacity fade out example",
+						"details": "\
+var fadeOutEffect = new KeyframeEffect(document.querySelector('div.test'), [\
+	{ opacity: 1 },\
+	{ opacity: 0 }\
+], 500);"
+					}
+				]
 			}
 		},
 		{
