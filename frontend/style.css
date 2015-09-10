@@ -28,8 +28,8 @@ div.code high-light.on {
 }
 
 
-
-body {
+html, body {
+	background: hsl(0, 0%, 90%);
 	font-size: 0;
 }
 
@@ -122,8 +122,8 @@ code.block {
 	position: relative;
 	display: block;
 	overflow-x: scroll;
-	padding: 10px 20px;
-	margin: 5px 0px;
+	padding: 20px;
+	margin: 25px 0px;
 	background: hsl(215, 10%, 15%);
 	color: hsl(215, 10%, 95%);
 	font: 16px/1.2 Inconsolata;
@@ -213,6 +213,7 @@ details.code summary {
 	border-bottom: 2px solid transparent;
 	margin: 0 20px;
 	outline: 0;
+	color: hsl(215, 10%, 20%);
 	cursor: s-resize;
 	-webkit-user-select: none;
 	-moz-user-select: none;
@@ -235,11 +236,11 @@ details.code[open] summary {
 */
 
 div.mirror {
-/* 	display: -webkit-flex; */
-/* 	display: flex; */
+	display: -webkit-flex;
+	display: flex;
 	
 	position: relative;
-	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png);
+/* 	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png); */
 }
 
 /* @media only screen and (max-width: 800px) { div.mirror { margin: 0 } }
@@ -253,30 +254,25 @@ div.code {
 	
 	display: inline-block;
 	overflow: hidden;
-	width: 50%;
+	width: 100%;
 	vertical-align: top;
 	font-size: 20px;
 }
 
-
-div.prose { background: hsl(0, 0%, 100%); color: hsl(215, 10%, 33%); }
-div.code { background: hsl(215, 10%, 20%); color: hsl(215, 10%, 83%); }
-
-button.divider {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	bottom: 0;
-	width: 8px;
-	margin-left: -4px;
-	cursor: col-resize;
-	background: none;
+div.prose + div.code,
+div.prose:nth-last-child(2) {
+	width: 50%;
 }
 
-button.divider:hover,
-button.divider:active {
-	background: hsl(0, 0%, 50%);
+div.prose + div.code code.block {
+	border-radius: 6px 0 0 6px;
 }
+
+
+
+
+div.prose { color: hsl(215, 10%, 20%); }
+div.code { color: hsl(215, 10%, 85%); }
 
 
 
@@ -303,22 +299,25 @@ div.prose {
 }
 
 h2.herald {
-	padding: 40px 20px 10px;
-	background: hsl(215, 50%, 60%);
-	color: white;
+	padding: 50px 20px 20px;
 	font-size: 24px;
 }
 
 h3.signal {
 	display: block;
-	padding: 20px 20px 10px;
-	background: hsl(215, 50%, 60%);
-	color: white;
+	padding: 30px 20px 10px;
 	font-size: 22px;
 }
 
+h2.herald, h3.signal {
+/* 	background: hsl(215, 50%, 60%);
+	color: white; */
+	
+	color: hsl(0, 0%, 10%);
+}
+
 p.description {
-	margin: 10px 20px 30px;
+	margin: 30px 20px 30px;
 }
 
 
@@ -334,7 +333,7 @@ ol.arguments li {
 }
 
 ol.arguments li + li {
-	margin-top: 20px;
+	margin-top: 1.5em;
 }
 
 ol.arguments li h4 {
@@ -379,16 +378,6 @@ ol.arguments .type {
 @font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/Inconsolata-Bold.ttf'); }
 
 code { white-space: pre}
-
-
-
-
-
-
-
-
-
-
 
 
 
