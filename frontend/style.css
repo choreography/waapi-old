@@ -249,8 +249,8 @@ div.mirror {
 
 div.prose,
 div.code {
-/* 	-webkit-flex: 1 50%; */
-/* 	flex: 1 50%; */
+	-webkit-flex: 1 50%;
+	flex: 1 50%;
 	
 	display: inline-block;
 	overflow: hidden;
@@ -277,10 +277,18 @@ div.code { color: hsl(215, 10%, 85%); }
 
 
 @media only screen and (max-width: 800px) {
-	div.prose,
-	div.code {
-		display: block;
+	div.mirror {
+		-webkit-flex-direction: column;
+		flex-direction: column;
+	}
+	
+	div.prose + div.code,
+	div.prose:nth-last-child(2) {
 		width: 100%;
+	}
+	
+	div.prose + div.code code.block {
+		border-radius: 0;
 	}
 }
 
