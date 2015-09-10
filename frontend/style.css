@@ -29,7 +29,7 @@ div.code high-light.on {
 
 
 html, body {
-	background: hsl(0, 0%, 90%);
+	background: hsl(0, 0%, 95%);
 	font-size: 0;
 }
 
@@ -61,7 +61,7 @@ header.search {
 header.search h1 {
 	display: inline-block;
 	vertical-align: middle;
-	margin-left: 5px;
+	margin-left: 20px;
 	font-size: 22px;
 }
 
@@ -69,7 +69,7 @@ form.search {
 	display: inline-block;
 	border-radius: 4px;
 	background: white;
-	margin: 2px;
+	margin: 10px 20px;
 	vertical-align: middle;
 	font-size: 0;
 }
@@ -346,12 +346,14 @@ ol.arguments li + li {
 
 ol.arguments li h4 {
 	display: inline;
+	font-family: Inconsolata;
 }
 
 ol.arguments li h4:before {
 	position: absolute;
 	top: 0;
 	left: 20px;
+	font-family: Lato, sans-serif;
 	content: '•';
 }
 
@@ -385,7 +387,7 @@ ol.arguments .type {
 @font-face { font-family: Inconsolata; src: url('/assets/Inconsolata-Regular.ttf'); }
 @font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/Inconsolata-Bold.ttf'); }
 
-code { white-space: pre}
+code { white-space: pre }
 
 
 
