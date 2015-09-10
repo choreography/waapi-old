@@ -66,108 +66,10 @@ document.addEventListener('DOMContentLoaded', function() {
 	while(iter-->0)
 	{
 		var block = blocks[iter];
-		/*
+		
 		// Need to preserve the original HTML-ified sourcecode,
 		// which may contain highlighting (<high-light>) and typographic syntax (<b>/<i>)
-		// We split the contentText and innerHTML while allowing the whole to be indexed
-		var pseudo = {
-			nodes: Array.prototype.map.call(block.childNodes, function(node, index) {
-				if(node.nodeType === document.TEXT_NODE)
-				{
-					return node.nodeValue;
-				}
-				
-				else if(node.nodeType === document.ELEMENT_NODE)
-				{
-					var parsed = node.outerHTML.match(/(<[^>]+>)([^<]*)(<\/[^>]+>)/);
-					if(!parsed) return ['unparsed:', node];
-					var start = parsed[1];
-					var inner = parsed[2];
-					var end = parsed[3];
-					return [start, inner, end];
-				}
-				else return ['unknown', node];
-			}),
-			get length () {
-				var total = 0, iter = this.nodes.length;
-				while(iter-->0) {
-					var node = this.nodes[iter];
-					if(typeof node === 'string') total += node.length;
-					else total += node[1].length;
-				}
-				return total;
-			},
-			
-			get text () {
-				return this.nodes.map(function(node) {
-					if(typeof node === 'string') return node;
-					else return node[1];
-				}).join('');
-			},
-			
-			get raw () {
-				return this.nodes.map(function(node) {
-					if(typeof node === 'string') return node;
-					else return node.join('');
-				}).join('');
-			},
-			
-			slice: function(start, end, fn) {
-				var temp = [], consumed = 0; consumable = end-start;
-				if(consumable > this.length - 1) consumable = this.length - 1;
-				
-				var offset = 0, iter = 0;
-				while(consumed < consumable && iter < this.nodes.length)
-				{
-					var node = this.nodes[iter++];
-					var isElement = typeof node !== 'string';
-					var str = isElement? node[1] : node;
-
-					if(start-offset > str.length)
-					{
-						offset += str.length;
-						continue;
-					}
-					else if(offset > end) break;
-					
-					var piece;
-					if(start-offset <= 0 && end-offset >= str.length) piece = str;
-					else piece = str.slice(start-offset, end-offset);
-					
-					consumed += piece.length;
-					
-					if(fn) piece = fn(piece);
-					
-					if(isElement)
-					{
-						var startTag = node[0];
-						var endTag = node[2];
-						
-						temp.push(startTag);
-						temp.push(piece);
-						temp.push(endTag);
-					}
-					
-					else temp.push(piece);
-					
-					offset += str.length;
-				}
-				
-				return temp.join('');
-			}
-		};
-		
-		if(typeof pseudo.nodes[0] === 'string') pseudo.nodes[0] = pseudo.nodes[0].trimLeft();
-		else pseudo.nodes[0][1] = pseudo.nodes[0][1].trimLeft();
-		if(typeof pseudo.nodes[pseudo.nodes.length-1] === 'string') pseudo.nodes[pseudo.nodes.length-1] = pseudo.nodes[pseudo.nodes.length-1].trimRight();
-		else pseudo.nodes[pseudo.nodes.length-1][1] = pseudo.nodes[pseudo.nodes.length-1][1].trimRight();
-		
-		
-		var source = pseudo.text;
-// 		var source = block.textContent.trim();
-		*/
-
-		
+		// We replace all the text nodes with syntax highlighted code
 		var pseudo = {
 			nodes: [],
 			
@@ -244,16 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		
 		pseudo.walk(block);
 		
-		var source = pseudo.text;
-		
-		
-		
-		var ctx = source.match(/(.*)\n/);
-		if(!ctx) ctx = source; else ctx = ctx[1];
-		
-
 		var last = 0;
-		var ast = acorn.parse(source, {
+		var ast = acorn.parse(pseudo.text, {
 			ecmaVersion: 6,
 			onToken: function(token) {
 				if(last !== token.start) onWhitespace(last, token.start);
@@ -363,10 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 		
 		function onWhitespace(start, end) {
-			// pseudo.tokenize(start, end, function(piece) {
-			// 	return piece.replace()
-			// });
-			
 			pseudo.tokenize(start, end, function(piece, node) {
 				console.log('"' + piece + '"');
 				var threads = piece.split(/(\t)/);
@@ -384,34 +274,11 @@ document.addEventListener('DOMContentLoaded', function() {
 					
 					else node.diff.push(document.createTextNode(thread));
 				}
-				
-				//var text = document.createTextNode(piece);
-				//node.diff.push(text);
 			});
-			
-			
-// 			var text = pseudo.slice(start, end, function (str) {
-// 				return str
-// // 				.replace(/ /g, '<span class="space">$&</span>')
-// // 				.replace(/[\n\r]+/g, '<span class="newline">$&</span>')
-// 				.replace(/\t/g, '<span class="tab">&#09;</span>');
-// 			});
-// 			code.push(text);
 		}
 		
-		// if(source === 'new KeyframeEffect(target, frames, options);') debugger;
-
 		pseudo.render();
 	}
 });
 
-/*
-.keyword { color: hsl(0, 70%, 50%) }
-.syntax, .operator { color: hsl(0, 0%, 80%);}
-.entity { color: hsl(260, 30%, 60%) }
-.string { color: hsl(0, 40%, 60%) }
-.numeric { color: hsl(215, 50%, 60%) }
 
-.type { color: hsl(15, 25%, 34%) }
-.argument { color: hsl(120, 20%, 50%) }
-*/
