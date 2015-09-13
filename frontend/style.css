@@ -1,13 +1,13 @@
 h1, h2, h3, h4 { margin: 0 }
-::selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
-::-moz-selection { background: hsla(30, 100%, 50%, 0.8); color: white; }
+::selection { background: hsla(53, 84%, 65%, 0.8); color: black; }
+::-moz-selection { background: hsla(53, 84%, 65%, 0.8); color: black; }
 
 
 high-light { display: inline }
 
 div.prose high-light:after {
 	content: '*';
-	color: hsl(30, 100%, 50%);
+	color: hsl(53, 84%, 0%);
 }
 
 div.prose high-light.on:after { visibility: hidden }
@@ -18,13 +18,13 @@ div.prose high-light.on {
 	border-radius: 4px;
 	margin: -1px -2px;
 	color: black;
-	background: hsla(30, 100%, 50%, 0.2);
+	background: hsla(53, 84%, 65%, 1);
 }
 
 div.code high-light.on {
 	padding: 1px 0;
 	margin: -1px -0;
-	background: hsla(30, 100%, 50%, 0.2);
+	background: hsla(53, 84%, 65%, 0.1);
 }
 
 
@@ -46,6 +46,19 @@ header.banner {
 	color: hsl(0, 0%, 95%);
 	font-size: 16px;
 }
+
+
+
+
+
+/*
+	Interface View
+*/
+
+article.interface {
+	padding-bottom: 30vh; /* Some breathing room to allow user to center content in their view better */
+}
+
 
 
 
