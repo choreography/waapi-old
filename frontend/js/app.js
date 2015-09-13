@@ -195,6 +195,26 @@ document.addEventListener('DOMContentLoaded', function() {
 		
 		pseudo.walk(block);
 		
+		function onWhitespace(start, end) {
+			pseudo.tokenize(start, end, function(piece, node) {
+				var threads = piece.split(/(\t)/);
+				for(var iter = 0, total = threads.length; iter < total; ++iter)
+				{
+					var thread = threads[iter];
+					
+					if(iter&1)
+					{
+						var tab = document.createElement('span');
+						tab.className = 'tab';
+						tab.textContent = '\t';
+						node.diff.push(tab);
+					}
+					
+					else node.diff.push(document.createTextNode(thread));
+				}
+			});
+		}
+		
 		var last = 0;
 		var ast = acorn.parse(pseudo.text, {
 			ecmaVersion: 6,
@@ -304,26 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				pseudo.tokenize(start, end, 'comment');
 			}
 		});
-		
-		function onWhitespace(start, end) {
-			pseudo.tokenize(start, end, function(piece, node) {
-				var threads = piece.split(/(\t)/);
-				for(var iter = 0, total = threads.length; iter < total; ++iter)
-				{
-					var thread = threads[iter];
-					
-					if(iter&1)
-					{
-						var tab = document.createElement('span');
-						tab.className = 'tab';
-						tab.textContent = '\t';
-						node.diff.push(tab);
-					}
-					
-					else node.diff.push(document.createTextNode(thread));
-				}
-			});
-		}
 		
 		pseudo.render();
 	}
