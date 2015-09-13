@@ -1,0 +1,18 @@
+{
+	"interfaces": {
+		"KeyframeEffect": {
+			"description": "KeyframeEffect updates CSS properties of a target element over time.\n\nThey sit within an Animation and work with the global clock known as the DocumentTimeline.",
+			"constructor": {
+				"arguments": {
+					"target": "<high-light group=\"target\"><h4 class=\"argument\">target</h4> is the Element being animated.</high-light><br><br>Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.",
+					"frames": "<high-light group=\"frames\"><h4 class=\"argument\">frames</h4> is an array of Keyframes to use.</high-light>",
+					"options": "<h4 class=\"argument\">options</h4> is either a Number specifying duration in milliseconds OR <high-light group=\"options.obj\">an Object with properties specifying timing and behaviour of the effect.</high-light><br><br>For a list & description of the properties see KeyframeEffectOptions."
+				}
+			}
+		},
+		
+		"GroupEffect": {},
+		
+		"SequenceEffect": {}
+	}
+}
