@@ -1,10 +1,59 @@
-fetch('/data.json')
-.then(function(response) {
-	return response.json();
-})
-.then(function(json) {
-	window.WAAPI = json;
-})
+Promise.all([
+	fetch('/web-animations.idl')
+	.then(function(response) { return response.text() })
+	.then(function(text) { return WebIDL2.parse(text) })
+	.then(function(idl) {
+		window.IDL = {
+			ast: idl,
+			interfaces: {}
+		};
+		
+		var iter = idl.length;
+		while(iter-->0) {
+			var node = idl[iter];
+			if(node.type && node.type === 'interface')
+			{
+				var interface = IDL.interfaces[node.name] = {};
+				
+				node.extAttrs.forEach(function(extAttr) {
+					if(extAttr.name === 'Constructor')
+					{
+						interface.constructor = {};
+						extAttr.arguments.forEach(function(arg) {
+							interface.constructor[arg.name] = arg;
+						});
+					}
+				});
+				
+				node.members.forEach(function(member) {
+					if(member.type === 'attribute')
+					{
+						if(!interface.attributes) interface.attributes = {};
+						interface.attributes[member.name] = member;
+					}
+					
+					else if(member.type === 'operation')
+					{
+						if(!interface.methods) interface.methods = {};
+						interface.methods[member.name] = member;
+					}
+					
+					else if(member.type === 'constant')
+					{
+						if(!interface.constants) interface.constants = {};
+						interface.constants[member.name] = member;
+					}
+					
+					else console.error('unknown member.type', member);
+				});
+			}
+		}
+	}),
+	
+	fetch('/documentation.json')
+	.then(function(response) { return response.json() })
+	.then(function(docs) { window.WAAPI = docs })
+])
 .then(function() {
 	/// Kick off application and routing
 	App.init();
@@ -258,7 +307,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		
 		function onWhitespace(start, end) {
 			pseudo.tokenize(start, end, function(piece, node) {
-				console.log('"' + piece + '"');
 				var threads = piece.split(/(\t)/);
 				for(var iter = 0, total = threads.length; iter < total; ++iter)
 				{
