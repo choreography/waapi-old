@@ -1,18 +1,72 @@
 {
 	"interfaces": {
 		"KeyframeEffect": {
-			"description": "KeyframeEffect updates CSS properties of a target element over time.\n\nThey sit within an Animation and work with the global clock known as the DocumentTimeline.",
-			"constructor": {
-				"arguments": {
-					"target": "<high-light group=\"target\"><h4 class=\"argument\">target</h4> is the Element being animated.</high-light><br><br>Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.",
-					"frames": "<high-light group=\"frames\"><h4 class=\"argument\">frames</h4> is an array of Keyframes to use.</high-light>",
-					"options": "<h4 class=\"argument\">options</h4> is either a Number specifying duration in milliseconds OR <high-light group=\"options.obj\">an Object with properties specifying timing and behaviour of the effect.</high-light><br><br>For a list & description of the properties see KeyframeEffectOptions."
+			"intro": {
+				"title": "KeyframeEffect",
+				"desc": "KeyframeEffect updates CSS properties of a single DOM element over time.\n\nThey sit within an Animation and work with its' global clock (known as the DocumentTimeline).",
+				"spec": {
+					"function": "var effect = new KeyframeEffect(target, frames, options);",
+					"parameters": "var target = Element || null;\nvar frames = [Keyframes, Keyframes /*, ... */];\nvar options = Number || KeyframeEffectOptions;"
 				}
+			},
+			"args": {
+				"entries": [
+					"<high-light group=\"target\"><h4 class=\"argument\">target</h4> is the Element being animated.</high-light><br><br>Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.",
+					"<high-light group=\"frames\"><h4 class=\"argument\">frames</h4> is an array of Keyframes to use.</high-light>",
+					"<h4 class=\"argument\">options</h4> is either a Number specifying duration in milliseconds OR <high-light group=\"options.obj\">an Object with properties specifying timing and behaviour of the effect.</high-light><br><br>For a list & description of the properties see KeyframeEffectOptions."
+				],
+				"usage": [
+					"/// Constructing a KeyframeEffect\n\n\n// Grab a DOM element to animate\n<high-light group=\"target\">var target = document.querySelector('.my-target');</high-light>\n\n// Keyframes for fade out, start from `opacity: 1`\n// and end at `opacity: 0`\n<high-light group=\"frames\">var frames = [\n\t{\n\t\topacity: 1\n\t},\n\t{\n\t\topacity: 0\n\t}\n];</high-light>\n\n<high-light group=\"options.obj\">var options = {\n\tduration: 300,\t// Play effect for 300ms,\n\tdelay: 100,\t\t// delay it for 100ms,\n\tfill: 'both'\t// keep CSS active beyond animation\n\t\t\t\t\t// (until `.cancel()` is called)\n};</high-light>\n\nvar <high-light group=\"node\">effect</high-light> = new KeyframeEffect(<high-light group=\"target\">target</high-light>, <high-light group=\"frames\">frames</high-light>, <high-light group=\"options.obj\">options</high-light>);"
+				]
+			},
+			"usage": [
+				{
+					"caption": "You can use the effect by putting it directly into an animation",
+					"code": "var animation = document.timeline.play(<high-light group=\"node\">effect</high-light>);"
+				},
+				{
+					"caption": "Or alternatively you can composite it with other effects",
+					"code": "var group = new GroupEffect([\n\t<high-light group=\"node\">effect</high-light>,\n\totherEffect\n]);\n\nvar animation = document.timeline.play(group);"
+				}
+			]
+		},
+		
+		"GroupEffect": {
+			"intro": {
+				"title": "GroupEffect",
+				"desc": "Provides a way to group multiple animation effects together, similar to <a class=\"inline\" href=\"/interface/SequenceEffect\">SequenceEffect</a>.<br><br>When animated it synchronises to start all the effects all at the same time.",
+				"spec": {
+					"function": "var group = new GroupEffect(effects);",
+					"parameters": "var effects = [<a class=\"inline\" href=\"/interface/KeyframeEffect\">KeyframeEffect</a>, GroupEffect, <a class=\"inline\" href=\"/interface/SequenceEffect\">SequenceEffect</a> /*, ... */];"
+				}
+			},
+			"args": {
+				"entries": [
+					"<high-light group=\"effects\"><h4 class=\"argument\">effects</h4> are a group of animations played together at once.</high-light>"
+				],
+				"usage": [
+					"/// Constructing and playing a GroupEffect made of two effects\n\nvar element1 = document.querySelector('.animate1');\nvar element2 = document.querySelector('.animate2');\n\nvar keyframes = [ { opacity: 1 }, { opacity: 0 } ];\n\nvar timings = { duration: 500 };\n\n<high-light group=\"effects\">var effects = [\n\tnew KeyframeEffect(element1, keyframes, timings),\n\tnew KeyframeEffect(element2, keyframes, timings)\n];</high-light>\n\nvar group = new GroupEffect(<high-light group=\"effects\">effects</high-light>);\ndocument.timeline.play(group);"
+				]
 			}
 		},
 		
-		"GroupEffect": {},
-		
-		"SequenceEffect": {}
+		"SequenceEffect": {
+			"intro": {
+				"title": "SequenceEffect",
+				"desc": "Provides a way to group multiple animation effects together, similar to <a class=\"inline\" href=\"/interface/GroupEffect\">GroupEffect</a>.<br><br>When animated it synchronises effects to play one after the other has finished, as per the order defined from the <high-light group=\"effects\">effects</high-light> parameter.",
+				"spec": {
+					"function": "var group = new SequenceEffect(effects);",
+					"parameters": "var effects = [<a class=\"inline\" href=\"/interface/KeyframeEffect\">KeyframeEffect</a>, <a class=\"inline\" href=\"/interface/GroupEffect\">GroupEffect</a>, SequenceEffect /*, ... */];"
+				}
+			},
+			"args": {
+				"entries": [
+					"<high-light group=\"effects\"><h4 class=\"argument\">effects</h4> are a group of animations played in order.</high-light>"
+				],
+				"usage": [
+					"/// Constructing and playing a SequenceEffect made of two effects\n\nvar element1 = document.querySelector('.animate1');\nvar element2 = document.querySelector('.animate2');\n\nvar keyframes = [ { opacity: 1 }, { opacity: 0 } ];\n\nvar timings = { duration: 500 };\n\n<high-light group=\"effects\">var effects = [\n\tnew KeyframeEffect(element1, keyframes, timings),\n\tnew KeyframeEffect(element2, keyframes, timings)\n];</high-light>\n\nvar group = new SequenceEffect(<high-light group=\"effects\">effects</high-light>);\ndocument.timeline.play(group);"
+				]
+			}
+		}
 	}
 }

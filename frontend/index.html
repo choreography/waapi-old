@@ -6,6 +6,30 @@
 	<base href="/">
 	<title>Web Animations API</title>
 	
+	<script type="application/ld+json">
+		{
+			"@context": "http://schema.org/",
+			"@type": "APIReference",
+			"name": "KeyframeEffect",
+			"description": "KeyframeEffect updates CSS properties of a target element over time",
+			"keywords": "keyframeeffect,web animations api",
+			"url": "http://waapi.io/interface/KeyframeEffect",
+			"about": {
+				"@type": "Thing",
+				"name": "Web Animations API",
+				"description": "API of a specification for synchronisation and timing of changes to the presentation of a Web page"
+			},
+			"inLanguage": "en-GB",
+			"targetPlatform": "Web",
+			"editor": {
+				"@type": "Person",
+				"name": "Martin Pitt",
+				"jobTitle": "Web Developer",
+				"url": "http://martinpitt.co.uk"
+			}
+		}
+	</script>
+	
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="/shared/fonts/lato.css">
 	<link rel="stylesheet" href="/shared/css/unstyle.css">
@@ -34,18 +58,26 @@
 			<input class="search" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Search…">
 			<button class="clear"></button>
 		</form>
-		<h1>Web Animations API</h1>
+		<h1><a href="/">Web Animations API</a></h1>
 	</header>
 	
 	<header class="banner">
 		Hi!   Cheers for visiting. Still working on this though.   Below you can see a sneak peek of what is to come.
 	</header>
 	
-	<article class="view intro">
+	<article class="view intro no-layout">
 		
 	</article>
 	
-	<article class="view interface">
+	<article class="view interface no-layout">
+		<h2 class="herald"></h2>
+		<div class="mirror introduction">
+			<div class="prose"></div>
+			<div class="code"></div>
+		</div>
+		
+		
+		<!--
 		<h2 class="herald">KeyframeEffect</h2>
 		<div class="mirror">
 			<div class="prose">
@@ -56,10 +88,12 @@
 				</p>
 			</div>
 			<div class="code">
-				<code class="block topdog">new <h2>KeyframeEffect</h2>(target, frames, options);</code>
+				<code class="block spec">
+new KeyframeEffect(target, frames, options);
+				</code>
 				<code class="block spec">
 var target = Element || null;
-var frames = [Keyframes, Keyframes, Keyframes];
+var frames = [Keyframe, Keyframe /*, ... */];
 var options = Number || KeyframeEffectOptions;
 				</code>
 			</div>
@@ -138,10 +172,10 @@ var fadeOutEffect = new KeyframeEffect(document.querySelector('div.test'), [
 	{ opacity: 0 }
 ], 500);
 					</code>
-<!-- 					<code class="block"><span class="keyword">var</span> <span class="variable">fadeOutEffect</span> <span class="syntax">=</span> <span class="keyword">new</span> <span class="function">KeyframeEffect</span><span class="syntax">(</span><span>document.querySelector</span><span class="syntax">(</span><span class="string">'div.test'</span><span class="syntax">)</span><span class="syntax">,</span> <span class="array">[<br><span class="tab">&#09;</span>{ opacity: 1 },<br><span class="tab">&#09;</span>{ opacity: 0 }<br>]</span><span class="syntax">,</span> <span class="number">500</span><span class="syntax">);</span></code> -->
 				</details>
 			</div>
 		</div>
+		-->
 	</article>
 	
 	<article class="view no-layout">

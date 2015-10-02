@@ -1,18 +1,7 @@
 /// 'View' manages current visible element types and is responsible for showing/hiding  new & old elements
 var View = {
 	init: function initialiseViews() {
-		/// Hide certain types by default
-		var elements = document.querySelectorAll('article.view');
-		var iter = elements.length;
-		while(iter-->0) elements[iter].style.visibility = 'hidden';
-		
-// 		$('body > main, .slide, .tab').css('visibility', 'hidden');
-		
-		// Show Application  (after a trivial delay so that app can initialise fully)
-		document.documentElement.style.display = 'none';
-		requestAnimationFrame(function() {
-			document.documentElement.style.display = '';
-		});
+		console.log('%c[View] %cInit', 'color: #777', 'color: #000');
 		
 		/// Fast click and handling of anchor tags (by immediately calling History .pushState/.replaceState)
 		/*$(document).on('mouseup touchend', '[href]', function(event) {
@@ -62,14 +51,14 @@ var View = {
 		if(newer)
 		{
 			var screen = document.querySelector('article.view.' + newer.replace(/ /g, '.'));
-			screen.style.visibility = '';
+			screen.classList.remove('no-layout');
 			document.body.classList.add('screen-' + newer.replace(/(\.| )/g, '-'));
 		}
 		
 		if(older)
 		{
 			var screen = document.querySelector('article.view.' + older.replace(/ /g, '.'));
-			screen.style.visibility = 'hidden';
+			screen.classList.add('no-layout');
 			document.body.classList.remove('screen-' + older.replace(/(\.| )/g, '-'));
 		}
 		

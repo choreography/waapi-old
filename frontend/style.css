@@ -21,7 +21,7 @@ div.prose high-light.on {
 	background: hsla(53, 84%, 65%, 1);
 }
 
-div.code high-light.on {
+code high-light.on {
 	padding: 1px 0;
 	margin: -1px -0;
 	background: hsla(53, 84%, 65%, 0.1);
@@ -47,6 +47,25 @@ header.banner {
 	font-size: 16px;
 }
 
+
+
+
+/*
+	Intro View
+*/
+
+article.intro nav.links {
+	padding: 20px;
+}
+
+article.intro a.inline {
+	display: inline-block;
+	font: 22px/1 Lato, sans-serif;
+}
+
+article.intro a.inline ~ a.inline {
+	margin-top: .5em;
+}
 
 
 
@@ -166,12 +185,12 @@ code.block + code.block:before {
 code.block h2 { display: inline }
 
 .comment { color: hsl(120, 10%, 40%) }
-.keyword { color: hsl(0, 70%, 50%) }
+.keyword {color: hsl(0, 70%, 50%);}
 .syntax, .operator { color: hsl(0, 0%, 70%) }
 .entity { color: hsl(260, 30%, 60%) }
 .string { color: hsl(0, 40%, 60%) }
 .numeric { color: hsl(215, 50%, 60%) }
-
+.native { color: hsl(215, 50%, 95%) }
 .type { color: hsl(15, 25%, 34%) }
 .argument { color: hsl(120, 20%, 50%) }
 
@@ -339,6 +358,7 @@ h2.herald, h3.signal {
 
 p.description {
 	margin: 30px 20px 30px;
+	font-size: 20px;
 }
 
 
