@@ -92,6 +92,23 @@ document.addEventListener('DOMContentLoaded', function() {
 	});
 });
 
+/*var Markdown = new Remarkable({
+	html: true,
+	xhtmlOut: false,
+	highlight: function(str, lang) {
+		str = str.replace(/^(    )+/gm, function(m, group) { return m.replace(/    /g, '\t') });
+		return '<code class="block">' + str + '</code>'
+	}
+});
+
+Markdown.use(function(system, opts) {
+	system.render = function (src, env) {
+		env = env || {};
+// 		debugger;
+		return this.renderer.render(this.parse(src, env), this.options, env);
+	};
+});*/
+
 
 var App = {
 	init: function() {
@@ -119,9 +136,14 @@ var App = {
 			
 			var interface = WAAPI.interfaces[name];
 			var view = document.querySelector('article.interface');
-			view.innerHTML = Render.Interface(interface);
+// 			var ast = Markdown.Reader.parse(interface.article);
+// 			view.innerHTML = Markdown.Writer.render(ast); // Render.Interface(interface);
+// 			view.innerHTML = Markdown.render(interface.article);
+			view.innerHTML = interface.article;
 			Array.prototype.forEach.call(view.querySelectorAll('code.block'), CodeHighlight);
+			
 			View.Screen('interface');
+			if(window.scrollY > view.offsetTop) window.scrollTo(0, view.offsetTop);
 		}
 	}
 };
@@ -213,11 +235,6 @@ Router.pages({
 
 
 
-// document.addEventListener('DOMContentLoaded', function() {
-// 	var blocks = document.querySelectorAll('code');
-// 	var iter = blocks.length;
-// 	while(iter-->0) CodeHighlight(blocks[iter]);
-// });
 
 function CodeHighlight(block) {
 	// Need to preserve the original HTML-ified sourcecode,

@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="initial-scale=1, width=device-width">
 	<base href="/">
-	<title>Web Animations API</title>
+	<title>Web Animations API Documentation</title>
 	
 	<script type="application/ld+json">
 		{
@@ -16,7 +16,7 @@
 			"url": "http://waapi.io/interface/KeyframeEffect",
 			"about": {
 				"@type": "Thing",
-				"name": "Web Animations API",
+				"name": "Web Animations API Documentation",
 				"description": "API of a specification for synchronisation and timing of changes to the presentation of a Web page"
 			},
 			"inLanguage": "en-GB",
@@ -46,6 +46,7 @@
 	<script src="/lib/highlighter.js"></script>
 	<script src="/lib/acorn.js"></script>
 	<script src="/lib/webidl2.js"></script>
+	<script src="/lib/remarkable.js"></script>
 	<script src="/js/choreo.js"></script>
 	<script src="/js/app.js"></script>
 
@@ -53,16 +54,16 @@
 <body>
 	<!-- Markup -->
 	<header class="search">
-		<form class="search">
+		<h1><a href="/">Web Animations API Documentation</a></h1>
+		<!-- <form class="search">
 			<span class="icon-search"></span>
 			<input class="search" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Search…">
 			<button class="clear"></button>
-		</form>
-		<h1><a href="/">Web Animations API</a></h1>
+		</form> -->
 	</header>
 	
 	<header class="banner">
-		Hi!   Cheers for visiting. Still working on this though.   Below you can see a sneak peek of what is to come.
+		Hi!   Welcome to the Web Animations API Documentation site. This is still work in progress, if you have any feedback please contact me (<a href="http://twitter.com/Nexii" target="_blank">@Nexii</a>).   Below you can see a sneak peek of what is to come.
 	</header>
 	
 	<article class="view intro no-layout">
@@ -70,128 +71,17 @@
 	</article>
 	
 	<article class="view interface no-layout">
-		<h2 class="herald"></h2>
-		<div class="mirror introduction">
-			<div class="prose"></div>
-			<div class="code"></div>
-		</div>
-		
-		
-		<!--
-		<h2 class="herald">KeyframeEffect</h2>
-		<div class="mirror">
-			<div class="prose">
-				<p class="description">
-					KeyframeEffect updates CSS properties of a target element over time.<br>
-					<br>
-					They sit within an Animation and work with the global clock known as the DocumentTimeline.
-				</p>
-			</div>
-			<div class="code">
-				<code class="block spec">
-new KeyframeEffect(target, frames, options);
-				</code>
-				<code class="block spec">
-var target = Element || null;
-var frames = [Keyframe, Keyframe /*, ... */];
-var options = Number || KeyframeEffectOptions;
-				</code>
-			</div>
-		</div>
-
-		<h3 class="signal">Arguments</h3>
-		<div class="mirror">
-			<div class="prose">
-				<ol class="arguments">
-					<li>
-						<high-light group="target"><h4 class="argument">target</h4>
-						is the Element being animated.</high-light><br><br>
-						Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.
-					<li>
-						<high-light group="frames"><h4 class="argument">frames</h4>
-						is an array of Keyframes to use.</high-light>
-					<li>
-						<h4 class="argument">options</h4>
-						is either a Number specifying duration in milliseconds OR <high-light group="options.obj">an Object with properties specifying timing and behaviour of the effect</high-light>.<br>
-						<br>
-						For a list & description of the properties see KeyframeEffectOptions.
-						
-				</ol>
-				<p class="description">
-				</p>
-			</div>
-			<div class="code">
-				<code class="block highlight usage">
-/// Constructing a KeyframeEffect
-
-// Grab a DOM element to animate
-<high-light group="target">var target = document.querySelector('.my-target');</high-light>
-
-// Keyframes for fade out, start from `opacity: 1` and end at `opacity: 0`
-<high-light group="frames">var frames = [
-	{
-		opacity: 1
-	},
-	{
-		opacity: 0
-	}
-];</high-light>
-
-<high-light group="options.obj">var options = {
-	duration: 300,	// Play effect for 300ms,
-	delay: 100,		// delay it for 100ms,
-	fill: 'both'	// keep CSS active beyond animation (until `.cancel()` is called)
-};</high-light>
-
-var <high-light group="node">effect</high-light> = new KeyframeEffect(<high-light group="target">target</high-light>, <high-light group="frames">frames</high-light>, <high-light group="options.obj">options</high-light>);
-				</code>
-				<code class="block highlight usage">
-/// You can use the effect by putting it directly into an animation
-var animation = document.timeline.play(<high-light group="node">effect</high-light>);
-				</code>
-				<code class="block highlight usage">
-/// Or alternatively you can composite it with other effects
-var group = new GroupEffect([
-	<high-light group="node">effect</high-light>,
-	otherEffect
-]);
-
-var animation = document.timeline.play(group);
-				</code>
-			</div>
-		</div>
-
-		<h3 class="signal">Examples</h3>
-		<div class="mirror">
-			<div class="code">
-				<details class="code" open>
-					<summary>Opacity fade out example</summary>
-					<code class="block">
-var fadeOutEffect = new KeyframeEffect(document.querySelector('div.test'), [
-	{ opacity: 1 },
-	{ opacity: 0 }
-], 500);
-					</code>
-				</details>
-			</div>
-		</div>
-		-->
+		<!-- interfaces.article -->
 	</article>
 	
 	<article class="view no-layout">
 		
 	</article>
 	
-<!-- 		<section class="paper index">
-			<h2>Overview</h2>
-			<a class="row" href="?API=Animation"><span>Animation</span></a>
-			<br>
-			<a class="row" href="?API=KeyframeEffect"><span>KeyframeEffect</span></a>
-			<a class="row" href="?API=GroupEffect"><span>GroupEffect</span></a>
-			<a class="row" href="?API=SequenceEffect"><span>SequenceEffect</span></a>
-			<br>
-			<a class="row" href="?API=DocumentTimeline"><span>document.timeline</span></a>
-			<br>
-			<a class="row" href="?API=Element.animate"><span>element.animate</span></a>
-			<a class="row" href="?API=Element.getAnimations"><span>element.getAnimations</span></a>
-		</section> -->
+<!-- 	<footer class="page">
+		<h1 class="herald">test</h1>
+		About/Description
+		Copyright / This is a opensource things, git repo thing
+		Links to all the pages
+		About me (contacts/twitter)
+	</footer> -->

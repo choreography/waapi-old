@@ -47,6 +47,15 @@ header.banner {
 	font-size: 16px;
 }
 
+/*
+	Page Footer
+*/
+
+footer.page {
+	font-size: 16px;
+}
+
+
 
 
 
@@ -93,8 +102,12 @@ header.search {
 header.search h1 {
 	display: inline-block;
 	vertical-align: middle;
-	margin-left: 20px;
+	margin: 10px 20px;
 	font-size: 22px;
+}
+
+header.search h1 a:hover {
+	text-decoration: underline;
 }
 
 form.search {
@@ -300,6 +313,10 @@ div.prose + div.code code.block {
 	border-radius: 6px 0 0 6px;
 }
 
+div.code pre {
+	margin: 0;
+}
+
 
 
 
@@ -338,25 +355,22 @@ div.prose {
 	padding: 0;
 }
 
-h2.herald {
+h1.herald {
 	padding: 50px 20px 20px;
 	font-size: 24px;
 }
 
-h3.signal {
+h2.signal {
 	display: block;
 	padding: 30px 20px 10px;
 	font-size: 22px;
 }
 
-h2.herald, h3.signal {
-/* 	background: hsl(215, 50%, 60%);
-	color: white; */
-	
+h1.herald, h2.signal {
 	color: hsl(0, 0%, 10%);
 }
 
-p.description {
+article.interface p {
 	margin: 30px 20px 30px;
 	font-size: 20px;
 }
@@ -377,12 +391,14 @@ ol.arguments li + li {
 	margin-top: 1.5em;
 }
 
-ol.arguments li h4 {
+ol.arguments li h3 {
 	display: inline;
 	font-family: Inconsolata;
+	color: hsl(120, 20%, 50%);
 }
 
-ol.arguments li h4:before {
+
+ol.arguments li h3:before {
 	position: absolute;
 	top: 0;
 	left: 20px;
@@ -392,11 +408,11 @@ ol.arguments li h4:before {
 
 
 
-ol.arguments .syntax {
+div.prose ul .syntax {
 	font-size: 15px
 }
 
-ol.arguments .type {
+div.prose ul .type {
 	margin-left: .8em;
 	font-size: 13px;
 }

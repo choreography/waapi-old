@@ -43,6 +43,79 @@ server.use(function* (next) {
 	yield next;
 });
 
+function readFile(path) {
+	return new Promise(function(resolve, reject) {
+		fs.readFile(path, { encoding: 'utf8' }, function(err, data) {
+			if(err) reject(err); else resolve(data);
+		})
+	})
+}
+
+function readJSON(path) {
+	return new Promise(function(resolve, reject) {
+		fs.readFile(path, { encoding: 'utf8' }, function(err, data) {
+			if(err) reject(err);
+			var json;
+			try { json = JSON.parse(data) }
+			catch(e) { return reject(e) }
+			resolve(json);
+		})
+	})
+}
+
+function inlineDocumentation(json) {
+	var articles = Object.keys(json.interfaces)
+	.filter(function(interface) { return 'article' in json.interfaces[interface] });
+	
+	var docs = Object.keys(json.interfaces)
+	.filter(function(interface) { return 'documentation' in json.interfaces[interface] });
+	
+	return Promise.all([
+		Promise.all(
+			articles.map(function(interface) {
+				var path = json.interfaces[interface].article;
+				return readFile(__dirname + '/frontend/' + path);
+			})
+		).then(function(files) {
+			articles.forEach(function(key, index) {
+				var file = files[index];
+				var interface = json.interfaces[key];
+				interface.article = file;
+			});
+		}),
+		
+		Promise.all(
+			docs.map(function(interface) {
+				var path = json.interfaces[interface].documentation;
+				return readJSON(__dirname + '/frontend/' + path);
+			})
+		).then(function(files) {
+			docs.forEach(function(key, index) {
+				var file = files[index];
+				var interface = json.interfaces[key];
+				interface.documentation = file;
+			});
+		})
+	]);
+}
+
+
+server.use(function* (next) {
+	if(this.request.path && this.request.path === '/documentation.json')
+	{
+		var docs = yield readJSON(__dirname + '/frontend/documentation.json');
+		yield inlineDocumentation(docs);
+		docs.inlined = true;
+		this.body = docs;
+		
+		//if(process.env.NODE_ENV === 'production');
+		//else yield next;
+	}
+	
+	else yield next;
+})
+
+
 
 
 /// Define a static directory to serve

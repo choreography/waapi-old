@@ -1,0 +1,96 @@
+<h1 class="herald">KeyframeEffect</h1>
+<div class="mirror">
+	<div class="prose">
+		<p class="description">
+			KeyframeEffect updates CSS properties of a target element over time.<br>
+			<br>
+			They sit within an Animation and work with the global clock known as the DocumentTimeline.
+		</p>
+	</div>
+	<div class="code">
+		<code class="block spec">
+new KeyframeEffect(target, frames, options);
+		</code>
+		<code class="block spec">
+var target = Element || null;
+var frames = [Keyframe, Keyframe /*, ... */];
+var options = Number || KeyframeEffectOptions;
+		</code>
+	</div>
+</div>
+
+<h2 class="signal">Arguments</h2>
+<div class="mirror">
+	<div class="prose">
+		<ol class="arguments">
+			<li>
+				<high-light group="target"><h3 class="argument">target</h3>
+				is the Element being animated.</high-light><br><br>
+				Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.
+			<li>
+				<high-light group="frames"><h3 class="argument">frames</h3>
+				is an array of Keyframes to use.</high-light>
+			<li>
+				<h3 class="argument">options</h3>
+				is either a Number specifying duration in milliseconds OR <high-light group="options.obj">an Object with properties specifying timing and behaviour of the effect</high-light>.<br>
+				<br>
+				For a list & description of the properties see KeyframeEffectOptions.
+		</ol>
+		<p class="description">
+		</p>
+	</div>
+	<div class="code">
+		<code class="block highlight usage">
+/// Constructing a KeyframeEffect
+
+// Grab a DOM element to animate
+<high-light group="target">var target = document.querySelector('.my-target');</high-light>
+
+// Keyframes for fade out, start from `opacity: 1` and end at `opacity: 0`
+<high-light group="frames">var frames = [
+	{
+		opacity: 1
+	},
+	{
+		opacity: 0
+	}
+];</high-light>
+
+<high-light group="options.obj">var options = {
+	duration: 300,	// Play effect for 300ms,
+	delay: 100,		// delay it for 100ms,
+	fill: 'both'	// keep CSS active beyond animation (until `.cancel()` is called)
+};</high-light>
+
+var <high-light group="node">effect</high-light> = new KeyframeEffect(<high-light group="target">target</high-light>, <high-light group="frames">frames</high-light>, <high-light group="options.obj">options</high-light>);
+		</code>
+		<code class="block highlight usage">
+/// You can use the effect by putting it directly into an animation
+var animation = document.timeline.play(<high-light group="node">effect</high-light>);
+		</code>
+		<code class="block highlight usage">
+/// Or alternatively you can composite it with other effects
+var group = new GroupEffect([
+	<high-light group="node">effect</high-light>,
+	otherEffect
+]);
+
+var animation = document.timeline.play(group);
+		</code>
+	</div>
+</div>
+
+<h2 class="signal">Examples</h2>
+<div class="mirror">
+	<div class="code">
+		<details class="code" open>
+			<summary>Opacity fade out example</summary>
+			<code class="block">
+var fadeOutEffect = new KeyframeEffect(document.querySelector('div.test'), [
+	{ opacity: 1 },
+	{ opacity: 0 }
+], 500);
+			</code>
+		</details>
+	</div>
+</div>
