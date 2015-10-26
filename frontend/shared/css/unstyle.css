@@ -4,9 +4,10 @@
 	Inspired by 	normalize.css	(MIT License | git.io/normalize)
 */
 
-section, article, header, main, footer, aside, details, nav, menu, figure, figcaption { display: block; }
+section, article, header, main, footer, aside, details, summary, nav, menu, figure, figcaption { display: block; }
 canvas, video, audio, progress { vertical-align: baseline; display: inline-block; }
 template, audio:not([controls]), [hidden], datalist { display: none; height: 0; }
+summary::-webkit-details-marker { display: none }
 button { width: auto; overflow: visible; }
 button, input, select, textarea { border-radius: 0; margin: 0; font-size: 100%; line-height: normal; vertical-align: middle; }
 button::-moz-focus-inner, input::-moz-focus-inner { padding: 0; border: 0; }

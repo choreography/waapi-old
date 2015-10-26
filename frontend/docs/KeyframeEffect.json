@@ -1,30 +1,21 @@
 {
-	"intro": {
-		"title": "KeyframeEffect",
-		"desc": "KeyframeEffect updates CSS properties of a single DOM element over time.\n\nThey sit within an Animation and work with its' global clock (known as the DocumentTimeline).",
-		"spec": {
-			"function": "var effect = new KeyframeEffect(target, frames, options);",
-			"parameters": "var target = Element || null;\nvar frames = [Keyframes, Keyframes /*, ... */];\nvar options = Number || KeyframeEffectOptions;"
-		}
+	"@context": "http://schema.org/",
+	"@type": "APIReference",
+	"name": "KeyframeEffect",
+	"description": "KeyframeEffect updates CSS properties of a target element over time",
+	"keywords": "keyframeeffect,web animations api",
+	"url": "http://waapi.io/interface/KeyframeEffect",
+	"about": {
+		"@type": "Thing",
+		"name": "Web Animations API Documentation",
+		"description": "API of a specification for synchronisation and timing of changes to the presentation of a Web page"
 	},
-	"args": {
-		"entries": [
-			"<high-light group=\"target\"><h4 class=\"argument\">target</h4> is the Element being animated.</high-light><br><br>Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.",
-			"<high-light group=\"frames\"><h4 class=\"argument\">frames</h4> is an array of Keyframes to use.</high-light>",
-			"<h4 class=\"argument\">options</h4> is either a Number specifying duration in milliseconds OR <high-light group=\"options.obj\">an Object with properties specifying timing and behaviour of the effect.</high-light><br><br>For a list & description of the properties see KeyframeEffectOptions."
-		],
-		"usage": [
-			"/// Constructing a KeyframeEffect\n\n\n// Grab a DOM element to animate\n<high-light group=\"target\">var target = document.querySelector('.my-target');</high-light>\n\n// Keyframes for fade out, start from `opacity: 1`\n// and end at `opacity: 0`\n<high-light group=\"frames\">var frames = [\n\t{\n\t\topacity: 1\n\t},\n\t{\n\t\topacity: 0\n\t}\n];</high-light>\n\n<high-light group=\"options.obj\">var options = {\n\tduration: 300,\t// Play effect for 300ms,\n\tdelay: 100,\t\t// delay it for 100ms,\n\tfill: 'both'\t// keep CSS active beyond animation\n\t\t\t\t\t// (until `.cancel()` is called)\n};</high-light>\n\nvar <high-light group=\"node\">effect</high-light> = new KeyframeEffect(<high-light group=\"target\">target</high-light>, <high-light group=\"frames\">frames</high-light>, <high-light group=\"options.obj\">options</high-light>);"
-		]
-	},
-	"usage": [
-		{
-			"caption": "You can use the effect by putting it directly into an animation",
-			"code": "var animation = document.timeline.play(<high-light group=\"node\">effect</high-light>);"
-		},
-		{
-			"caption": "Or alternatively you can composite it with other effects",
-			"code": "var group = new <a class=\"inline\" href=\"interface/GroupEffect\">GroupEffect</a>([\n\t<high-light group=\"node\">effect</high-light>,\n\totherEffect\n]);\n\nvar animation = document.timeline.play(group);"
-		}
-	]
+	"inLanguage": "en-GB",
+	"targetPlatform": "Web",
+	"editor": {
+		"@type": "Person",
+		"name": "Martin Pitt",
+		"jobTitle": "Web Developer",
+		"url": "http://martinpitt.co.uk"
+	}
 }

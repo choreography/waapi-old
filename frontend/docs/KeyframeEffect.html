@@ -2,8 +2,9 @@
 <div class="mirror">
 	<div class="prose">
 		<p class="description">
-			KeyframeEffect updates CSS properties of a target element over time.<br>
-			<br>
+			KeyframeEffect updates CSS properties of a target element over time.
+		</p>
+		<p class="description">
 			They sit within an Animation and work with the global clock known as the DocumentTimeline.
 		</p>
 	</div>
@@ -14,7 +15,7 @@ new KeyframeEffect(target, frames, options);
 		<code class="block spec">
 var target = Element || null;
 var frames = [Keyframe, Keyframe /*, ... */];
-var options = Number || KeyframeEffectOptions;
+var options = Number || <a class="inline" href="/interface/KeyframeEffectOptions">KeyframeEffectOptions</a>;
 		</code>
 	</div>
 </div>
@@ -34,10 +35,8 @@ var options = Number || KeyframeEffectOptions;
 				<h3 class="argument">options</h3>
 				is either a Number specifying duration in milliseconds OR <high-light group="options.obj">an Object with properties specifying timing and behaviour of the effect</high-light>.<br>
 				<br>
-				For a list & description of the properties see KeyframeEffectOptions.
+				For a list & description of the properties see <a class="inline" href="/interface/KeyframeEffectOptions">KeyframeEffectOptions</a>.
 		</ol>
-		<p class="description">
-		</p>
 	</div>
 	<div class="code">
 		<code class="block highlight usage">

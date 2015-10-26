@@ -67,7 +67,7 @@ a.inline:after {
 */
 
 html {
-	font: 22px/1.3 Lato, Arial, sans-serif;
+	font: 18px/1.6 Lato, Arial, sans-serif;
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: subpixel-antialiased;
 }

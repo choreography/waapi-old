@@ -1,47 +1,8 @@
 {
 	"interfaces": {
-		"KeyframeEffect": {
-			"article": "docs/KeyframeEffect.html"
-		},
-		
-		"GroupEffect": {
-			"intro": {
-				"title": "GroupEffect",
-				"desc": "Provides a way to group multiple animation effects together, similar to <a class=\"inline\" href=\"/interface/SequenceEffect\">SequenceEffect</a>.<br><br>When animated it synchronises to start all the effects all at the same time.",
-				"spec": {
-					"function": "var group = new GroupEffect(effects);",
-					"parameters": "var effects = [<a class=\"inline\" href=\"/interface/KeyframeEffect\">KeyframeEffect</a>, GroupEffect, <a class=\"inline\" href=\"/interface/SequenceEffect\">SequenceEffect</a> /*, ... */];"
-				}
-			},
-			"args": {
-				"entries": [
-					"<high-light group=\"effects\"><h4 class=\"argument\">effects</h4> are a group of animations played together at once.</high-light>"
-				],
-				"usage": [
-					"/// Constructing and playing a GroupEffect made of two effects\n\nvar element1 = document.querySelector('.animate1');\nvar element2 = document.querySelector('.animate2');\n\nvar keyframes = [ { opacity: 1 }, { opacity: 0 } ];\n\nvar timings = { duration: 500 };\n\n<high-light group=\"effects\">var effects = [\n\tnew KeyframeEffect(element1, keyframes, timings),\n\tnew KeyframeEffect(element2, keyframes, timings)\n];</high-light>\n\nvar group = new GroupEffect(<high-light group=\"effects\">effects</high-light>);\ndocument.timeline.play(group);"
-				]
-			}
-		},
-		
-		"SequenceEffect": {
-			"intro": {
-				"title": "SequenceEffect",
-				"desc": "Provides a way to group multiple animation effects together, similar to <a class=\"inline\" href=\"/interface/GroupEffect\">GroupEffect</a>.<br><br>When animated it synchronises effects to play one after the other has finished, as per the order defined from the <high-light group=\"effects\">effects</high-light> parameter.",
-				"spec": {
-					"function": "var group = new SequenceEffect(effects);",
-					"parameters": "var effects = [<a class=\"inline\" href=\"/interface/KeyframeEffect\">KeyframeEffect</a>, <a class=\"inline\" href=\"/interface/GroupEffect\">GroupEffect</a>, SequenceEffect /*, ... */];"
-				}
-			},
-			"args": {
-				"entries": [
-					"<high-light group=\"effects\"><h4 class=\"argument\">effects</h4> are a group of animations played in order.</high-light>"
-				],
-				"usage": [
-					"/// Constructing and playing a SequenceEffect made of two effects\n\nvar element1 = document.querySelector('.animate1');\nvar element2 = document.querySelector('.animate2');\n\nvar keyframes = [ { opacity: 1 }, { opacity: 0 } ];\n\nvar timings = { duration: 500 };\n\n<high-light group=\"effects\">var effects = [\n\tnew KeyframeEffect(element1, keyframes, timings),\n\tnew KeyframeEffect(element2, keyframes, timings)\n];</high-light>\n\nvar group = new SequenceEffect(<high-light group=\"effects\">effects</high-light>);\ndocument.timeline.play(group);"
-				]
-			}
-		},
-		
-		"KeyframeEffectOptions": {}
+		"KeyframeEffect": "/docs/KeyframeEffect.html",
+		"GroupEffect": "/docs/GroupEffect.html",
+		"SequenceEffect": "/docs/SequenceEffect.html",
+		"KeyframeEffectOptions": "/docs/KeyframeEffectOptions.html"
 	}
 }

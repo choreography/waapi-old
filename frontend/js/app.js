@@ -1,65 +1,23 @@
-Promise.all([
-	fetch('/web-animations.idl')
-	.then(function(response) { return response.text() })
-	.then(function(text) { return WebIDL2.parse(text) })
-	.then(function(idl) {
-		window.IDL = {
-			ast: idl,
-			interfaces: {}
-		};
-		
-		var iter = idl.length;
-		while(iter-->0) {
-			var node = idl[iter];
-			if(node.type && node.type === 'interface')
-			{
-				var interface = IDL.interfaces[node.name] = {};
-				
-				node.extAttrs.forEach(function(extAttr) {
-					if(extAttr.name === 'Constructor')
-					{
-						interface.constructor = {};
-						extAttr.arguments.forEach(function(arg) {
-							interface.constructor[arg.name] = arg;
-						});
-					}
-				});
-				
-				node.members.forEach(function(member) {
-					if(member.type === 'attribute')
-					{
-						if(!interface.attributes) interface.attributes = {};
-						interface.attributes[member.name] = member;
-					}
-					
-					else if(member.type === 'operation')
-					{
-						if(!interface.methods) interface.methods = {};
-						interface.methods[member.name] = member;
-					}
-					
-					else if(member.type === 'constant')
-					{
-						if(!interface.constants) interface.constants = {};
-						interface.constants[member.name] = member;
-					}
-					
-					else console.error('unknown member.type', member);
-				});
-			}
-		}
-	}),
-	
-	fetch('/documentation.json')
-	.then(function(response) { return response.json() })
-	.then(function(docs) { window.WAAPI = docs })
-])
+new FontFaceObserver('Lato', {}).check().then(function() {
+	document.documentElement.classList.add('font-lato');
+});
+
+new FontFaceObserver('Inconsolata', {}).check().then(function() {
+	document.documentElement.classList.add('font-inconsolata');
+});
+
+
+
+/// Fetch & Parse Docs
+fetch('/documentation.json')
+.then(function(response) { return response.json() })
+.then(function(docs) { window.WAAPI = docs })
 .then(function() {
 	/// Kick off application and routing
 	App.init();
 	Router.init();
-}, function(error) {
-// 	console.error(error);
+}, function(err) {
+	console.error(err);
 });
 
 
@@ -76,6 +34,7 @@ function onLink(event) {
 		}
 		return;
 	}
+	
 	event.preventDefault();
 	
 	event.target.classList.add('tapped');
@@ -83,32 +42,9 @@ function onLink(event) {
 	event.target.classList.remove('tapped');
 }
 
-document.documentElement.style.display = 'none';
 document.addEventListener('DOMContentLoaded', function() {
 	View.init();
-	
-	requestAnimationFrame(function() {
-		document.documentElement.style.display = '';
-	});
 });
-
-/*var Markdown = new Remarkable({
-	html: true,
-	xhtmlOut: false,
-	highlight: function(str, lang) {
-		str = str.replace(/^(    )+/gm, function(m, group) { return m.replace(/    /g, '\t') });
-		return '<code class="block">' + str + '</code>'
-	}
-});
-
-Markdown.use(function(system, opts) {
-	system.render = function (src, env) {
-		env = env || {};
-// 		debugger;
-		return this.renderer.render(this.parse(src, env), this.options, env);
-	};
-});*/
-
 
 var App = {
 	init: function() {
@@ -118,108 +54,62 @@ var App = {
 	Intro: {
 		route: function() {
 			console.log('%c[App.Intro] %cInit', 'color: #777', 'color: #000');
-			View.Screen('intro');
-			var interfaces = WAAPI.interfaces;
-			var view = document.querySelector('article.intro');
-			view.innerHTML = '<nav class="links">' + Object.keys(WAAPI.interfaces).map(function(name) { return '<a class="inline" href="/interface/' + name + '">' + name + '</a>' }).join('<br>') + '</nav>';
+			var view = document.querySelector('main.content');
+			
+			fetch('/docs/Default.html')
+			.then(function(response) { return response.text() })
+			.then(function(article) {
+				view.innerHTML = article;
+			});
 		}
 	},
 	
 	Interface: {
 		route: function(name) {
 			console.log('%c[App.Interface] %c' + name, 'color: #777', 'color: #000');
-			if(!name in WAAPI.interfaces)
+			var view = document.querySelector('main.content');
+			
+			if(!(name in WAAPI.interfaces))
 			{
-				// Welp.
+				view.innerHTML = '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>';
 				return;
 			}
 			
 			var interface = WAAPI.interfaces[name];
-			var view = document.querySelector('article.interface');
-// 			var ast = Markdown.Reader.parse(interface.article);
-// 			view.innerHTML = Markdown.Writer.render(ast); // Render.Interface(interface);
-// 			view.innerHTML = Markdown.render(interface.article);
-			view.innerHTML = interface.article;
-			Array.prototype.forEach.call(view.querySelectorAll('code.block'), CodeHighlight);
 			
-			View.Screen('interface');
-			if(window.scrollY > view.offsetTop) window.scrollTo(0, view.offsetTop);
+			/// Already served by server?
+			var header = view.querySelector('h1.herald');
+			if(header && header.innerText === name)
+			{
+				var codeblocks = view.querySelectorAll('code.block');
+				Array.prototype.forEach.call(codeblocks, CodeHighlight);
+				
+				return; /// Already served by server
+			}
+			
+			/// TODO: Loading bar?
+			
+			/// Fetch the article content
+			fetch(interface)
+			.then(function(response) {
+				if(response.status === 404)
+				{
+					view.innerHTML = '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>';
+				}
+
+				else return response.text();
+			})
+			.then(function(article) {
+				if(!article) return;
+				
+				view.innerHTML = article;
+				
+				var codeblocks = view.querySelectorAll('code.block');
+				Array.prototype.forEach.call(codeblocks, CodeHighlight);
+			});
 		}
 	}
 };
-
-
-var Render = {
-/*
-	"introduction": {
-		"title": "...",
-		"description": "...",
-		"spec": {
-			"function": "...",
-			"parameters": "..."
-		}
-	},
-	"arguments": {
-		"entries": [
-			"...",
-			"...",
-			"..."
-		],
-		"usage": "..."
-	},
-	"usage": ["...", "..."]
-*/
-	Interface: function /*
-		<h2 class="herald">{{=it.intro.title}}</h2>
-		<div class="mirror">
-			<div class="prose">
-				<p class="description">{{=it.intro.desc.replace(/\n/g, '<br>')}}</p>
-			</div>
-			<div class="code">
-				<code class="block spec">{{=it.intro.spec.function}}</code>
-				<code class="block spec">{{=it.intro.spec.parameters}}</code>
-			</div>
-		</div>
-		
-		{{? it.args }}
-		<h3 class="signal">Arguments</h3>
-		<div class="mirror">
-			<div class="prose">
-				<ol class="arguments">
-				{{~it.args.entries :value:index}}
-					<li class="{{=index}}">{{=value}}
-				{{~}}
-			</div>
-			<div class="code">
-				{{~it.args.usage :value:index}}
-				<code class="block usage">{{=value}}</code>
-				{{~}}
-			</div>
-		</div>
-		{{?}}
-		
-		{{? it.usage }}
-		<h3 class="signal">Usage</h3>
-		{{~it.usage :value:index}}
-		<p class="description">{{=value.caption}}</p>
-		<code class="block usage">{{=value.code}}</code>
-		{{~}}
-		{{?}}
-		
-		{{? it.examples }}
-		<h3 class="signal">Examples</h3>
-		{{~it.examples :value:index}}
-		<code class="block example">{{=value}}</code>
-		{{~}}
-		{{?}}
-		
-	*/ (it) { var out='<h2 class="herald">'+(it.intro.title)+'</h2><div class="mirror"><div class="prose"><p class="description">'+(it.intro.desc.replace(/\n/g, '<br>'))+'</p></div><div class="code"><code class="block spec">'+(it.intro.spec.function)+'</code><code class="block spec">'+(it.intro.spec.parameters)+'</code></div></div>';if(it.args){out+='<h3 class="signal">Arguments</h3><div class="mirror"><div class="prose"><ol class="arguments">';var arr1=it.args.entries;if(arr1){var value,index=-1,l1=arr1.length-1;while(index<l1){value=arr1[index+=1];out+='<li class="'+(index)+'">'+(value);} } out+='</div><div class="code">';var arr2=it.args.usage;if(arr2){var value,index=-1,l2=arr2.length-1;while(index<l2){value=arr2[index+=1];out+='<code class="block usage">'+(value)+'</code>';} } out+='</div></div>';}if(it.usage){out+='<h3 class="signal">Usage</h3>';var arr3=it.usage;if(arr3){var value,index=-1,l3=arr3.length-1;while(index<l3){value=arr3[index+=1];out+='<p class="description">'+(value.caption)+'</p><code class="block usage">'+(value.code)+'</code>';} } }if(it.examples){out+='<h3 class="signal">Examples</h3>';var arr4=it.examples;if(arr4){var value,index=-1,l4=arr4.length-1;while(index<l4){value=arr4[index+=1];out+='<code class="block example">'+(value)+'</code>';} } }return out; }
-}
-
-
-
-
-
 
 
 

@@ -33,25 +33,104 @@ var serve = require('koa-static');
 
 
 
-/// Redirect non-file-ish queries to index
 server.use(function* (next) {
-	if(this.request.path.length && /^(\/[\-_a-z0-9]+)+\/?$/i.test(this.request.path))
-	{
-		this.request.path = '/';
-	}
+// 	<!-- JSON-LD -->
+// 	<script type="application/ld+json"></script>
+	
+// 	<!-- Main Content -->
+	
+// 	'/': App.Intro,
+// 	'/interface/:name': App.Interface,
+	
+	
 	
 	yield next;
 });
 
+
+/// Redirect non-file-ish queries to index, otherwise load .html and .json content for articles
+server.use(function* (next) {
+	if(this.request.path.length && /^(\/[\-_a-z0-9]+)+\/?$/i.test(this.request.path))
+	{
+		var index = yield readFile(__dirname + '/frontend/index.html');
+		
+		var route = this.request.path.match(/^\/interface\/([\-_a-z0-9]+)$/i);
+		var exists = false;
+		if(route) exists = yield fileExists(__dirname + '/frontend/docs/' + route[1] + '.html');
+		
+		if(route)
+		{
+			if(exists)
+			{
+				var article = yield readFile(__dirname + '/frontend/docs/' + route[1] + '.html');
+				var jsonLD = yield readFile(__dirname + '/frontend/docs/' + route[1] + '.json');
+				
+				if(jsonLD) index = index.replace('<!-- JSON-LD -->', '<script type="application/ld+json">' + jsonLD + '</script>');
+				if(article)
+				{
+					article = article
+						.replace(/<code class="block([\w ]+)?">\s+/gm, '<code class="block$1">')
+						.replace(/\s+<\/code>/gm, '</code>');
+					index = index.replace('<!-- Main Content -->', article);
+				}
+
+				this.body = index;
+			}
+			
+			else
+			{
+				index = index.replace('<!-- Main Content -->', '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>');
+				
+				this.status = 404;
+				this.body = index;
+			}
+		}
+
+		else
+		{
+			this.request.path = '/';
+			yield next;
+		}
+	}
+	
+	else yield next;
+});
+
+
+server.use(function* (next) {
+	if(this.request.path === '/')
+	{
+		var article = yield readFile(__dirname + '/frontend/docs/Default.html');
+		var jsonLD = yield readFile(__dirname + '/frontend/docs/Default.json');
+
+		if(jsonLD) index = index.replace('<!-- JSON-LD -->', '<script type="application/ld+json">' + jsonLD + '</script>');
+		if(article) index = index.replace('<!-- Main Content -->', article);
+		
+		this.body = index;
+	}
+	
+	else yield next;
+});
+
+
+
+function fileExists(path) {
+	return new Promise(function(resolve, reject) {
+		fs.stat(path, function(err, stats) {
+			resolve(stats? stats.isFile(): false);
+		});
+	});
+}
+
 function readFile(path) {
 	return new Promise(function(resolve, reject) {
 		fs.readFile(path, { encoding: 'utf8' }, function(err, data) {
-			if(err) reject(err); else resolve(data);
+			/*if(err) reject(err); else*/ resolve(data);
 		})
 	})
 }
 
-function readJSON(path) {
+/*function readJSON(path) {
 	return new Promise(function(resolve, reject) {
 		fs.readFile(path, { encoding: 'utf8' }, function(err, data) {
 			if(err) reject(err);
@@ -63,57 +142,15 @@ function readJSON(path) {
 	})
 }
 
-function inlineDocumentation(json) {
-	var articles = Object.keys(json.interfaces)
-	.filter(function(interface) { return 'article' in json.interfaces[interface] });
-	
-	var docs = Object.keys(json.interfaces)
-	.filter(function(interface) { return 'documentation' in json.interfaces[interface] });
-	
-	return Promise.all([
-		Promise.all(
-			articles.map(function(interface) {
-				var path = json.interfaces[interface].article;
-				return readFile(__dirname + '/frontend/' + path);
-			})
-		).then(function(files) {
-			articles.forEach(function(key, index) {
-				var file = files[index];
-				var interface = json.interfaces[key];
-				interface.article = file;
-			});
-		}),
-		
-		Promise.all(
-			docs.map(function(interface) {
-				var path = json.interfaces[interface].documentation;
-				return readJSON(__dirname + '/frontend/' + path);
-			})
-		).then(function(files) {
-			docs.forEach(function(key, index) {
-				var file = files[index];
-				var interface = json.interfaces[key];
-				interface.documentation = file;
-			});
-		})
-	]);
-}
-
-
 server.use(function* (next) {
 	if(this.request.path && this.request.path === '/documentation.json')
 	{
 		var docs = yield readJSON(__dirname + '/frontend/documentation.json');
-		yield inlineDocumentation(docs);
-		docs.inlined = true;
 		this.body = docs;
-		
-		//if(process.env.NODE_ENV === 'production');
-		//else yield next;
 	}
 	
 	else yield next;
-})
+})*/
 
 
 

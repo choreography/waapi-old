@@ -31,12 +31,22 @@ var View = {
 		
 		Router.on('handled', function(ctx) {
 			console.log('%c[Router] %c' + ctx.request.path, 'color: #777', 'color: #000');
-// 			$('a[href].current').removeClass('current');
-// 			$('a[href]').each(function(index, $anchor) {
-// 				var href = $anchor.getAttribute('href');
-// 				if(ctx.request.path.indexOf(href) == 0) $anchor.classList.add('current');
-// 			});
+			var anchor = document.querySelectorAll('[href].current');
+			if(anchor) Array.prototype.forEach.call(anchor, function(node) { node.classList.remove('current') });
+			anchor = document.querySelectorAll('[href]');
+			if(anchor) Array.prototype.forEach.call(anchor, function(node) {
+				var href = node.getAttribute('href');
+				if(ctx.request.path.indexOf(href) === 0)
+				{
+					var a = href.split('/');
+					var b = ctx.request.path.split('/');
+					var iter = a.length;
+					while(iter-->0) if(a[iter] !== b[iter]) return false;
+					node.classList.add('current');
+				}
+			});
 		});
+		
 		
 		View.on('screen', function(ev) { console.log('%c[View.Screen] ' + '%c'+ev.older + ' %c» ' + '%c'+ev.newer, 'color: #777', 'color: #000', 'color: #aaa', 'color: #000'); });
 		View.on('popup', function(ev) { console.log('%c[View.Popup] ' + '%c'+ev.older + ' %c» ' + '%c'+ev.newer, 'color: #777', 'color: #000', 'color: #aaa', 'color: #000'); });

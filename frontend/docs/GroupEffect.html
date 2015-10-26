@@ -1,0 +1,61 @@
+<h1 class="herald">GroupEffect</h1>
+<div class="mirror">
+	<div class="prose">
+		<p class="description">
+			Provides a way to group multiple animation effects together, similar to <a class="inline" href="/interface/SequenceEffect">SequenceEffect</a>.<br>
+			<br>
+			When animated it synchronises to start <high-light group="effects">all the effects</high-light> all at the same time.
+		</p>
+	</div>
+	<div class="code">
+		<code class="block spec">
+var group = new GroupEffect(<high-light group="effects">effects</high-light>);
+		</code>
+		<code class="block spec">
+<high-light group="effects">var effects = [<a class="inline" href="/interface/KeyframeEffect">KeyframeEffect</a>, GroupEffect, <a class="inline" href="/interface/SequenceEffect">SequenceEffect</a> /*, ... */];</high-light>
+		</code>
+	</div>
+</div>
+
+<h2 class="signal">Arguments</h2>
+<div class="mirror">
+	<div class="prose">
+		<ol class="arguments">
+			<li>
+				<high-light group="effects"><h3 class="argument">effects</h3> are a group of animations played together at once.</high-light>
+		</ol>
+	</div>
+	<div class="code">
+		<code class="block highlight usage">
+/// Constructing and playing a GroupEffect made of two effects
+
+var element1 = document.querySelector('.animate1');
+var element2 = document.querySelector('.animate2');
+
+var keyframes = [ { opacity: 1 }, { opacity: 0 } ];
+
+var timings = { duration: 500 };
+
+<high-light group="effects">var effects = [
+	new KeyframeEffect(element1, keyframes, timings),
+	new KeyframeEffect(element2, keyframes, timings)
+];</high-light>
+
+var group = new GroupEffect(<high-light group="effects">effects</high-light>);
+document.timeline.play(group);
+		</code>
+	</div>
+</div>
+
+<!--
+<h2 class="signal">Examples</h2>
+<div class="mirror">
+	<div class="code">
+		<details class="code" open>
+			<summary>…</summary>
+			<code class="block">
+			</code>
+		</details>
+	</div>
+</div>
+-->

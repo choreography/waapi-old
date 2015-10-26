@@ -30,8 +30,33 @@ code high-light.on {
 
 html, body {
 	background: hsl(0, 0%, 95%);
-	font-size: 0;
+	font: 0 sans-serif;
 }
+
+html.font-lato { font-family: Lato, sans-serif }
+
+
+
+/*
+	Core Page Layout
+*/
+
+body {
+	display: flex;
+	flex-flow: row;
+	overflow: hidden;
+}
+
+div.page {
+	flex: auto;
+	overflow-y: scroll;
+}
+
+nav.guide {
+	flex: none;
+	width: 12em;
+}
+
 
 
 
@@ -40,88 +65,132 @@ html, body {
 */
 
 header.banner {
-	background: hsl(0, 0%, 20%);
-	border-bottom: 1px solid hsl(0, 0%, 5%);
 	padding: 6px 20px;
+	margin-left: auto;
+	border-bottom: 1px solid hsl(0, 0%, 5%);
+	background: hsl(0, 0%, 20%);
 	color: hsl(0, 0%, 95%);
 	font-size: 16px;
 }
 
-/*
-	Page Footer
-*/
-
-footer.page {
-	font-size: 16px;
-}
-
-
 
 
 
 /*
-	Intro View
+	Navigation Guide
 */
 
-article.intro nav.links {
-	padding: 20px;
-}
-
-article.intro a.inline {
-	display: inline-block;
-	font: 22px/1 Lato, sans-serif;
-}
-
-article.intro a.inline ~ a.inline {
-	margin-top: .5em;
-}
-
-
-
-
-/*
-	Interface View
-*/
-
-article.interface {
-	padding-bottom: 30vh; /* Some breathing room to allow user to center content in their view better */
-}
-
-
-
-
-/*
-	Search Header
-*/
-
-header.search {
+nav.guide {
 	background: hsl(0, 0%, 98%);
-	border-bottom: 1px solid hsl(0, 0%, 70%);
+	font-size: 18px;
+	line-height: 2;
 }
 
-header.search h1 {
+nav.guide details {}
+nav.guide details > summary {
+	position: relative;
+	padding-left: 1.6em;
+	cursor: pointer;
+	-webkit-user-select: none;
+}
+
+nav.guide details > summary:before {
+	position: absolute;
+	left: 5px;
+	top: 50%;
+	width: 1em;
+	height: .6em;
+	background: url(/assets/icon-expand.svg) center no-repeat;
+	content: '';
+	transition: transform 200ms ease-in-out;
+	transform: translateY(-35%) rotate(-90deg);
+	transform-origin: 50% 35%;
+}
+
+nav.guide details[open] > summary:before {
+	transform: translateY(-35%) rotate(0deg);
+}
+
+
+nav.guide details > a {
+	display: block;
+	padding-left: 2em;
+	-webkit-user-select: none;
+}
+
+nav.guide details > a.current {
+	background: hsla(30, 100%, 50%, 0.2);
+}
+
+nav.guide details > summary:focus,
+nav.guide details > a:focus {
+	outline: none;
+	background: hsl(30, 100%, 50%);
+}
+
+
+
+
+/*
+	Main Content
+*/
+
+main.content {
+	min-height: 100%;
+	padding-bottom: 30vh;/* Some breathing room to allow user to center content in their view better */
+}
+
+
+
+
+
+/*
+	Landmark Header
+*/
+
+header.landmark {
+	height: 56px;
+	/* border-bottom: 1px solid hsl(0, 0%, 70%); */
+	background: hsl(0, 0%, 98%);
+}
+
+header.landmark h1 {
 	display: inline-block;
 	vertical-align: middle;
-	margin: 10px 20px;
 	font-size: 22px;
+	line-height: 36px;
 }
 
-header.search h1 a:hover {
-	text-decoration: underline;
+header.landmark h1 a {
+	display: block;
+	padding: 10px 20px;
 }
+
+header.landmark:hover a { text-decoration: underline }
+header.landmark a.current { text-decoration: none }
+header.landmark a:focus { background: hsl(30, 100%, 50%); outline: none }
+
+
+
+
+
+/*
+	Search Form
+*/
 
 form.search {
-	display: inline-block;
+	display: block;
 	border-radius: 4px;
 	background: white;
-	margin: 10px 20px;
+	margin: 10px 5px;
 	vertical-align: middle;
 	font-size: 0;
+	white-space: nowrap;
 }
 
 input.search {
 	display: inline-block;
-	width: 200px;
+	width: calc(100% - 82px);
 	padding: 0 41px;
 	border: none;
 	border-radius: 4px;
@@ -129,8 +198,19 @@ input.search {
 	margin: 0 -36px;
 	outline: none;
 	background: none;
-	font: 18px/36px Lato, sans-serif;
+	font: 18px/36px sans-serif;
 }
+
+.font-lato input.search { font-family: Lato, sans-serif }
+
+
+form.search {
+	opacity: 0.3;
+	pointer-events: none;
+	cursor: initial;
+}
+
+
 
 input.search:focus {
 	box-shadow: inset 0 0 0 2px hsla(30, 100%, 50%, 0.8);
@@ -154,6 +234,13 @@ button.clear {
 	vertical-align: middle;
 }
 
+button.clear:focus {
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	margin: 8px;
+	background-color: hsl(30, 100%, 50%);
+}
 
 
 
@@ -168,44 +255,30 @@ code.block {
 	display: block;
 	overflow-x: scroll;
 	padding: 20px;
-	margin: 25px 0px;
+	margin: 10px 0px 25px;
 	background: hsl(215, 10%, 15%);
 	color: hsl(215, 10%, 95%);
-	font: 16px/1.2 Inconsolata;
+	font: 16px/1.2 monospace;
+	text-shadow: 0 1px 0 black;
 	-moz-tab-size: 4;
 	tab-size: 4;
 	vertical-align: top;
 }
-
-/* code.block + code.block {
-	margin-top: 25px;
-}
-code.block + code.block:before {
-	position: absolute;
-	top: -20px;
-	left: 5px;
-	right: 5px;
-	content: '';
-	display: block;
-	height: 15px;
-	padding-left: 20px;
-	border-radius: 20px;
-	background: hsl(215, 10%, 18%);
-	color: hsl(215, 10%, 50%);
-	font: 16px/10px Inconsolata;
-} */
+.font-inconsolata code.block { font-family: Inconsolata, monospace }
 
 code.block h2 { display: inline }
-
 .comment { color: hsl(120, 10%, 40%) }
-.keyword {color: hsl(0, 70%, 50%);}
-.syntax, .operator { color: hsl(0, 0%, 70%) }
+.keyword {color: hsl(0, 70%, 50%) }
+
+.syntax, .operator { color: hsl(0, 0%, 80%) }
 .entity { color: hsl(260, 30%, 60%) }
 .string { color: hsl(0, 40%, 60%) }
 .numeric { color: hsl(215, 50%, 60%) }
-.native { color: hsl(215, 50%, 95%) }
-.type { color: hsl(15, 25%, 34%) }
-.argument { color: hsl(120, 20%, 50%) }
+/* .native { color: hsl(215, 50%, 95%) } */
+/* .type { color: hsl(15, 25%, 34%) } */
+/* .argument { color: hsl(120, 20%, 50%) } */
+/* .dunno { color: hsl(190, 81%, 67%) } */
+/* .anotherfancycolor { color: hsl(80, 76%, 53%) } */
 
 .tab {
 	position: relative;
@@ -233,12 +306,6 @@ code.block h2 { display: inline }
 	content: '·';
 	color: hsla(0, 0%, 100%, 0.08);
 	font-size: 16px;
-}
-
-.newline:before {
-/* 	margin-left: .1em;
-	content: '\21B5';
-	color: hsla(0, 100%, 80%, 0.09); */
 }
 
 
@@ -281,26 +348,16 @@ details.code[open] summary {
 */
 
 div.mirror {
+	position: relative;
 	display: -webkit-flex;
 	display: flex;
-	
-	position: relative;
-/* 	background: hsl(0, 0%, 80%) url(assets/pattern-grid.png); */
 }
-
-/* @media only screen and (max-width: 800px) { div.mirror { margin: 0 } }
-@media only screen and (min-width: 1100px) { div.mirror { margin: 0 40px } } */
-
 
 div.prose,
 div.code {
 	-webkit-flex: 1 50%;
 	flex: 1 50%;
-	
-	display: inline-block;
 	overflow: hidden;
-	width: 100%;
-	vertical-align: top;
 	font-size: 20px;
 }
 
@@ -325,10 +382,10 @@ div.code { color: hsl(215, 10%, 85%); }
 
 
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1000px) {
 	div.mirror {
-		-webkit-flex-direction: column;
-		flex-direction: column;
+		-webkit-flex-flow: column;
+		flex-flow: column;
 	}
 	
 	div.prose + div.code,
@@ -370,9 +427,12 @@ h1.herald, h2.signal {
 	color: hsl(0, 0%, 10%);
 }
 
-article.interface p {
-	margin: 30px 20px 30px;
+main.content {
 	font-size: 20px;
+}
+
+main.content p {
+	margin: 10px 20px;
 }
 
 
@@ -393,18 +453,22 @@ ol.arguments li + li {
 
 ol.arguments li h3 {
 	display: inline;
-	font-family: Inconsolata;
+	font-family: monospace;
 	color: hsl(120, 20%, 50%);
 }
+
+.font-inconsolata ol.arguments li h3 { font-family: Inconsolata, monospace }
 
 
 ol.arguments li h3:before {
 	position: absolute;
 	top: 0;
 	left: 20px;
-	font-family: Lato, sans-serif;
+	font-family: sans-serif;
 	content: '•';
 }
+
+.font-lato ol.arguments li h3:before { font-family: Lato, sans-serif }
 
 
 
@@ -436,7 +500,7 @@ div.prose ul .type {
 @font-face { font-family: Inconsolata; src: url('/assets/Inconsolata-Regular.ttf'); }
 @font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/Inconsolata-Bold.ttf'); }
 
-code { white-space: pre }
+code {white-space: pre;}
 
 
 
