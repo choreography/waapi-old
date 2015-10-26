@@ -1,0 +1,7 @@
+{
+	"@context" : "http://schema.org",
+	"@type" : "WebSite",
+	"name" : "Web Animations API Documentation",
+	"alternateName" : "WAAPI Docs",
+	"url" : "https://waapi.io"
+}

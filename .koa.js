@@ -100,6 +100,7 @@ server.use(function* (next) {
 server.use(function* (next) {
 	if(this.request.path === '/')
 	{
+		var index = yield readFile(__dirname + '/frontend/index.html');
 		var article = yield readFile(__dirname + '/frontend/docs/Default.html');
 		var jsonLD = yield readFile(__dirname + '/frontend/docs/Default.json');
 
