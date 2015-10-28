@@ -1,17 +1,34 @@
 {
-	"@context": "http://schema.org/",
-	"@type": "APIReference",
-	"name": "KeyframeEffect",
-	"description": "KeyframeEffect updates CSS properties of a target element over time",
-	"keywords": "keyframeeffect,web animations api",
-	"url": "http://waapi.io/interface/KeyframeEffect",
-	"about": {
-		"@type": "Thing",
-		"name": "Web Animations API Documentation",
-		"description": "API of a specification for synchronisation and timing of changes to the presentation of a Web page"
+	"@context": "http://schema.org",
+	"@type": "WebSite",
+	"name": "Web Animations API Documentation",
+	"alternateName": "WAAPI Docs",
+	"url": "http://waapi.io",
+	"description": "Documentation for the API of the Web Animations spec",
+	"mainEntity": {
+		"@type": "WebPage",
+		"headline": "KeyframeEffect",
+		"breadcrumb": "Effects > KeyframeEffect",
+		"mainEntity": {
+			"@type": "APIReference",
+			"name": "KeyframeEffect",
+			"headline": "KeyframeEffect",
+			"image": "http://waapi.io/docs/KeyframeEffect.png",
+			"description": "KeyframeEffect updates CSS properties of a target element over time",
+			"keywords": "keyframeeffect,web animations api",
+			"url": "http://waapi.io/interface/KeyframeEffect",
+			"dateCreated": "2015-10-05",
+			"datePublished": "2015-10-26",
+			"dateModified": "2015-10-27T16:44:00",
+			"about": {
+				"@type": "Thing",
+				"name": "Web Animations API Documentation",
+				"description": "API of a specification for synchronisation and timing of changes to the presentation of a Web page"
+			},
+			"inLanguage": "en-GB",
+			"targetPlatform": "Web"
+		}
 	},
-	"inLanguage": "en-GB",
-	"targetPlatform": "Web",
 	"editor": {
 		"@type": "Person",
 		"name": "Martin Pitt",

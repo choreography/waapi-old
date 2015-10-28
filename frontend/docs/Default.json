@@ -1,7 +1,54 @@
 {
-	"@context" : "http://schema.org",
-	"@type" : "WebSite",
-	"name" : "Web Animations API Documentation",
-	"alternateName" : "WAAPI Docs",
-	"url" : "https://waapi.io"
+	"@context": "http://schema.org",
+	"@type": "WebSite",
+	"name": "Web Animations API Documentation",
+	"alternateName": "WAAPI Docs",
+	"url": "http://waapi.io",
+	"description": "Documentation for the API of the Web Animations spec",
+	"about": {
+		"@type": "APIReference",
+		"name": "Web Animations",
+		"headline": "Web Animations",
+		"description": "API of a specification for synchronisation and timing of changes to the presentation of a Web page",
+		"url": "https://w3c.github.io/web-animations/",
+		"datePublished": "2015-10-22",
+		"image": "https://w3c.github.io/web-animations/img/time-hierarchy-no-groups.svg",
+		"publisher": {
+			"@type": "Organization",
+			"name": "W3C",
+			"url": "http://www.w3.org/"
+		},
+		"editor": [
+			{
+				"@type": "Person",
+				"name": "Brian Birtles",
+				"affiliation": "Mozilla Japan",
+				"memberOf": "W3C"
+			},
+			{
+				"@type": "Person",
+				"name": "Shane Stephens",
+				"affiliation": "Google Inc",
+				"memberOf": "W3C"
+			},
+			{
+				"@type": "Person",
+				"name": "Alex Danilo",
+				"affiliation": "Google Inc",
+				"memberOf": "W3C"
+			},
+			{
+				"@type": "Person",
+				"name": "Tab Atkins",
+				"affiliation": "Google Inc",
+				"memberOf": "W3C"
+			}
+		]
+	},
+	"editor": {
+		"@type": "Person",
+		"name": "Martin Pitt",
+		"jobTitle": "Web Developer",
+		"url": "http://martinpitt.co.uk"
+	}
 }
