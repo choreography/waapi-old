@@ -35,9 +35,13 @@ var App = {
 			console.log('%c[App.Intro] %cInit', 'color: #777', 'color: #000');
 			var view = document.querySelector('main.content');
 			
+			NProgress.start();
+			
 			fetch('/docs/Default.html')
 			.then(function(response) { return response.text() })
 			.then(function(article) {
+				NProgress.done();
+				
 				view.innerHTML = article;
 			});
 		}
