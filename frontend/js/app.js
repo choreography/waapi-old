@@ -21,30 +21,6 @@ fetch('/documentation.json')
 });
 
 
-document.addEventListener('mouseup', onLink);
-document.addEventListener('touchend', onLink);
-
-function onLink(event) {
-	if(!(event.target.matches('a[href]') && event.target.host === location.host && !event.defaultPrevented))
-	{
-		if(event.type === 'touchend')
-		{
-			event.preventDefault();
-			event.target.click();
-		}
-		return;
-	}
-	
-	event.preventDefault();
-	
-	event.target.classList.add('tapped');
-	History.pushState(null, null, event.target.getAttribute('href'));
-	event.target.classList.remove('tapped');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-	View.init();
-});
 
 var App = {
 	init: function() {
@@ -125,7 +101,7 @@ Router.pages({
 
 
 
-
+/// Syntax Highlighting
 function CodeHighlight(block) {
 	// Need to preserve the original HTML-ified sourcecode,
 	// which may contain highlighting (<high-light>) and typographic syntax (<b>/<i>)
@@ -343,3 +319,138 @@ function CodeHighlight(block) {
 	
 	pseudo.render();
 }
+
+
+
+
+
+/// 'View' manages current visible element types and is responsible for showing/hiding  new & old elements
+var View = {
+	init: function initialiseViews() {
+		console.log('%c[View] %cInit', 'color: #777', 'color: #000');
+		
+		/// Fast click and handling of anchor tags (by immediately calling History .pushState/.replaceState)
+		document.addEventListener('mouseup', onLink);
+		document.addEventListener('touchend', onLink);
+		
+		function onLink(event) {
+			if(!(event.target.matches('a[href]') && event.target.host === location.host && !event.defaultPrevented))
+			{
+				if(event.type === 'touchend')
+				{
+					event.preventDefault();
+					event.target.click();
+				}
+				return;
+			}
+			
+			event.preventDefault();
+			
+			event.target.classList.add('tapped');
+			History.pushState(null, null, event.target.getAttribute('href'));
+			event.target.classList.remove('tapped');
+		}
+		
+		Router.on('handled', function(ctx) {
+			console.log('%c[Router] %c' + ctx.request.path, 'color: #777', 'color: #000');
+			var anchor = document.querySelectorAll('[href].current');
+			if(anchor) Array.prototype.forEach.call(anchor, function(node) { node.classList.remove('current') });
+			anchor = document.querySelectorAll('[href]');
+			if(anchor) Array.prototype.forEach.call(anchor, function(node) {
+				var href = node.getAttribute('href');
+				if(ctx.request.path.indexOf(href) === 0)
+				{
+					var a = href.split('/');
+					var b = ctx.request.path.split('/');
+					var iter = a.length;
+					while(iter-->0) if(a[iter] !== b[iter]) return false;
+					node.classList.add('current');
+				}
+			});
+		});
+		
+// 		View.on('screen', function(ev) { console.log('%c[View.Screen] ' + '%c'+ev.older + ' %c» ' + '%c'+ev.newer, 'color: #777', 'color: #000', 'color: #aaa', 'color: #000'); });
+	},
+	
+	/*
+	Screen: function(newer) {
+		if(newer === this._screen) return;
+		var older = this._screen;
+		this._screen = newer;
+		
+		if(newer)
+		{
+			var screen = document.querySelector('article.view.' + newer.replace(/ /g, '.'));
+			screen.classList.remove('no-layout');
+			document.body.classList.add('screen-' + newer.replace(/(\.| )/g, '-'));
+		}
+		
+		if(older)
+		{
+			var screen = document.querySelector('article.view.' + older.replace(/ /g, '.'));
+			screen.classList.add('no-layout');
+			document.body.classList.remove('screen-' + older.replace(/(\.| )/g, '-'));
+		}
+		
+		View.trigger('screen', { newer: newer, older: older });
+	},
+	*/
+	
+	trigger: function(event, object) {
+		if(event in this.events)
+		{
+			var subscribers = this.events[event];
+			for(var iter = 0, total = subscribers.length; iter < total; ++iter)
+			{
+				var subscriber = subscribers[iter];
+				subscriber.call(this, object);
+			}
+		}
+	},
+	
+	on: function(event, callback) {
+		if(!(event in this.events)) this.events[event] = [];
+		this.events[event].push(callback);
+	},
+	
+	events: {}
+};
+
+document.addEventListener('DOMContentLoaded', View.init);
+
+
+
+
+
+var Highlighter = {
+	init: function() {
+		document.addEventListener('mouseover', Highlighter);
+	},
+	
+	handleEvent: function(event) { this[event.type](event); },
+	mouseover: function(event) {
+		var highlight = event.target.closest('high-light');
+		if(!highlight) return;
+		var group = highlight.getAttribute('group');
+		if(!group) return;
+		
+		var elements = document.querySelectorAll('high-light[group="' + group + '"]');
+		var iter = elements.length;
+		while(iter-->0) elements[iter].classList.add('on');
+		
+		highlight.addEventListener('mouseleave', this);
+	},
+	
+	mouseleave: function(event) {
+		var highlight = event.target.closest('high-light');
+		var group = highlight.getAttribute('group');
+		if(!group) return;
+		var elements = document.querySelectorAll('high-light[group="' + group + '"]');
+		var iter = elements.length;
+		while(iter-->0) elements[iter].classList.remove('on');
+		
+		highlight.removeEventListener('mouseleave', this);
+	}
+}
+
+document.addEventListener('DOMContentLoaded', Highlighter.init);
