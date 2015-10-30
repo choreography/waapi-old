@@ -3,6 +3,7 @@ var fs = require('fs');
 var koa = require('koa');
 var server = koa();
 var serve = require('koa-static');
+var staticCache = require('koa-static-cache');
 var enforceHTTPS = require('koa-sslify');
 
 
@@ -148,6 +149,17 @@ server.use(function* (next) {
 	
 	else yield next;
 })*/
+
+
+
+if(process.env.NODE_ENV === 'production')
+{
+	app.use(staticCache('./frontend', {
+		buffer: true,
+		gzip: true
+// 		maxAge: 4 * 24 * 60 * 60
+	}));
+}
 
 
 
