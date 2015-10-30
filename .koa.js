@@ -154,7 +154,7 @@ server.use(function* (next) {
 
 if(process.env.NODE_ENV === 'production')
 {
-	app.use(staticCache('./frontend', {
+	server.use(staticCache('./frontend', {
 		buffer: true,
 		gzip: true
 // 		maxAge: 4 * 24 * 60 * 60
