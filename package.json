@@ -16,6 +16,7 @@
     "url": "http://martinpitt.co.uk/"
   },
   "scripts": {
+    "build": "sw-precache --root=frontend --replacePrefix \"/\" --static-file-globs='frontend/**/*.{js,html,json,css,png,jpg,gif,svg,ttf,woff}'",
     "start": "node .koa.js"
   },
   "repository": {
@@ -30,5 +31,8 @@
     "koa-sslify": "^1.0.0",
     "koa-static": "^1.4.9",
     "koa-static-cache": "^3.1.2"
+  },
+  "devDependencies": {
+    "sw-precache": "^2.2.0"
   }
 }
