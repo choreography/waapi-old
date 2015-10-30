@@ -61,6 +61,11 @@ nav.guide {
 @media only screen and (max-width: 700px) {
 	body {
 		flex-flow: column;
+		overflow-y: scroll;
+	}
+
+	div.page {
+		overflow-y: visible;
 	}
 	
 	nav.guide {
