@@ -348,6 +348,8 @@ var View = {
 				}
 				return;
 			}
+
+			if(event.target !== document.elementFromPoint(event.clientX, event.clientY)) return;
 			
 			event.preventDefault();
 			
