@@ -7,18 +7,77 @@ new FontFaceObserver('Inconsolata', {}).check().then(function() {
 });
 
 
+/// Progress Loader
+function progressLoader() {
+	NProgress.start();
+	
+	var onLoaded;
+	var soFar = 0;
+	var contentLength = 0;
+	var chunks = [];
+	
+	function Uint8ToString(u8a){
+		var CHUNK_SZ = 0x8000;
+		var c = [];
+		for (var i=0; i < u8a.length; i+=CHUNK_SZ) {
+			c.push(String.fromCharCode.apply(null, u8a.subarray(i, i+CHUNK_SZ)));
+		}
+		return c.join('');
+	}
+
+	function pump(reader, resolve, reject) {
+		reader.read().then(function(result) {
+			if(result.done)
+			{
+				NProgress.done();
+				var result = chunks.map(Uint8ToString).join('');
+				resolve(result);
+				return;
+			}
+			
+			var chunk = result.value;
+			soFar += chunk.byteLength;
+			if(contentLength) NProgress.set(soFar/contentLength);
+			
+			chunks.push(chunk);
+
+			pump(reader, resolve, reject);
+		});
+	}
+	
+	return function onFetch(response) {
+		soFar = 0;
+		contentLength = response.headers.get('Content-Length');
+		if(response.body && response.body.getReader)
+		{
+			var reader = response.body.getReader();
+			onLoaded = new Promise(function(resolve, reject) {
+				pump(reader, resolve, reject);
+			});
+
+			return onLoaded;
+		}
+		else
+		{
+			NProgress.done();
+			return response.text();
+		}
+	};
+}
+
+
 
 /// Fetch & Parse Docs
 NProgress.start();
 
 fetch('/documentation.json')
-.then(function(response) { return response.json() })
+.then(progressLoader())
+.then(function(response) { return JSON.parse(response) })
 .then(function(docs) { window.WAAPI = docs })
 .then(function() {
 	/// Kick off application and routing
 	App.init();
 	Router.init();
-	NProgress.done();
 }, function(err) {
 	console.error(err);
 });
@@ -35,13 +94,9 @@ var App = {
 			console.log('%c[App.Intro] %cInit', 'color: #777', 'color: #000');
 			var view = document.querySelector('main.content');
 			
-			NProgress.start();
-			
 			fetch('/docs/Default.html')
-			.then(function(response) { return response.text() })
+			.then(progressLoader())
 			.then(function(article) {
-				NProgress.done();
-				
 				view.innerHTML = article;
 			});
 		}
@@ -70,20 +125,17 @@ var App = {
 				return; /// Already served by server
 			}
 			
-			NProgress.start();
-			
 			/// Fetch the article content
 			fetch(interface)
 			.then(function(response) {
-				NProgress.done();
-
 				if(response.status === 404)
 				{
 					view.innerHTML = '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>';
 				}
-
-				else return response.text();
+				
+				else return response;
 			})
+			.then(progressLoader())
 			.then(function(article) {
 				if(!article) return;
 				
