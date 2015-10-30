@@ -3,17 +3,13 @@ var fs = require('fs');
 var koa = require('koa');
 var server = koa();
 var serve = require('koa-static');
+var enforceHTTPS = require('koa-sslify');
 
 
-/// Redirect HTTP to HTTPS
-/*server.use(function* (next) {
-	if(process.env.NODE_ENV === 'production' && this.request.headers['x-forwarded-proto'] != 'https')
-	{
-		this.redirect('https://' + this.request.hostname + this.request.originalUrl);
-	}
-	
-	else yield next;
-});*/
+/// Force HTTPS on all requests
+server.use(enforceHttps({
+	trustProtoHeader: true
+}));
 
 
 
