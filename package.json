@@ -1,31 +1,33 @@
 {
-	"name": "waapi-docs",
-	"version": "1.1.0",
-	"license": "MIT",
-	"description": "Documentation of the Web Animations API",
-	"homepage": "https://github.com/choreography/waapi",
-	"keywords": ["waapi", "web", "animations", "api"],
-	"author": {
-		"name": "Martin Pitt",
-		"email": "martin.r.pitt@gmail.com",
-		"url": "http://martinpitt.co.uk/"
-	},
-	
-	"scripts": {
-		"start": "node .koa.js"
-	},
-
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/choreography/waapi.git"
-	},
-	
-	"bugs": {
-		"url": "https://github.com/choreography/waapi/issues"
-	},
-
-	"dependencies": {
-		"koa": "^0.21.0",
-		"koa-static": "^1.4.9"
-	}
+  "name": "waapi-docs",
+  "version": "1.1.0",
+  "license": "MIT",
+  "description": "Documentation of the Web Animations API",
+  "homepage": "https://github.com/choreography/waapi",
+  "keywords": [
+    "waapi",
+    "web",
+    "animations",
+    "api"
+  ],
+  "author": {
+    "name": "Martin Pitt",
+    "email": "martin.r.pitt@gmail.com",
+    "url": "http://martinpitt.co.uk/"
+  },
+  "scripts": {
+    "start": "node .koa.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/choreography/waapi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/choreography/waapi/issues"
+  },
+  "dependencies": {
+    "koa": "^0.21.0",
+    "koa-sslify": "^1.0.0",
+    "koa-static": "^1.4.9"
+  }
 }
