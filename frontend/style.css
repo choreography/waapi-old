@@ -58,6 +58,21 @@ nav.guide {
 }
 
 
+@media only screen and (max-width: 700px) {
+	body {
+		flex-flow: column;
+	}
+	
+	nav.guide {
+		width: auto;
+		box-shadow: 0 2px 2px #ccc;
+	}
+}
+
+
+
+
+
 
 
 /*
@@ -171,6 +186,15 @@ header.landmark a.current { text-decoration: none }
 header.landmark a:focus { background: hsl(30, 100%, 50%); outline: none }
 
 
+@media only screen and (max-width: 700px) {
+	header.landmark {
+		box-shadow: 0 2px 2px #ccc;
+	}
+	
+	header.landmark h1 {
+		display: block;
+	}
+}
 
 
 
