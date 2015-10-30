@@ -7,7 +7,7 @@ var enforceHTTPS = require('koa-sslify');
 
 
 /// Force HTTPS on all requests
-server.use(enforceHttps({
+server.use(enforceHTTPS({
 	trustProtoHeader: true
 }));
 
