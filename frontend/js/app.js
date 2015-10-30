@@ -9,6 +9,8 @@ new FontFaceObserver('Inconsolata', {}).check().then(function() {
 
 
 /// Fetch & Parse Docs
+NProgress.start();
+
 fetch('/documentation.json')
 .then(function(response) { return response.json() })
 .then(function(docs) { window.WAAPI = docs })
@@ -16,6 +18,7 @@ fetch('/documentation.json')
 	/// Kick off application and routing
 	App.init();
 	Router.init();
+	NProgress.done();
 }, function(err) {
 	console.error(err);
 });
@@ -63,11 +66,13 @@ var App = {
 				return; /// Already served by server
 			}
 			
-			/// TODO: Loading bar?
+			NProgress.start();
 			
 			/// Fetch the article content
 			fetch(interface)
 			.then(function(response) {
+				NProgress.done();
+
 				if(response.status === 404)
 				{
 					view.innerHTML = '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>';
