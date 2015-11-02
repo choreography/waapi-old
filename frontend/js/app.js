@@ -6,71 +6,14 @@ new FontFaceObserver('Inconsolata', {}).check().then(function() {
 	document.documentElement.classList.add('font-inconsolata');
 });
 
-
-/// Progress Loader
-function progressLoader() {
-	NProgress.start();
-	
-	var onLoaded;
-	var soFar = 0;
-	var contentLength = 0;
-	var chunks = [];
-	
-	function Uint8ToString(u8a){
-		var CHUNK_SZ = 0x8000;
-		var c = [];
-		for (var i=0; i < u8a.length; i+=CHUNK_SZ) {
-			c.push(String.fromCharCode.apply(null, u8a.subarray(i, i+CHUNK_SZ)));
-		}
-		return c.join('');
-	}
-
-	function pump(reader, resolve, reject) {
-		reader.read().then(function(result) {
-			if(result.done)
-			{
-				NProgress.done();
-				var result = chunks.map(Uint8ToString).join('');
-				resolve(result);
-				return;
-			}
-			
-			var chunk = result.value;
-			soFar += chunk.byteLength;
-			if(contentLength) NProgress.set(soFar/contentLength);
-			
-			chunks.push(chunk);
-
-			pump(reader, resolve, reject);
-		});
-	}
-	
-	return function onFetch(response) {
-		soFar = 0;
-		contentLength = response.headers.get('Content-Length');
-		if(response.body && response.body.getReader)
-		{
-			var reader = response.body.getReader();
-			onLoaded = new Promise(function(resolve, reject) {
-				pump(reader, resolve, reject);
-			});
-
-			return onLoaded;
-		}
-		else
-		{
-			NProgress.done();
-			return response.text();
-		}
-	};
-}
-
-
+new FontFaceObserver('Material', {}).check(String.fromCharCode(parseInt('e5c9', 16))).then(function() {
+	document.documentElement.classList.add('font-material');
+});
 
 
 
 /// Kick off service workers
-if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+if ('serviceWorker' in navigator && (location.protocol === 'https:' && location.host === 'waapi.io')) {
 	navigator.serviceWorker.register('/service-worker.js', {
 		scope: '/'
 	}).then(function(registration) {
@@ -119,23 +62,7 @@ if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
 
 
 
-/// Fetch & Parse Docs
-NProgress.start();
-
-fetch('/documentation.json')
-.then(progressLoader())
-.then(function(response) { return JSON.parse(response) })
-.then(function(docs) { window.WAAPI = docs })
-.then(function() {
-	/// Kick off application and routing
-	App.init();
-	Router.init();
-}, function(err) {
-	console.error(err);
-});
-
-
-
+/// Application Logic
 var App = {
 	init: function() {
 		console.log('%c[App] %cInit', 'color: #777', 'color: #000');
@@ -146,10 +73,12 @@ var App = {
 			console.log('%c[App.Intro] %cInit', 'color: #777', 'color: #000');
 			var view = document.querySelector('main.content');
 			
+			NProgress.start();
 			fetch('/docs/Default.html')
-			.then(progressLoader())
+			.then(function(response) { return response.text() })
 			.then(function(article) {
 				view.innerHTML = article;
+				NProgress.done();
 			});
 		}
 	},
@@ -158,14 +87,6 @@ var App = {
 		route: function(name) {
 			console.log('%c[App.Interface] %c' + name, 'color: #777', 'color: #000');
 			var view = document.querySelector('main.content');
-			
-			if(!(name in WAAPI.interfaces))
-			{
-				view.innerHTML = '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>';
-				return;
-			}
-			
-			var interface = WAAPI.interfaces[name];
 			
 			/// Already served by server?
 			var header = view.querySelector('h1.herald');
@@ -178,16 +99,18 @@ var App = {
 			}
 			
 			/// Fetch the article content
-			fetch(interface)
+			NProgress.start();
+			fetch('/docs/' + name + '.html')
 			.then(function(response) {
-				if(response.status === 404)
+				NProgress.done();
+				
+				if(response.status >= 400)
 				{
 					view.innerHTML = '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>';
 				}
 				
-				else return response;
+				else return response.text();
 			})
-			.then(progressLoader())
 			.then(function(article) {
 				if(!article) return;
 				
@@ -293,6 +216,12 @@ function CodeHighlight(block) {
 	if(block.firstChild.nodeType === document.TEXT_NODE) block.firstChild.nodeValue = block.firstChild.nodeValue.trimLeft();
 	if(block.lastChild.nodeType === document.TEXT_NODE) block.lastChild.nodeValue = block.lastChild.nodeValue.trimRight();
 	
+	if(block.classList.contains('json'))
+	{
+		if(block.firstChild.nodeType === document.TEXT_NODE)
+			block.firstChild.nodeValue = 'var blah = ' + block.firstChild.nodeValue;
+	}
+	
 	pseudo.walk(block);
 	
 	function onWhitespace(start, end) {
@@ -335,7 +264,7 @@ function CodeHighlight(block) {
 			
 			else if(token.type === acorn.tokTypes.name)
 			{
-				if(token.value in window && isNative(window[token.value]) )
+				if(token.value in window) // && isNative(window[token.value]) )
 					pseudo.tokenize(token.start, token.end, 'native');
 				else
 					pseudo.tokenize(token.start, token.end, 'name');
@@ -429,8 +358,14 @@ function CodeHighlight(block) {
 			pseudo.tokenize(start, end, 'comment');
 		}
 	});
-	
+
 	pseudo.render();
+	
+	if(block.classList.contains('json'))
+	{
+		var iter = 6;
+		while(iter-->0) block.removeChild(block.firstChild);
+	}
 }
 
 
@@ -456,7 +391,7 @@ var View = {
 				}
 				return;
 			}
-
+			
 			if(event.target !== document.elementFromPoint(event.clientX, event.clientY)) return;
 			
 			event.preventDefault();
@@ -531,7 +466,6 @@ var View = {
 	events: {}
 };
 
-document.addEventListener('DOMContentLoaded', View.init);
 
 
 
@@ -568,4 +502,273 @@ var Highlighter = {
 	}
 }
 
-document.addEventListener('DOMContentLoaded', Highlighter.init);
+
+
+var Guide = {
+	init: function() {
+		var guide = document.querySelector('nav.guide');
+		guide.addEventListener('touchend', Guide.onGuide);
+		guide.addEventListener('mouseup', Guide.onGuide);
+		document.addEventListener('keydown', Guide.onKeyboard);
+	},
+	
+	onGuide: function(event) {
+		var element = event.target;
+		
+		if(element.matches('label, a')) Guide.onSelect(event);
+		else Guide.onDeselect(event);
+		
+		if(element.matches('label.folder'))
+		{
+			event.preventDefault();
+			Guide.onFolder(element);
+		}
+
+		else if(element.matches('a.docs'))
+		{
+			event.preventDefault();
+			Guide.onDocs(element);
+		}
+	},
+	
+	onSelect: function(event) {
+		var selected = document.querySelector('nav.guide .is-selected');
+		if(selected) selected.classList.remove('is-selected');
+		
+		event.target.classList.add('is-selected');
+	},
+	
+	onDeselect: function(event) {
+		var selected = document.querySelector('nav.guide .is-selected');
+		if(selected) selected.classList.remove('is-selected');
+	},
+	
+	onFolder: function(element) {
+		var folder = element.parentNode;
+		var label = element;
+		folder.classList.toggle('is-open');
+		
+		var visible = folder.children.length;
+		var iter = visible;
+		while(iter-->1)
+		{
+			if(folder.children[iter].classList.contains('folder')
+			&& folder.children[iter].classList.contains('is-open'))
+				visible += folder.children[iter].children.length - 1;
+		}
+		
+		if(folder.classList.contains('is-open'))
+		{
+			folder.style.height = 'auto';
+			var height = folder.offsetHeight;
+			folder.style.height = null;
+			
+			var group = new GroupEffect([
+				new KeyframeEffect(folder, [
+					{ height: '2em' },
+					{ height: height + 'px' }
+				], {
+					duration: 150 + 40 * visible,
+					easing: 'cubic-bezier(.44,0,.3,1.2)',
+					fill: 'forwards'
+				})
+			].concat(
+				Array.prototype.slice.call(folder.children, 1).map(function(node) {
+					return new KeyframeEffect(node, [
+						{ transform: 'translateY(' + (visible * -2) + 'em)' },
+						{ transform: 'translateY(0em)' }
+					], {
+						duration: 200 + 40 * visible,
+						easing: 'cubic-bezier(.4,.6,.58,1.07)'
+					})
+				})
+			));
+			
+			var animation = document.timeline.play(group);
+			
+			animation.onfinish = function() {
+				folder.style.height = 'auto';
+				animation.cancel();
+			};
+		}
+		
+		else
+		{
+			var group = new GroupEffect([
+				new KeyframeEffect(folder, [
+					{ height: folder.offsetHeight + 'px' },
+					{ height: '2em' }
+				], {
+					duration: 200 + 40*visible,
+					easing: 'cubic-bezier(.5,0,.5,1)',
+					fill: 'forwards'
+				})
+			].concat(
+				Array.prototype.slice.call(folder.children, 1).map(function(node) {
+					return new KeyframeEffect(node, [
+						{ transform: 'translateY(0em)' },
+						{ transform: 'translateY(' + (visible*-2) + 'em)' }
+					], {
+						duration: 150 + 40*visible,
+						easing: 'cubic-bezier(.5,0,1,1)'
+					})
+				})
+			));
+			
+			var animation = document.timeline.play(group);
+			
+			animation.onfinish = function() {
+				folder.style.height = null;
+				animation.cancel();
+			};
+		}
+	},
+
+	onDocs: function(element) {
+		if(element.hasAttribute('href'))
+		{
+			element.click();
+		}
+	},
+	
+	onKeyboard: function(event) {
+		if(!(document.activeElement === document.body || document.activeElement.matches('nav.guide *'))) return;
+		
+		var item = document.querySelector('nav.guide .is-selected');
+		if(!item)
+		{
+			item = document.querySelector('nav.guide').firstElementChild;
+		}
+		
+		var code = event.keyCode || event.which;
+		var LeftArrow = 37, UpArrow = 38, RightArrow = 39, DownArrow = 40, Enter = 13, Tab = 9;
+		if((code >= LeftArrow && code <= DownArrow) || code === Enter) event.preventDefault();
+		
+		if(code === UpArrow)
+		{
+			if(item.matches('label.folder'))
+			{
+				item.classList.remove('is-selected');
+				item.blur();
+				item = item.parentNode;
+			}
+			
+			if(item.previousElementSibling)
+			{
+				if(item.previousElementSibling.matches('div.folder'))
+				{
+					item.classList.remove('is-selected');
+					item.blur();
+					if(item.previousElementSibling.classList.contains('is-open'))
+					{
+						item.previousElementSibling.lastElementChild.classList.add('is-selected');
+						item.previousElementSibling.lastElementChild.focus();
+					}
+					else
+					{
+						item.previousElementSibling.firstElementChild.classList.add('is-selected');
+						item.previousElementSibling.firstElementChild.focus();
+					}
+				}
+				
+				else if(item.previousElementSibling.matches('label, a, form.search'))
+				{
+					item.classList.remove('is-selected');
+					item.blur();
+					item.previousElementSibling.classList.add('is-selected');
+					item.previousElementSibling.focus();
+				}
+			}
+		}
+		
+		else if(code === DownArrow)
+		{
+			if(!item.nextElementSibling && item.parentNode.matches('div.folder'))
+			{
+				item.classList.remove('is-selected');
+				item.blur();
+				item = item.parentNode;
+			}
+			
+			if(item.matches('label.folder') && !item.parentNode.classList.contains('is-open') && item.parentNode.nextElementSibling)
+			{
+				item.classList.remove('is-selected');
+				item.blur();
+				item = item.parentNode;
+			}
+			
+			if(item.nextElementSibling)
+			{
+				if(item.nextElementSibling.matches('div.folder'))
+				{
+					item.classList.remove('is-selected');
+					item.blur();
+					item.nextElementSibling.firstElementChild.classList.add('is-selected');
+					item.nextElementSibling.firstElementChild.focus();
+				}
+				
+				else if(item.nextElementSibling.matches('label, a'))
+				{
+					item.classList.remove('is-selected');
+					item.blur();
+					item.nextElementSibling.classList.add('is-selected');
+					item.nextElementSibling.focus();
+				}
+			}
+		}
+		
+		else if(code === LeftArrow)
+		{
+			if(item.matches('label.folder'))
+			{
+				if(item.parentNode.classList.contains('is-open'))
+				{
+					Guide.onFolder(item);
+				}
+				
+				else if(item.parentNode.parentNode.matches('div.folder'))
+				{
+					item.classList.remove('is-selected');
+					item.blur();
+					item.parentNode.parentNode.firstElementChild.classList.add('is-selected');
+					item.parentNode.parentNode.firstElementChild.focus();
+				}
+			}
+			
+			else if(item.parentNode.matches('div.folder'))
+			{
+				item.classList.remove('is-selected');
+				item.blur();
+				item.parentNode.firstElementChild.classList.add('is-selected');
+				item.parentNode.firstElementChild.focus();
+			}
+		}
+		
+		else if(code === RightArrow)
+		{
+			if(item.matches('label.folder') && !item.parentNode.classList.contains('is-open'))
+			{
+				Guide.onFolder(item);
+			}
+		}
+		
+		else if(code === Enter)
+		{
+			if(item.matches('label.folder')) Guide.onFolder(item);
+			else if(item.matches('a.docs')) Guide.onDocs(item);
+		}
+	}
+};
+
+
+
+
+/// Kick off application and routing
+document.addEventListener('DOMContentLoaded', function(event) {
+	View.init();
+	Highlighter.init();
+	App.init();
+	Router.init();
+	Guide.init();
+});
+

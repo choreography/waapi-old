@@ -1,0 +1,51 @@
+new Animation(effect, timeline);
+
+Constructor
+	effect
+		Optional effect to assign to the new animation
+	
+	timeline
+		Optional timeline to associate with new animation
+
+Attributes
+	id							[String]
+		String used to identify animation
+	effect						[AnimationEffectReadOnly?]
+		Target effect of animation
+	timeline					[AnimationTimeline?]
+		Timeline associated with animation
+	startTime					[Number?]
+		Setter/getter for start time of animation
+	currentTime					[Number?]
+		The current time of animation
+	playbackRate				[Number]
+		Rate of playback for animation
+	playState					[AnimationPlayState] [readonly]
+		Current state of animation
+			• "idle"
+			• "pending"
+			• "running"
+			• "paused"
+			• "finished"
+	ready						[Promise] [readonly]
+		Returns the current ready promise
+	finished					[Promise] [readonly]
+		Returns the current finished promise
+	onfinish					[Function?]
+		Event hnadler for finish event
+	oncancel					[Function?]
+		Event handler for cancel event
+
+Methods
+	cancel()
+		Clears all effects and aborts playback
+	finish()
+		Seeks towards the end of the target effect per the current direction
+	play()
+		Unpauses animation and rewinds if it has already finished
+	pause()
+		Suspends playback
+	reverse()
+		Inverts playback rate and as with play(): unpauses animation and rewinds to start if it has already finished in the reversed direction
+
+

@@ -1,0 +1,85 @@
+<h1 class="herald">KeyframeEffectOptions</h1>
+<code class="block json spec">
+{
+	delay: 0,
+		// The start delay which represents the number of milliseconds
+		// from the start time of the associated animation to the start
+		// of the active interval.
+	
+	endDelay: 0,
+		// The end delay which represents the number of milliseconds
+		// from the end of an animation effect’s active interval
+	
+	fill: "auto" || "none" || "forwards" || "backwards" || "both",
+		// The fill mode which defines the behavior of the animation effect
+		// outside its active interval.
+		// * "none"
+		// 		The animation effect has no effect outside of its' play
+		// * "forwards"
+		// 		After playing, will have same effect as the last moment
+		// * "backwards"
+		// 		Before playing, will have same effect as the first moment
+		// * "both"
+		// 		Combination of forwards & backwards
+	
+	iterations: 1.0,
+		// The amount of times to repeat the animation
+	
+	iterationStart: 0.0,
+		// Offset for the start of the iterations
+	
+	duration: "auto",
+		// Time taken to complete a single iteration
+		// ("auto" is for expanding to include duration of child effects)
+	
+	direction: "normal" || "reverse" || "alternate" || "alternate-reverse",
+		// * "normal"
+		// 		All iterations are played as specified.
+		// * "reverse"
+		// 		All iterations are played in the reverse direction from
+		// 		the way they are specified.
+		// * "alternate"
+		// 		Even iterations are played as specified, odd iterations
+		// 		are played in the reverse direction from the way they are specified.
+		// * "alternate-reverse"
+		// 		Even iterations are played in the reverse direction from
+		// 		the way they are specified, odd iterations are played as specified.
+	
+	easing: "linear" || "ease" || "ease-in" || "ease-out" || "ease-in-out"
+	     || "cubic-bezier(&lsaquo;number&rsaquo;, &lsaquo;number&rsaquo;, &lsaquo;number&rsaquo;, &lsaquo;number&rsaquo;)",
+		// Works same way as timing-function in CSS transitions/animations
+	
+	composite: "replace" || "add" || "accumulate",
+		// The composite operation used to composite this animation
+		// with the effect stack, as specified by one of the
+		// CompositeOperation enumeration values. This is used
+		// for all keyframes that do not specify a keyframe-specific
+		// composite operation.
+	
+	iterationComposite: "replace" || "accumulate",
+		// The iteration composite operation used to define the way
+		// animation values build from iteration to iteration.
+	
+	spacing: "distribute" || "paced(&lsaquo;property&rsaquo;)"
+		// The spacing mode to apply to this animation effect’s keyframes.
+		// * "paced(&lsaquo;property&rsaquo;)"
+		// 		Use the paced keyframe spacing mode with the property name indicated
+		// 		by {property} as the paced property. E.g. paced(left) or paced(transform)
+}
+</code>
+
+<!-- <ol class="arguments">
+	<li>
+		<high-light group="target"><h3 class="argument">target</h3>
+		is the Element being animated.</high-light><br><br>
+		Can be null for animations that don't target a specific element, for example Animation-driven sounds via Audio API.
+	<li>
+		<high-light group="frames"><h3 class="argument">frames</h3>
+		is an array of Keyframes to use.</high-light>
+	<li>
+		<h3 class="argument">options</h3>
+		is either a Number specifying duration in milliseconds OR <high-light group="options.obj">an Object with properties specifying timing and behaviour of the effect</high-light>.<br>
+		<br>
+		For a list & description of the properties see <a class="inline" href="/interface/KeyframeEffectOptions">KeyframeEffectOptions</a>.
+</ol>
+ -->

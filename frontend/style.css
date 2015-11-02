@@ -67,28 +67,29 @@ body {
 	Fonts
 */
 
-@font-face { font-family: Inconsolata; src: url('/assets/fonts/Inconsolata-Regular.ttf'); }
-@font-face { font-family: Inconsolata; font-weight: bold; src: url('/assets/fonts/Inconsolata-Bold.ttf'); }
+@font-face { font-family: Inconsolata; src: url(/assets/fonts/Inconsolata-Regular.ttf); }
+@font-face { font-family: Inconsolata; font-weight: bold; src: url(/assets/fonts/Inconsolata-Bold.ttf); }
 
-@font-face { font-family: Lato; font-weight: 100; font-style: normal; src: url('/assets/fonts/LatoLatinHair-Regular.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 100; font-style: italic; src: url('/assets/fonts/LatoLatinHair-Italic.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 200; font-style: normal; src: url('/assets/fonts/LatoLatinThin-Regular.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 200; font-style: italic; src: url('/assets/fonts/LatoLatinThin-Italic.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 300; font-style: normal; src: url('/assets/fonts/LatoLatinLight-Regular.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 300; font-style: italic; src: url('/assets/fonts/LatoLatinLight-Italic.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 400; font-style: normal; src: url('/assets/fonts/LatoLatin-Regular.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 400; font-style: italic; src: url('/assets/fonts/LatoLatin-Italic.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 500; font-style: normal; src: url('/assets/fonts/LatoLatinMed-Regular.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 500; font-style: italic; src: url('/assets/fonts/LatoLatinMed-Italic.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 600; font-style: normal; src: url('/assets/fonts/LatoLatinSemBd-Regular.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 600; font-style: italic; src: url('/assets/fonts/LatoLatinSemBd-Italic.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 700; font-style: normal; src: url('/assets/fonts/LatoLatin-Bold.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 700; font-style: italic; src: url('/assets/fonts/LatoLatin-BoldItalic.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 800; font-style: normal; src: url('/assets/fonts/LatoLatinExtBd-Regular.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 800; font-style: italic; src: url('/assets/fonts/LatoLatinExtBd-Italic.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 900; font-style: normal; src: url('/assets/fonts/LatoLatinBlack-Regular.woff') format('woff'); }
-@font-face { font-family: Lato; font-weight: 900; font-style: italic; src: url('/assets/fonts/LatoLatinBlack-Italic.woff') format('woff'); }
+@font-face { font-family: Lato; font-weight: 100; font-style: normal; src: url(/assets/fonts/LatoLatinHair-Regular.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 100; font-style: italic; src: url(/assets/fonts/LatoLatinHair-Italic.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 200; font-style: normal; src: url(/assets/fonts/LatoLatinThin-Regular.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 200; font-style: italic; src: url(/assets/fonts/LatoLatinThin-Italic.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 300; font-style: normal; src: url(/assets/fonts/LatoLatinLight-Regular.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 300; font-style: italic; src: url(/assets/fonts/LatoLatinLight-Italic.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 400; font-style: normal; src: url(/assets/fonts/LatoLatin-Regular.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 400; font-style: italic; src: url(/assets/fonts/LatoLatin-Italic.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 500; font-style: normal; src: url(/assets/fonts/LatoLatinMed-Regular.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 500; font-style: italic; src: url(/assets/fonts/LatoLatinMed-Italic.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 600; font-style: normal; src: url(/assets/fonts/LatoLatinSemBd-Regular.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 600; font-style: italic; src: url(/assets/fonts/LatoLatinSemBd-Italic.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 700; font-style: normal; src: url(/assets/fonts/LatoLatin-Bold.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 700; font-style: italic; src: url(/assets/fonts/LatoLatin-BoldItalic.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 800; font-style: normal; src: url(/assets/fonts/LatoLatinExtBd-Regular.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 800; font-style: italic; src: url(/assets/fonts/LatoLatinExtBd-Italic.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 900; font-style: normal; src: url(/assets/fonts/LatoLatinBlack-Regular.woff) format('woff'); }
+@font-face { font-family: Lato; font-weight: 900; font-style: italic; src: url(/assets/fonts/LatoLatinBlack-Italic.woff) format('woff'); }
 
+@font-face { font-family: Material; src: local('Material Icons'), local('MaterialIcons-Regular'), url(/assets/fonts/MaterialIcons-Regular.woff2) format('woff2'), url(/assets/fonts/MaterialIcons-Regular.woff) format('woff'), url(/assets/fonts/MaterialIcons-Regular.ttf) format('truetype'); }
 
 
 
@@ -99,11 +100,14 @@ body {
 high-light { display: inline }
 
 div.prose high-light:after {
+	vertical-align: text-top;
+	font: 14px/1 Material;
 	content: '*';
-	color: hsl(53, 84%, 0%);
 }
 
-div.prose high-light.on:after { visibility: hidden }
+.font-material div.prose high-light:after { content: 'label_outline' }
+
+/* div.prose high-light.on:after { visibility: hidden } */
 
 
 div.prose high-light.on {
@@ -138,27 +142,44 @@ abbr, [title] { text-decoration: none; cursor: help }
 
 body {
 	display: flex;
-	flex-flow: row;
+	display: -webkit-flex;
+	flex-flow: column;
+	-webkit-flex-flow: column;
 	overflow: hidden;
+	overflow-y: scroll;
 }
 
 div.page {
-	flex: auto;
-	overflow-y: scroll;
+	display: flex;
+	display: -webkit-flex;
+	flex-flow: row;
+	-webkit-flex-flow: row;
+	flex: 1 1 100%;
+	-webkit-flex: 1 1 100%;
+	/* overflow-y: scroll; */
+}
+
+main.content {
+	flex: 1 1 0%;
+	-webkit-flex: 1 1 0%;
 }
 
 nav.guide {
 	flex: none;
-	width: 12em;
+	-webkit-flex: none;
+	order: -1;
+	-webkit-order: -1;
+	width: 14em;
 }
 
 
 @media only screen and (max-width: 700px) {
 	body {
 		flex-flow: column;
+		-webkit-flex-flow: column;
 		overflow-y: scroll;
 	}
-
+	
 	div.page {
 		overflow-y: visible;
 	}
@@ -180,7 +201,7 @@ nav.guide {
 */
 
 header.banner {
-	padding: 6px 20px;
+	padding: 30px 20px;
 	margin-left: auto;
 	border-bottom: 1px solid hsl(0, 0%, 5%);
 	background: hsl(0, 0%, 20%);
@@ -201,47 +222,130 @@ nav.guide {
 	line-height: 2;
 }
 
-nav.guide details {}
-nav.guide details > summary {
+nav.guide .disabled {
+	color: hsl(0, 0%, 80%);
+	cursor: default;
+}
+
+nav.guide label,
+nav.guide a {
 	position: relative;
-	padding-left: 1.6em;
+	display: block;
+	background: hsl(0, 0%, 98%);
+}
+
+nav.guide div.folder {
+	overflow: hidden;
+	height: 2em;
+	outline: none;
+}
+
+nav.guide div.folder > label.folder {
+	z-index: 1;
 	cursor: pointer;
+	outline: none;
 	-webkit-user-select: none;
 }
 
-nav.guide details > summary:before {
+nav.guide div.folder > label.folder:before,
+nav.guide a.docs:before {
+	display: inline-block;
+	margin-left: -1.1em;
+	margin-right: .1em;
+	vertical-align: text-bottom;
+	font: 18px/1.1 Material;
+}
+
+nav.guide div.folder > label.folder:before { content: '>' }
+nav.guide div.folder.is-open > label.folder:before { content: 'v' }
+nav.guide a.docs:before { content: ' ' }
+.font-material nav.guide div.folder > label.folder:before { content: 'folder' }
+.font-material nav.guide div.folder.is-open > label.folder:before { content: 'folder_open' }
+.font-material nav.guide a.docs:before { content: 'code' }
+
+nav.guide label,
+nav.guide a { padding-left: 1.5em }
+
+nav.guide div.folder div.folder > label.folder,
+nav.guide div.folder > label.folder ~ a { padding-left: 2.5em }
+
+nav.guide div.folder div.folder div.folder > label.folder,
+nav.guide div.folder div.folder > label.folder ~ a { padding-left: 3.5em }
+
+nav.guide label.folder:hover,
+nav.guide a.docs:hover {
+	background: hsl(30, 0%, 90%);
+}
+
+nav.guide div.folder:focus > label.folder,
+nav.guide a.docs:focus,
+nav.guide .is-selected {
+	outline: none;
+	background: hsl(30, 0%, 88%);
+}
+
+nav.guide a.docs.current {
+	background: hsl(30, 0%, 60%);
+	color: white;
+}
+
+
+
+/* nav.guide .folder > summary:after {
 	position: absolute;
-	left: 5px;
 	top: 50%;
-	width: 1em;
-	height: .6em;
+	right: .25em;
+	transform: translate(-100%, -50%) rotate(-90deg) perspective(20px) rotateX(0deg);
+	vertical-align: baseline;
+	display: inline-block;
+	width: 20px;
+	height: 12px;
+	margin-left: .3em;
 	background: url(/assets/icon-expand.svg) center no-repeat;
 	content: '';
 	transition: transform 200ms ease-in-out;
-	transform: translateY(-35%) rotate(-90deg);
-	transform-origin: 50% 35%;
 }
 
-nav.guide details[open] > summary:before {
-	transform: translateY(-35%) rotate(0deg);
+nav.guide .folder[open] > summary:after {
+	transform: translate(0%, -50%) rotate(-90deg) perspective(20px) rotateX(180deg);
 }
 
+nav.guide .folder > .folder,
+nav.guide .folder > a { margin-left: .6em }
+nav.guide label,
+nav.guide a { padding-left: .6em }
 
-nav.guide details > a {
-	display: block;
-	padding-left: 2em;
-	-webkit-user-select: none;
+nav.guide .folder > .folder,
+nav.guide .folder > a { box-shadow: -1em 0 0 hsl(0, 0%, 80%) } */
+
+
+/*
+nav.guide details > summary:hover,
+nav.guide details > a:hover {
+	position: relative;
 }
 
-nav.guide details > a.current {
+nav.guide details > summary:hover:before,
+nav.guide details > a:hover:before {
+	position: absolute;
+	top: .1em;
+	left: .1em;
+	right: .1em;
+	bottom: .1em;
+	content: '';
+	border-radius: .25em;
 	background: hsla(30, 100%, 50%, 0.2);
+	border-left-color: hsla(30, 100%, 50%, 0.2);
 }
 
 nav.guide details > summary:focus,
 nav.guide details > a:focus {
 	outline: none;
 	background: hsl(30, 100%, 50%);
+	border-left-color: hsl(30, 100%, 50%);
+	box-shadow: -40px 0 0 0px hsl(30, 100%, 50%);
 }
+*/
 
 
 
@@ -342,8 +446,8 @@ span.icon-search {
 	display: inline-block;
 	width: 36px;
 	height: 36px;
-	background: url(assets/icon-search.svg) center no-repeat;
-	background-size: auto 20px;
+	background: url(/assets/ic_search_black_24px.svg) center no-repeat;
+	background-size: auto 24px;
 	vertical-align: middle;
 }
 
@@ -351,16 +455,16 @@ button.clear {
 	display: inline-block;
 	width: 36px;
 	height: 36px;
-	background: url(assets/icon-close.svg) center no-repeat;
-	background-size: auto 20px;
+	background: url(/assets/ic_clear_black_24px.svg) center no-repeat;
+	background-size: auto 24px;
 	vertical-align: middle;
 }
 
 button.clear:focus {
-	width: 20px;
-	height: 20px;
+	width: 30px;
+	height: 30px;
 	border-radius: 100%;
-	margin: 8px;
+	margin: 3px;
 	background-color: hsl(30, 100%, 50%);
 }
 
@@ -470,8 +574,8 @@ details.code[open] summary {
 
 div.mirror {
 	position: relative;
-	display: -webkit-flex;
 	display: flex;
+	display: -webkit-flex;
 }
 
 div.prose,

@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="/style.css">
 	
 	<!-- Scripts -->
-<!-- 	<script defer src="/shared/js/web-animations-next.js"></script> -->
+	<script defer src="/shared/js/web-animations-next.js"></script>
 <!-- 	<script defer src="/shared/js/choreography.js"></script> -->
 	<script defer src="/lib/poly.js"></script>
 	<script defer src="/lib/router.js"></script>
@@ -24,22 +24,31 @@
 
 <body>
 	<!-- Markup -->
-	<nav class="guide">
-		<form class="search">
-			<span class="icon-search"></span>
-			<input class="search" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Search…">
-			<button class="clear"></button>
-		</form>
-		<details open>
-			<summary>Effects</summary>
-			<a href="/interface/KeyframeEffect">KeyframeEffect</a>
-			<a href="/interface/GroupEffect">GroupEffect</a>
-			<a href="/interface/SequenceEffect">SequenceEffect</a>
-		</details>
-	</nav>
+	<header class="landmark">
+		<h1><a href="/">Web Animations API Documentation</a></h1>
+	</header>
 	<div class="page">
-		<header class="landmark">
-			<h1><a href="/">Web Animations API Documentation</a></h1>
-		</header>
 		<main class="content"><!-- Main Content --></main>
+		<nav class="guide">
+			<form class="search">
+				<span class="icon-search"></span>
+				<input class="search" type="search" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Search…">
+				<button class="clear"></button>
+			</form>
+			<div class="folder" id="interfaces">
+				<label class="folder" for="interfaces">Interfaces</label>
+				<a class="docs disabled">Animation</a>
+				<div class="folder" id="effects">
+					<label class="folder" for="effects">Effects</label>
+					<a class="docs" href="/interface/KeyframeEffect">KeyframeEffect</a>
+					<a class="docs" href="/interface/GroupEffect">GroupEffect</a>
+					<a class="docs" href="/interface/SequenceEffect">SequenceEffect</a>
+				</div>
+				<a class="docs disabled">document.timeline</a>
+				<a class="docs disabled">element.animate</a>
+				<a class="docs disabled">element.getAnimations</a>
+			</div>
+			<a class="docs disabled">Examples</a>
+			<a class="docs disabled">Other Resources</a>
+		</nav>
 	</div>

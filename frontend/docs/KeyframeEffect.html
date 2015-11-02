@@ -9,13 +9,13 @@
 		</p>
 	</div>
 	<div class="code">
-		<code class="block spec">
+		<code class="block javascript spec">
 new KeyframeEffect(target, frames, options);
 		</code>
-		<code class="block spec">
-var target = Element || null;
-var frames = [Keyframe, Keyframe /*, ... */];
-var options = Number || <a class="inline" href="/interface/KeyframeEffectOptions">KeyframeEffectOptions</a>;
+		<code class="block javascript spec">
+<high-light group="target">var target = Element || null;</high-light>
+<high-light group="frames">var frames = [Keyframe, Keyframe /*, ... */];</high-light>
+var options = Number || <high-light group="options.obj"><a class="inline" href="/interface/KeyframeEffectOptions">KeyframeEffectOptions</a></high-light>;
 		</code>
 	</div>
 </div>
@@ -33,13 +33,13 @@ var options = Number || <a class="inline" href="/interface/KeyframeEffectOptions
 				is an array of Keyframes to use.</high-light>
 			<li>
 				<h3 class="argument">options</h3>
-				is either a Number specifying duration in milliseconds OR <high-light group="options.obj">an Object with properties specifying timing and behaviour of the effect</high-light>.<br>
+				is either a Number specifying duration in milliseconds OR <high-light group="options.obj">an Object with properties specifying timing and behaviour of the effect.</high-light><br>
 				<br>
 				For a list & description of the properties see <a class="inline" href="/interface/KeyframeEffectOptions">KeyframeEffectOptions</a>.
 		</ol>
 	</div>
 	<div class="code">
-		<code class="block highlight usage">
+		<code class="block javascript usage">
 /// Constructing a KeyframeEffect
 
 // Grab a DOM element to animate
@@ -63,11 +63,11 @@ var options = Number || <a class="inline" href="/interface/KeyframeEffectOptions
 
 var <high-light group="node">effect</high-light> = new KeyframeEffect(<high-light group="target">target</high-light>, <high-light group="frames">frames</high-light>, <high-light group="options.obj">options</high-light>);
 		</code>
-		<code class="block highlight usage">
+		<code class="block javascript usage">
 /// You can use the effect by putting it directly into an animation
 var animation = document.timeline.play(<high-light group="node">effect</high-light>);
 		</code>
-		<code class="block highlight usage">
+		<code class="block javascript usage">
 /// Or alternatively you can composite it with other effects
 var group = new GroupEffect([
 	<high-light group="node">effect</high-light>,
@@ -84,7 +84,7 @@ var animation = document.timeline.play(group);
 	<div class="code">
 		<details class="code" open>
 			<summary>Opacity fade out example</summary>
-			<code class="block">
+			<code class="block javascript example">
 var fadeOutEffect = new KeyframeEffect(document.querySelector('div.test'), [
 	{ opacity: 1 },
 	{ opacity: 0 }

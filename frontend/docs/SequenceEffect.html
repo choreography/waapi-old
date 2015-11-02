@@ -4,15 +4,15 @@
 		<p class="description">
 			Provides a way to group multiple animation effects together, similar to <a class="inline" href="/interface/GroupEffect">GroupEffect</a>.<br>
 			<br>
-			When animated it synchronises effects to play one after the other has finished, as per the order defined from the <high-light group="effects">effects</high-light> parameter.
+			When animated it synchronises effects to play one after the other has finished, as per <high-light group="effects">the order defined from the effects parameter.</high-light>
 		</p>
 	</div>
 	<div class="code">
-		<code class="block spec">
+		<code class="block javascript spec">
 var group = new SequenceEffect(effects);
 		</code>
-		<code class="block spec">
-var effects = [<a class="inline" href="/interface/KeyframeEffect">KeyframeEffect</a>, <a class="inline" href="/interface/GroupEffect">GroupEffect</a>, SequenceEffect /*, ... */];
+		<code class="block javascript spec">
+<high-light group="effects">var effects = [<a class="inline" href="/interface/KeyframeEffect">KeyframeEffect</a>, <a class="inline" href="/interface/GroupEffect">GroupEffect</a>, SequenceEffect /*, ... */];</high-light>
 		</code>
 	</div>
 </div>
@@ -26,7 +26,7 @@ var effects = [<a class="inline" href="/interface/KeyframeEffect">KeyframeEffect
 		</ol>
 	</div>
 	<div class="code">
-		<code class="block highlight usage">
+		<code class="block javascript usage">
 /// Constructing and playing a SequenceEffect made of two effects
 
 var element1 = document.querySelector('.animate1');
@@ -53,7 +53,7 @@ document.timeline.play(group);
 	<div class="code">
 		<details class="code" open>
 			<summary>…</summary>
-			<code class="block">
+			<code class="block javascript">
 			</code>
 		</details>
 	</div>
