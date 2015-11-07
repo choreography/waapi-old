@@ -83,43 +83,41 @@ var App = {
 		}
 	},
 	
-	Interface: {
-		route: function(name) {
-			console.log('%c[App.Interface] %c' + name, 'color: #777', 'color: #000');
-			var view = document.querySelector('main.content');
+	Docs: function(name) {
+		console.log('%c[App.Docs] %c' + name, 'color: #777', 'color: #000');
+		var view = document.querySelector('main.content');
+		
+		/// Already served by server?
+		var header = view.querySelector('h1.herald');
+		if(header && header.innerText === name)
+		{
+			var codeblocks = view.querySelectorAll('code.block');
+			Array.prototype.forEach.call(codeblocks, CodeHighlight);
 			
-			/// Already served by server?
-			var header = view.querySelector('h1.herald');
-			if(header && header.innerText === name)
+			return; /// Already served by server
+		}
+		
+		/// Fetch the article content
+		NProgress.start();
+		fetch('/docs/' + name + '.html')
+		.then(function(response) {
+			NProgress.done();
+			
+			if(response.status >= 400)
 			{
-				var codeblocks = view.querySelectorAll('code.block');
-				Array.prototype.forEach.call(codeblocks, CodeHighlight);
-				
-				return; /// Already served by server
+				view.innerHTML = '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>';
 			}
 			
-			/// Fetch the article content
-			NProgress.start();
-			fetch('/docs/' + name + '.html')
-			.then(function(response) {
-				NProgress.done();
-				
-				if(response.status >= 400)
-				{
-					view.innerHTML = '<h1 class="herald">Not Found</h1><br><p><a href="/" class="inline">Back to homepage?</a></p>';
-				}
-				
-				else return response.text();
-			})
-			.then(function(article) {
-				if(!article) return;
-				
-				view.innerHTML = article;
-				
-				var codeblocks = view.querySelectorAll('code.block');
-				Array.prototype.forEach.call(codeblocks, CodeHighlight);
-			});
-		}
+			else return response.text();
+		})
+		.then(function(article) {
+			if(!article) return;
+			
+			view.innerHTML = article;
+			
+			var codeblocks = view.querySelectorAll('code.block');
+			Array.prototype.forEach.call(codeblocks, CodeHighlight);
+		});
 	}
 };
 
@@ -128,7 +126,8 @@ var App = {
 /// Routing
 Router.pages({
 	'/': App.Intro,
-	'/interface/:name': App.Interface,
+	'/interface/:name': App.Docs,
+	'/:name': App.Docs,
 	
 	// Default route to send user to intro screen on 404
 	'*': '/'
