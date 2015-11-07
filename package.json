@@ -16,7 +16,7 @@
     "url": "http://martinpitt.co.uk/"
   },
   "scripts": {
-    "build": "sw-precache --root=frontend --replacePrefix \"/\" --static-file-globs='frontend/**/*.{js,html,json,css,png,jpg,gif,svg,ttf,woff}'",
+    "build": "sw-precache --root=frontend --replacePrefix \"/\" --static-file-globs='frontend/**/*.{js,html,json,css,png,jpg,gif,svg,ttf,woff,woff2}'",
     "start": "node .koa.js"
   },
   "repository": {
