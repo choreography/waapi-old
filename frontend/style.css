@@ -721,7 +721,41 @@ div.prose ul .type {
 	Resource Page
 */
 
+p.elucidate {
+	font-size: 16px;
+	line-height: 1.6;
+}
+
+h2.signal + p.elucidate { margin-top: 0px }
+
+
 ul.resources {}
+ul.resources li {
+	position: relative;
+	margin-left: 40px;
+/* 	border-top: 1px solid hsla(0, 0%, 0%, 0.05);
+	border-bottom: 1px solid hsla(0, 0%, 100%, 0.4); */
+}
+ul.resources li:first-child { border-top: none }
+ul.resources li:last-child { border-bottom: none }
+
+ul.resources li:before {
+	position: absolute;
+	top: .5em;
+	left: -20px;
+	bottom: .5em;
+	content: '';
+/* 	width: 4px; */
+	border-radius: 10px;
+	border-left: 4px solid hsla(0, 0%, 0%, 0.1);
+}
+
+ul.resources a.resource {
+	padding-left: 40px;
+	margin-left: -40px;
+}
+
+
 
 a.resource {
 	display: block;
