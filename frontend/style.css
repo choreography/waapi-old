@@ -717,6 +717,47 @@ div.prose ul .type {
 
 
 /*
+	Resource Page
+*/
+
+ul.resources {}
+
+a.resource {
+	display: block;
+	padding: .5em 5px .5em 20px;
+/* 	font-size: 16px; */
+	line-height: 1.6;
+}
+
+a.resource em {
+	display: block;
+	font-size: 0.875em;
+	opacity: 0.8;
+}
+
+a.resource em:after {
+	font: 14px/1 Material;
+	content: '';
+}
+
+a.resource[target="_blank"] em:after {
+	font: 14px/1 Material;
+	content: ' \2750';
+}
+
+.font-material a.resource em:after { content: '' }
+.font-material a.resource[target="_blank"] em:after { content: ' open_in_new' }
+
+a.resource:visited { color: hsl(215, 40%, 30%) }
+a.resource:hover { background: hsla(0, 0%, 0%, 0.1) }
+a.resource:focus {
+	background: hsl(30, 100%, 50%);
+	outline: none;
+}
+
+
+
+/*
 	NProgress.css
 */
 
