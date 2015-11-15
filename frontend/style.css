@@ -136,24 +136,25 @@ abbr, [title] { text-decoration: none; cursor: help }
 
 
 
+
 /*
 	Core Page Layout
 */
 
 body {
-	display: flex;
 	display: -webkit-flex;
-	flex-flow: column;
+	display: flex;
 	-webkit-flex-flow: column;
+	flex-flow: column;
 	overflow: hidden;
 	overflow-y: scroll;
 }
 
 div.page {
-	display: flex;
 	display: -webkit-flex;
-	flex-flow: row;
+	display: flex;
 	-webkit-flex-flow: row;
+	flex-flow: row;
 	flex: 1 1 100%;
 	-webkit-flex: 1 1 100%;
 	/* overflow-y: scroll; */
@@ -580,8 +581,8 @@ details.code[open] summary {
 
 div.mirror {
 	position: relative;
-	display: flex;
 	display: -webkit-flex;
+	display: flex;
 }
 
 div.prose,
