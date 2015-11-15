@@ -277,17 +277,23 @@ nav.guide a.docs:hover {
 	background: hsl(30, 0%, 90%);
 }
 
-nav.guide div.folder:focus > label.folder,
-nav.guide a.docs:focus,
 nav.guide .is-selected {
-	outline: none;
 	background: hsl(30, 0%, 88%);
+	outline: none;
 }
 
 nav.guide a.docs.current {
 	background: hsl(30, 0%, 60%);
 	color: white;
 }
+
+nav.guide div.folder:focus > label.folder,
+nav.guide a.docs:focus {
+	background: hsl(30, 100%, 50%);
+	outline: none;
+}
+
+
 
 
 

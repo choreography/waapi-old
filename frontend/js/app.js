@@ -630,25 +630,48 @@ var Guide = {
 		}
 	},
 	
+	blur: function(node) {
+		node.classList.remove('is-selected');
+		var focusable = node;
+		if(node.matches('label[for]'))
+		{
+			focusable = document.querySelector('#' + node.getAttribute('for'));
+		}
+		
+		focusable.blur();
+	},
+
+	focus: function(node) {
+		node.classList.add('is-selected');
+		var focusable = node;
+		if(node.matches('label[for]'))
+		{
+			focusable = document.querySelector('#' + node.getAttribute('for'));
+		}
+		
+		focusable.setAttribute('tabindex', '0');
+		focusable.focus();
+	},
+
 	onKeyboard: function(event) {
 		if(!(document.activeElement === document.body || document.activeElement.matches('nav.guide *'))) return;
 		
-		var item = document.querySelector('nav.guide .is-selected');
+		var code = event.keyCode || event.which;
+		var LeftArrow = 37, UpArrow = 38, RightArrow = 39, DownArrow = 40, Enter = 13, Tab = 9;
+		if(!((code >= LeftArrow && code <= DownArrow) || code === Enter || code === Tab)) return;
+		if((code >= LeftArrow && code <= DownArrow) || code === Enter) event.preventDefault();
+		
+		var item = document.activeElement.matches('label, a, form.search')? document.activeElement : document.querySelector('nav.guide .is-selected');
 		if(!item)
 		{
 			item = document.querySelector('nav.guide').firstElementChild;
 		}
 		
-		var code = event.keyCode || event.which;
-		var LeftArrow = 37, UpArrow = 38, RightArrow = 39, DownArrow = 40, Enter = 13, Tab = 9;
-		if((code >= LeftArrow && code <= DownArrow) || code === Enter) event.preventDefault();
-		
-		if(code === UpArrow)
+		if(code === UpArrow || (code === Tab && event.shiftKey))
 		{
 			if(item.matches('label.folder'))
 			{
-				item.classList.remove('is-selected');
-				item.blur();
+				Guide.blur(item);
 				item = item.parentNode;
 			}
 			
@@ -656,43 +679,40 @@ var Guide = {
 			{
 				if(item.previousElementSibling.matches('div.folder'))
 				{
-					item.classList.remove('is-selected');
-					item.blur();
+					Guide.blur(item);
+					
 					if(item.previousElementSibling.classList.contains('is-open'))
 					{
-						item.previousElementSibling.lastElementChild.classList.add('is-selected');
-						item.previousElementSibling.lastElementChild.focus();
+						event.preventDefault();
+						Guide.focus(item.previousElementSibling.lastElementChild);
 					}
 					else
 					{
-						item.previousElementSibling.firstElementChild.classList.add('is-selected');
-						item.previousElementSibling.firstElementChild.focus();
+						event.preventDefault();
+						Guide.focus(item.previousElementSibling.firstElementChild);
 					}
 				}
 				
 				else if(item.previousElementSibling.matches('label, a, form.search'))
 				{
-					item.classList.remove('is-selected');
-					item.blur();
-					item.previousElementSibling.classList.add('is-selected');
-					item.previousElementSibling.focus();
+					event.preventDefault();
+					Guide.blur(item);
+					Guide.focus(item.previousElementSibling);
 				}
 			}
 		}
 		
-		else if(code === DownArrow)
+		else if(code === DownArrow || (code === Tab && !event.shiftKey))
 		{
 			if(!item.nextElementSibling && item.parentNode.matches('div.folder'))
 			{
-				item.classList.remove('is-selected');
-				item.blur();
+				Guide.blur(item);
 				item = item.parentNode;
 			}
 			
 			if(item.matches('label.folder') && !item.parentNode.classList.contains('is-open') && item.parentNode.nextElementSibling)
 			{
-				item.classList.remove('is-selected');
-				item.blur();
+				Guide.blur(item);
 				item = item.parentNode;
 			}
 			
@@ -700,18 +720,16 @@ var Guide = {
 			{
 				if(item.nextElementSibling.matches('div.folder'))
 				{
-					item.classList.remove('is-selected');
-					item.blur();
-					item.nextElementSibling.firstElementChild.classList.add('is-selected');
-					item.nextElementSibling.firstElementChild.focus();
+					event.preventDefault();
+					Guide.blur(item);
+					Guide.focus(item.nextElementSibling.firstElementChild);
 				}
 				
 				else if(item.nextElementSibling.matches('label, a'))
 				{
-					item.classList.remove('is-selected');
-					item.blur();
-					item.nextElementSibling.classList.add('is-selected');
-					item.nextElementSibling.focus();
+					event.preventDefault();
+					Guide.blur(item);
+					Guide.focus(item.nextElementSibling);
 				}
 			}
 		}
@@ -727,19 +745,15 @@ var Guide = {
 				
 				else if(item.parentNode.parentNode.matches('div.folder'))
 				{
-					item.classList.remove('is-selected');
-					item.blur();
-					item.parentNode.parentNode.firstElementChild.classList.add('is-selected');
-					item.parentNode.parentNode.firstElementChild.focus();
+					Guide.blur(item);
+					Guide.focus(item.parentNode.parentNode.firstElementChild);
 				}
 			}
 			
 			else if(item.parentNode.matches('div.folder'))
 			{
-				item.classList.remove('is-selected');
-				item.blur();
-				item.parentNode.firstElementChild.classList.add('is-selected');
-				item.parentNode.firstElementChild.focus();
+				Guide.blur(item);
+				Guide.focus(item.parentNode.firstElementChild);
 			}
 		}
 		
