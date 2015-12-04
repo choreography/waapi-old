@@ -172,7 +172,7 @@ server.use(serve('./frontend'));
 if(!module.parent)
 {
 	/// Launch the server locally
-	var port = process.env.PORT || 8045;
+	var port = process.env.PORT || 8039;
 	server.listen(port);
 	console.log('Launching webserver at localhost:' + port);
 }
