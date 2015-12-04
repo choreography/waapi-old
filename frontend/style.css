@@ -157,7 +157,6 @@ div.page {
 	flex-flow: row;
 	flex: 1 1 100%;
 	-webkit-flex: 1 1 100%;
-	/* overflow-y: scroll; */
 }
 
 main.content {
@@ -174,20 +173,56 @@ nav.guide {
 }
 
 
-@media only screen and (max-width: 700px) {
-	body {
-		flex-flow: column;
-		-webkit-flex-flow: column;
+@media only screen and (max-width: 800px) {
+	html, body {
+		display: block;
+		overflow-x: hidden;
 		overflow-y: scroll;
+		-webkit-perspective-origin-x: 100%;
+		perspective-origin-x: 100%;
+		-webkit-perspective: 300px;
+		perspective: 300px;
 	}
 	
 	div.page {
-		overflow-y: visible;
+		position: relative;
+		display: block;
+		height: 100vh;
+		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d;
 	}
 	
 	nav.guide {
-		width: auto;
-		box-shadow: 0 2px 2px #ccc;
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 16em;
+		box-shadow: 1px 2px 3px #ccc, -1px 2px 3px #ccc;
+		transform: translate3d(-16em, 0, 10px);
+	}
+	
+	main.content {
+		transform: translate3d(0em, 0, 0px) rotateY(0deg);
+	}
+	
+	main.content,
+	nav.guide {
+		transition: 300ms cubic-bezier(.44,0,.3,1.2);
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transform-origin-x: 100%;
+		transform-origin-x: 100%;
+	}
+	
+	body.in-menu main.content {
+		transform: translate3d(0em, 0, -20px) rotateY(-2deg);
+		opacity: 0.2;
+		pointer-events: none;
+	}
+	
+	body.in-menu nav.guide {
+		transform: translate3d(2em, 0, 0px);
 	}
 }
 
@@ -397,7 +432,7 @@ header.landmark a:focus { background: hsl(30, 100%, 50%); outline: none }
 
 @media only screen and (max-width: 700px) {
 	header.landmark {
-		box-shadow: 0 2px 2px #ccc;
+/* 		box-shadow: 0 2px 2px #ccc; */
 	}
 	
 	header.landmark h1 {
