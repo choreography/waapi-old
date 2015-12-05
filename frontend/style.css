@@ -92,7 +92,6 @@ body {
 @font-face { font-family: Material; src: local('Material Icons'), local('MaterialIcons-Regular'), url(/assets/fonts/MaterialIcons-Regular.woff2) format('woff2'), url(/assets/fonts/MaterialIcons-Regular.woff) format('woff'), url(/assets/fonts/MaterialIcons-Regular.ttf) format('truetype'); }
 
 
-
 /*
 	Site styling
 */
@@ -169,61 +168,12 @@ nav.guide {
 	-webkit-flex: none;
 	order: -1;
 	-webkit-order: -1;
-	width: 14em;
+	pointer-events: none;
 }
 
-
-@media only screen and (max-width: 800px) {
-	html, body {
-		display: block;
-		overflow-x: hidden;
-		overflow-y: scroll;
-		-webkit-perspective-origin-x: 100%;
-		perspective-origin-x: 100%;
-		-webkit-perspective: 300px;
-		perspective: 300px;
-	}
-	
-	div.page {
-		position: relative;
-		display: block;
-		height: 100vh;
-		-webkit-transform-style: preserve-3d;
-		transform-style: preserve-3d;
-	}
-	
-	nav.guide {
-		position: fixed;
-		top: 0;
-		left: 0;
-		bottom: 0;
-		width: 16em;
-		box-shadow: 1px 2px 3px #ccc, -1px 2px 3px #ccc;
-		transform: translate3d(-16em, 0, 10px);
-	}
-	
-	main.content {
-		transform: translate3d(0em, 0, 0px) rotateY(0deg);
-	}
-	
-	main.content,
-	nav.guide {
-		transition: 300ms cubic-bezier(.44,0,.3,1.2);
-		-webkit-backface-visibility: hidden;
-		backface-visibility: hidden;
-		-webkit-transform-origin-x: 100%;
-		transform-origin-x: 100%;
-	}
-	
-	body.in-menu main.content {
-		transform: translate3d(0em, 0, -20px) rotateY(-2deg);
-		opacity: 0.2;
-		pointer-events: none;
-	}
-	
-	body.in-menu nav.guide {
-		transform: translate3d(2em, 0, 0px);
-	}
+nav.guide div.wrapper {
+	width: 14em;
+	pointer-events: all;
 }
 
 
@@ -253,10 +203,51 @@ header.banner {
 */
 
 nav.guide {
-	background: hsl(0, 0%, 98%);
+	position: relative;
 	font-size: 18px;
 	line-height: 2;
 }
+
+nav.guide div.wrapper {
+	background: hsl(0, 0%, 98%);
+}
+
+nav.guide button.toggle {
+	position: fixed;
+	top: 50%;
+	right: 0;
+	display: none;
+	padding: 0 50px;
+	border-radius: 3px 3px 0 0;
+	background: hsl(0, 0%, 98%);
+	box-shadow: 1px -1px 1px hsla(0, 0%, 0%, 0.4);
+	color: hsl(0, 0%, 10%);
+	font: 15px/20px Arial, sans-serif;
+	-webkit-transform-origin: bottom right;
+	transform-origin: bottom right;
+	-webkit-transform: rotate(90deg) translateX(50%);
+	transform: rotate(90deg) translateX(50%);
+}
+
+nav.guide button.toggle:active {
+	background: hsl(0, 0%, 20%);
+	box-shadow: none;
+	color: hsl(0, 0%, 80%);
+}
+
+nav.guide button.toggle:after {
+	content: "";
+	position: absolute;
+	top: -30px;
+	left: -30px;
+	right: -30px;
+	bottom: 0;
+	border-radius: 32px 32px 0 0;
+/* 	border: 4px dashed darkorange; */
+}
+
+/* nav.guide button.toggle:active:after { background: hsla(0, 0%, 0%, 0.1) } */
+
 
 nav.guide .disabled {
 	color: hsl(0, 0%, 80%);
@@ -793,9 +784,9 @@ ul.resources a.resource {
 
 
 a.resource {
-	display: block;
+	display: inline-block;
 	padding: .5em 5px .5em 20px;
-/* 	font-size: 16px; */
+	/* 	font-size: 16px; */
 	line-height: 1.6;
 }
 
@@ -904,4 +895,82 @@ a.resource:focus {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+
+
+/*
+	Mobile Nav
+*/
+
+
+@media only screen and (max-width: 800px) {
+	html, body {
+		display: block;
+		overflow-x: hidden;
+		overflow-y: scroll;
+/* 		-webkit-perspective-origin-x: 100%;
+		perspective-origin-x: 100%;
+		-webkit-perspective: 300px;
+		perspective: 300px; */
+	}
+	
+	div.page {
+		position: relative;
+		display: block;
+		height: 100vh;
+/* 		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d; */
+	}
+	
+	nav.guide {
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+	}
+	
+	nav.guide div.wrapper {
+		width: 16em;
+		padding-top: 2px;
+		box-shadow: 1px 2px 3px #ccc, -1px 2px 3px #ccc;
+		-webkit-transform: translateX(-16em);
+		transform: translateX(-16em);
+	}
+	
+	nav.guide button.toggle {
+		display: block;
+	}
+
+	main.content {
+		padding-left: 1em;
+		-webkit-transform: perspective(1000px) translateX(0em) rotateY(0deg);
+		transform: perspective(1000px) translateX(0em) rotateY(0deg);
+	}
+	
+	main.content,
+	nav.guide div.wrapper {
+		transition: 300ms cubic-bezier(.44,0,.3,1.2);
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transform-origin-x: 100%;
+		transform-origin-x: 100%;
+	}
+	
+	body.in-menu main.content {
+		-webkit-transform: perspective(1000px) translate3d(0em, 0, -250px) rotateY(-4deg);
+		transform: perspective(1000px) translate3d(0em, 0, -250px) rotateY(-4deg);
+		opacity: 0.2;
+		pointer-events: none;
+	}
+	
+	body.in-menu nav.guide div.wrapper {
+		-webkit-transform: translate3d(2em, 0, 0px);
+		transform: translate3d(2em, 0, 0px);
+	}
+}
+
+
+
+
 

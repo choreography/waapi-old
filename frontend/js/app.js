@@ -509,8 +509,27 @@ var Guide = {
 		guide.addEventListener('touchend', Guide.onGuide);
 		guide.addEventListener('mouseup', Guide.onGuide);
 		document.addEventListener('keydown', Guide.onKeyboard);
+		
+		var toggle = document.querySelector('nav.guide button.toggle');
+		toggle.addEventListener('mouseup', Guide.onToggle);
+		toggle.addEventListener('touchend', Guide.onToggle);
+		
+		var page = document.querySelector('div.page');
+		page.addEventListener('mouseup', Guide.onPage);
+		page.addEventListener('touchend', Guide.onPage);
 	},
 	
+	onToggle: function(event) {
+		document.body.classList.toggle('in-menu');
+	},
+	
+	onPage: function(event) {
+		if(document.body.classList.contains('in-menu') && event.target.matches('div.page'))
+		{
+			document.body.classList.remove('in-menu');
+		}
+	},
+
 	onGuide: function(event) {
 		var element = event.target;
 		
